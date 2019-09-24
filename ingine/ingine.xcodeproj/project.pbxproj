@@ -7,23 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A927EC6D4DFD44678351FE6 /* Pods_ingine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */; };
+		EE16B7D22308E71A0002397D /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D12308E7190002397D /* OptionCell.swift */; };
+		EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D32308F06C0002397D /* OptionsLauncher.swift */; };
+		EE28D4D122A59301002CA261 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE28D4D022A59301002CA261 /* AccountViewController.swift */; };
+		EE28D4D322A5A07E002CA261 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE28D4D222A5A07E002CA261 /* ProfileViewController.swift */; };
+		EE7F35C9229CCD5500AE9089 /* ViewController+ARSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35C5229CCD5100AE9089 /* ViewController+ARSessionDelegate.swift */; };
+		EE7F35CA229CCD5500AE9089 /* ingine.scn in Resources */ = {isa = PBXBuildFile; fileRef = EE7F35C6229CCD5200AE9089 /* ingine.scn */; };
+		EE7F35CB229CCD5500AE9089 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35C7229CCD5400AE9089 /* CropViewController.swift */; };
+		EE7F35CC229CCD5500AE9089 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35C8229CCD5500AE9089 /* ImageViewController.swift */; };
+		EE7F35D6229CCDE400AE9089 /* SECornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35CE229CCDE300AE9089 /* SECornerView.swift */; };
+		EE7F35D7229CCDE400AE9089 /* Array+shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35CF229CCDE400AE9089 /* Array+shift.swift */; };
+		EE7F35D8229CCDE400AE9089 /* SEAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35D0229CCDE400AE9089 /* SEAreaView.swift */; };
+		EE7F35D9229CCDE400AE9089 /* SECropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35D1229CCDE400AE9089 /* SECropView.swift */; };
+		EE7F35DA229CCDE400AE9089 /* CGPoint+geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35D2229CCDE400AE9089 /* CGPoint+geometry.swift */; };
+		EE7F35DB229CCDE400AE9089 /* SECropError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35D3229CCDE400AE9089 /* SECropError.swift */; };
+		EE7F35DC229CCDE400AE9089 /* SEQuadrangleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35D4229CCDE400AE9089 /* SEQuadrangleHelper.swift */; };
+		EE7F35DD229CCDE400AE9089 /* UIView+globalCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35D5229CCDE400AE9089 /* UIView+globalCoordinates.swift */; };
+		EE7F35E0229CCDEE00AE9089 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7F35DF229CCDEE00AE9089 /* StatusViewController.swift */; };
+		EE7F35E2229CCF2200AE9089 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE7F35E1229CCF2200AE9089 /* Main.storyboard */; };
 		EEC7CD5F22999F1E00B33B47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7CD5E22999F1E00B33B47 /* AppDelegate.swift */; };
 		EEC7CD6122999F1E00B33B47 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EEC7CD6022999F1E00B33B47 /* art.scnassets */; };
 		EEC7CD6322999F1E00B33B47 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7CD6222999F1E00B33B47 /* ViewController.swift */; };
-		EEC7CD6622999F1E00B33B47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEC7CD6422999F1E00B33B47 /* Main.storyboard */; };
 		EEC7CD6822999F3400B33B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEC7CD6722999F3400B33B47 /* Assets.xcassets */; };
 		EEC7CD6B22999F3400B33B47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEC7CD6922999F3400B33B47 /* LaunchScreen.storyboard */; };
+		EEC7CD73229CBED800B33B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEC7CD72229CBED700B33B47 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28EF1BCF6424AC43142E7E15 /* Pods-ingine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.release.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.release.xcconfig"; sourceTree = "<group>"; };
+		77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ingine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C5AD77DEDED43366A7DA8D3 /* Pods-ingine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.debug.xcconfig"; sourceTree = "<group>"; };
+		EE16B7D12308E7190002397D /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
+		EE16B7D32308F06C0002397D /* OptionsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsLauncher.swift; sourceTree = "<group>"; };
+		EE28D4D022A59301002CA261 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		EE28D4D222A5A07E002CA261 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		EE7F35C5229CCD5100AE9089 /* ViewController+ARSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+ARSessionDelegate.swift"; sourceTree = "<group>"; };
+		EE7F35C6229CCD5200AE9089 /* ingine.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ingine.scn; sourceTree = "<group>"; };
+		EE7F35C7229CCD5400AE9089 /* CropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		EE7F35C8229CCD5500AE9089 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		EE7F35CE229CCDE300AE9089 /* SECornerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SECornerView.swift; sourceTree = "<group>"; };
+		EE7F35CF229CCDE400AE9089 /* Array+shift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+shift.swift"; sourceTree = "<group>"; };
+		EE7F35D0229CCDE400AE9089 /* SEAreaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SEAreaView.swift; sourceTree = "<group>"; };
+		EE7F35D1229CCDE400AE9089 /* SECropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SECropView.swift; sourceTree = "<group>"; };
+		EE7F35D2229CCDE400AE9089 /* CGPoint+geometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+geometry.swift"; sourceTree = "<group>"; };
+		EE7F35D3229CCDE400AE9089 /* SECropError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SECropError.swift; sourceTree = "<group>"; };
+		EE7F35D4229CCDE400AE9089 /* SEQuadrangleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SEQuadrangleHelper.swift; sourceTree = "<group>"; };
+		EE7F35D5229CCDE400AE9089 /* UIView+globalCoordinates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+globalCoordinates.swift"; sourceTree = "<group>"; };
+		EE7F35DF229CCDEE00AE9089 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		EE7F35E1229CCF2200AE9089 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EEC7CD5B22999F1E00B33B47 /* ingine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ingine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEC7CD5E22999F1E00B33B47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEC7CD6022999F1E00B33B47 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		EEC7CD6222999F1E00B33B47 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		EEC7CD6522999F1E00B33B47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EEC7CD6722999F3400B33B47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EEC7CD6A22999F3400B33B47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EEC7CD6C22999F3400B33B47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEC7CD72229CBED700B33B47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +71,60 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A927EC6D4DFD44678351FE6 /* Pods_ingine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29B7B0173C700D5BE15A5497 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8C5AD77DEDED43366A7DA8D3 /* Pods-ingine.debug.xcconfig */,
+				28EF1BCF6424AC43142E7E15 /* Pods-ingine.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		564C80784CBE00EBF427710E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE7F35CD229CCDE300AE9089 /* CropView */ = {
+			isa = PBXGroup;
+			children = (
+				EE7F35CE229CCDE300AE9089 /* SECornerView.swift */,
+				EE7F35CF229CCDE400AE9089 /* Array+shift.swift */,
+				EE7F35D0229CCDE400AE9089 /* SEAreaView.swift */,
+				EE7F35D1229CCDE400AE9089 /* SECropView.swift */,
+				EE7F35D2229CCDE400AE9089 /* CGPoint+geometry.swift */,
+				EE7F35D3229CCDE400AE9089 /* SECropError.swift */,
+				EE7F35D4229CCDE400AE9089 /* SEQuadrangleHelper.swift */,
+				EE7F35D5229CCDE400AE9089 /* UIView+globalCoordinates.swift */,
+			);
+			path = CropView;
+			sourceTree = "<group>";
+		};
+		EE7F35DE229CCDEE00AE9089 /* Additional View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE7F35DF229CCDEE00AE9089 /* StatusViewController.swift */,
+			);
+			path = "Additional View Controllers";
+			sourceTree = "<group>";
+		};
 		EEC7CD5222999F1D00B33B47 = {
 			isa = PBXGroup;
 			children = (
 				EEC7CD5D22999F1E00B33B47 /* ingine */,
 				EEC7CD5C22999F1E00B33B47 /* Products */,
+				29B7B0173C700D5BE15A5497 /* Pods */,
+				564C80784CBE00EBF427710E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,12 +140,23 @@
 			isa = PBXGroup;
 			children = (
 				EEC7CD5E22999F1E00B33B47 /* AppDelegate.swift */,
-				EEC7CD6022999F1E00B33B47 /* art.scnassets */,
+				EE7F35C5229CCD5100AE9089 /* ViewController+ARSessionDelegate.swift */,
 				EEC7CD6222999F1E00B33B47 /* ViewController.swift */,
-				EEC7CD6422999F1E00B33B47 /* Main.storyboard */,
+				EE7F35C7229CCD5400AE9089 /* CropViewController.swift */,
+				EE7F35C8229CCD5500AE9089 /* ImageViewController.swift */,
+				EE28D4D022A59301002CA261 /* AccountViewController.swift */,
+				EE28D4D222A5A07E002CA261 /* ProfileViewController.swift */,
+				EE16B7D12308E7190002397D /* OptionCell.swift */,
+				EE16B7D32308F06C0002397D /* OptionsLauncher.swift */,
+				EE7F35C6229CCD5200AE9089 /* ingine.scn */,
+				EE7F35DE229CCDEE00AE9089 /* Additional View Controllers */,
+				EE7F35CD229CCDE300AE9089 /* CropView */,
+				EEC7CD6022999F1E00B33B47 /* art.scnassets */,
 				EEC7CD6722999F3400B33B47 /* Assets.xcassets */,
+				EE7F35E1229CCF2200AE9089 /* Main.storyboard */,
 				EEC7CD6922999F3400B33B47 /* LaunchScreen.storyboard */,
 				EEC7CD6C22999F3400B33B47 /* Info.plist */,
+				EEC7CD72229CBED700B33B47 /* GoogleService-Info.plist */,
 			);
 			path = ingine;
 			sourceTree = "<group>";
@@ -74,9 +168,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEC7CD6F22999F3400B33B47 /* Build configuration list for PBXNativeTarget "ingine" */;
 			buildPhases = (
+				44A45BBF1DC85F5BD597094A /* [CP] Check Pods Manifest.lock */,
 				EEC7CD5722999F1E00B33B47 /* Sources */,
 				EEC7CD5822999F1E00B33B47 /* Frameworks */,
 				EEC7CD5922999F1E00B33B47 /* Resources */,
+				8FC72403616D252C951ED290 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,34 +223,97 @@
 			files = (
 				EEC7CD6122999F1E00B33B47 /* art.scnassets in Resources */,
 				EEC7CD6B22999F3400B33B47 /* LaunchScreen.storyboard in Resources */,
+				EEC7CD73229CBED800B33B47 /* GoogleService-Info.plist in Resources */,
+				EE7F35E2229CCF2200AE9089 /* Main.storyboard in Resources */,
 				EEC7CD6822999F3400B33B47 /* Assets.xcassets in Resources */,
-				EEC7CD6622999F1E00B33B47 /* Main.storyboard in Resources */,
+				EE7F35CA229CCD5500AE9089 /* ingine.scn in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		44A45BBF1DC85F5BD597094A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ingine-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FC72403616D252C951ED290 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ingine/Pods-ingine-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ingine/Pods-ingine-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EEC7CD5722999F1E00B33B47 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE16B7D22308E71A0002397D /* OptionCell.swift in Sources */,
+				EE7F35E0229CCDEE00AE9089 /* StatusViewController.swift in Sources */,
+				EE7F35D9229CCDE400AE9089 /* SECropView.swift in Sources */,
+				EE7F35C9229CCD5500AE9089 /* ViewController+ARSessionDelegate.swift in Sources */,
+				EE7F35DB229CCDE400AE9089 /* SECropError.swift in Sources */,
+				EE7F35D6229CCDE400AE9089 /* SECornerView.swift in Sources */,
 				EEC7CD6322999F1E00B33B47 /* ViewController.swift in Sources */,
+				EE28D4D322A5A07E002CA261 /* ProfileViewController.swift in Sources */,
+				EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */,
+				EE7F35CC229CCD5500AE9089 /* ImageViewController.swift in Sources */,
+				EE7F35CB229CCD5500AE9089 /* CropViewController.swift in Sources */,
+				EE7F35D7229CCDE400AE9089 /* Array+shift.swift in Sources */,
 				EEC7CD5F22999F1E00B33B47 /* AppDelegate.swift in Sources */,
+				EE7F35DA229CCDE400AE9089 /* CGPoint+geometry.swift in Sources */,
+				EE28D4D122A59301002CA261 /* AccountViewController.swift in Sources */,
+				EE7F35D8229CCDE400AE9089 /* SEAreaView.swift in Sources */,
+				EE7F35DD229CCDE400AE9089 /* UIView+globalCoordinates.swift in Sources */,
+				EE7F35DC229CCDE400AE9089 /* SEQuadrangleHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EEC7CD6422999F1E00B33B47 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EEC7CD6522999F1E00B33B47 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		EEC7CD6922999F3400B33B47 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -284,17 +443,21 @@
 		};
 		EEC7CD7022999F3400B33B47 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C5AD77DEDED43366A7DA8D3 /* Pods-ingine.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6N73FJLHY8;
 				INFOPLIST_FILE = ingine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.ingine.ingine-ios-0.1.ingine";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.ingine.ingine-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -302,17 +465,21 @@
 		};
 		EEC7CD7122999F3400B33B47 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28EF1BCF6424AC43142E7E15 /* Pods-ingine.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6N73FJLHY8;
 				INFOPLIST_FILE = ingine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.ingine.ingine-ios-0.1.ingine";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.ingine.ingine-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
