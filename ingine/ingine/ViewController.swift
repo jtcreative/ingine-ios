@@ -77,6 +77,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    @objc func refreshConfig()
+    {
+        self.restartExperience()
+    }
+    
     // handle swipe gestures from home screen
     @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
         if (sender.direction == .left) {
@@ -158,6 +163,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
             }
         }
+        // refesh config every 60 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 60.0) { [weak self] in
+            self?.refreshConfig()
+        }
+//        var refreshTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(ViewController.refreshConfig), userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

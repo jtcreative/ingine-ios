@@ -192,7 +192,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if (sender.direction == .right) {
             print("Swipe Right")
             // go back home
-            performSegue(withIdentifier: "toHome", sender: nil)
+//            performSegue(withIdentifier: "toHome", sender: nil)
         }
     }
     

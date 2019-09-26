@@ -105,22 +105,22 @@
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="ingine" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RLh-bf-1c3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E6c-py-dvH" customClass="ARSCNView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </sceneKitView>
                             <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5W-V8-6lY">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AjQ-5W-To9">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tnx-rc-95S">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="85" id="z9S-1J-UzK"/>
                                 </constraints>
@@ -291,7 +291,6 @@
                         <outlet property="header" destination="OJv-dn-cjP" id="ONU-hO-joK"/>
                         <outlet property="ingineeredItemsTableView" destination="2MO-Z8-sKY" id="YV8-JU-K98"/>
                         <outlet property="userName" destination="pYX-a5-q33" id="6LU-UZ-NL7"/>
-                        <segue destination="BV1-FR-VrT" kind="showDetail" identifier="toHome" id="8W8-ir-sqM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1RK-TI-ngr" userLabel="First Responder" sceneMemberID="firstResponder"/>
