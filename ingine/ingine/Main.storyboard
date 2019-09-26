@@ -153,6 +153,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <exit id="RAR-nF-fNo" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="996" y="98.50074962518741"/>
         </scene>
@@ -259,6 +260,7 @@
                                         </state>
                                         <connections>
                                             <action selector="signOut:" destination="CJT-JP-PuX" eventType="touchUpInside" id="xm8-pq-5jd"/>
+                                            <segue destination="RAR-nF-fNo" kind="unwind" unwindAction="modalDismissedWithSegue:" id="79A-zd-fUm"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -289,7 +291,7 @@
                         <outlet property="header" destination="OJv-dn-cjP" id="ONU-hO-joK"/>
                         <outlet property="ingineeredItemsTableView" destination="2MO-Z8-sKY" id="YV8-JU-K98"/>
                         <outlet property="userName" destination="pYX-a5-q33" id="6LU-UZ-NL7"/>
-                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="toHome" modalTransitionStyle="flipHorizontal" id="8W8-ir-sqM"/>
+                        <segue destination="BV1-FR-VrT" kind="showDetail" identifier="toHome" id="8W8-ir-sqM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1RK-TI-ngr" userLabel="First Responder" sceneMemberID="firstResponder"/>

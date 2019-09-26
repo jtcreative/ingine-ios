@@ -202,7 +202,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-            performSegue(withIdentifier: "toHome", sender: nil)
+//            performSegue(withIdentifier: "toHome", sender: nil)
 //            navigationController?.popToRootViewController(animated: true)
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)

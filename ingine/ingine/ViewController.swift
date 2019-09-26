@@ -97,6 +97,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    @IBAction func modalDismissed(segue: UIStoryboardSegue) {
+      // You can use segue.source to retrieve the VC
+      // being dismissed to collect any data which needs
+      // to be processed
+    }
+    
     func isLoggedIn() -> Bool {
         var status : Bool
         if Auth.auth().currentUser?.uid != nil {
