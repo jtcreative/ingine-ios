@@ -1,8 +1,8 @@
 //  CropView.swift
-//  ARKitImageRecognition
+//  ingine
 //
-//  Created by Armen Nikoghosyan on 4/3/19.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by McNels on 4/3/19.
+//  Copyright © 2019 ingine. All rights reserved.
 //
 
 import UIKit
@@ -64,8 +64,10 @@ public class SECropView: UIView {
         guard let cornersOnImage = cornerLocations else { return nil }
         
         let imageOrigin = AVMakeRect(aspectRatio: imageSize, insideRect: imageViewFrame).origin
-        let shift = CGPoint(x: -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECropView.cornerSize / 2.0,
-                            y: -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECropView.cornerSize / 2.0)
+        let xVal = -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECropView.cornerSize / 2.0
+        let yVal = -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECropView.cornerSize / 2.0
+        let shift = CGPoint(x: xVal,
+                            y: yVal)
         
         return cornersOnImage.map {
             CGPoint(x: $0.x * scale.x + shift.x, y: $0.y * scale.y + shift.y)

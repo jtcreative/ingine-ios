@@ -57,7 +57,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             // Camera button setup
             self.cameraButton.frame = CGRect.init(x: 0, y: 0, width: 80, height: 80)
             self.cameraButton.setImage(UIImage.init(named: "camera"), for: .normal)
-            self.cameraButton.center = CGPoint.init(x: self.view.center.x, y: self.view.frame.size.height - 50)
+            self.cameraButton.center = CGPoint.init(x: self.view.center.x, y: self.view.frame.size.height - 60)
             self.cameraButton.addTarget(self, action: #selector(self.takePhotoAction), for: .touchUpInside)
             self.sceneView.addSubview(self.cameraButton)
             self.sceneView.autoenablesDefaultLighting = true
@@ -167,49 +167,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     /// Creates a new AR configuration to run on the `session`.
     /// - Tag: ARReferenceImage-Loading
     func resetTracking() {
-        
-//        guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-//            fatalError("Missing expected asset catalog resources.")
-//        }
-        
-//        let config = ARImageTrackingConfiguration()
-//        configuration.trackingImages = referenceImages
-//        session.run(config, options: [.resetTracking, .removeExistingAnchors])
-//        downloadQueue.async {
-//        DispatchQueue.global(qos: .userInitiated).async {
-        
-            // If logged in, show public + own ingineered items
-            if Auth.auth().currentUser?.uid != nil {
-                // logged in
-                
-                self.showToLoggedIn { (result) in
-                    switch result {
-                        case .success (let refImgSet) :
-                            var configuration:ARConfiguration!
-                            if #available(iOS 12.0, *) {
-                                configuration = ARImageTrackingConfiguration()
-                                (configuration as! ARImageTrackingConfiguration).maximumNumberOfTrackedImages = refImgSet.count
-                                (configuration as! ARImageTrackingConfiguration).trackingImages = refImgSet
-                                
-                            } else {
-                                // Fallback on earlier versions
-                            }
-                            
-                            DispatchQueue.main.async {
-                                self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                                self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
-                            }
-                        
-                        case .failure (let error) :
-                            print("ref images could not be downloaded. Error: \(error)")
-                        
-                    }
-                    
-                }
-            } else {
-                // if not logged in, show public images only
-                self.showToPublic { (result) in
-                    switch result {
+   
+        // If logged in, show public + own ingineered items
+        if Auth.auth().currentUser?.uid != nil {
+            // logged in
+            
+            self.showToLoggedIn { (result) in
+                switch result {
                     case .success (let refImgSet) :
                         var configuration:ARConfiguration!
                         if #available(iOS 12.0, *) {
@@ -225,16 +189,40 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                             self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
                             self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
                         }
-                        
+                    
                     case .failure (let error) :
                         print("ref images could not be downloaded. Error: \(error)")
-                        
-                    }
                     
                 }
+                
             }
-            
-//        }
+        } else {
+            // if not logged in, show public images only
+            self.showToPublic { (result) in
+                switch result {
+                case .success (let refImgSet) :
+                    var configuration:ARConfiguration!
+                    if #available(iOS 12.0, *) {
+                        configuration = ARImageTrackingConfiguration()
+                        (configuration as! ARImageTrackingConfiguration).maximumNumberOfTrackedImages = refImgSet.count
+                        (configuration as! ARImageTrackingConfiguration).trackingImages = refImgSet
+                        
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                        self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
+                    }
+                    
+                case .failure (let error) :
+                    print("ref images could not be downloaded. Error: \(error)")
+                    
+                }
+                
+            }
+        }
         
     }
     

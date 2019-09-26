@@ -50,7 +50,7 @@ class AccountViewController: UIViewController {
     
     lazy var loginRegisterButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(r: 255, g: 96, b: 136)
+        button.backgroundColor = UIColor(r: 186, g: 0, b: 28)
         button.setTitle("Register", for: UIControl.State())
         button.setTitleColor(UIColor.white, for: UIControl.State())
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -63,7 +63,7 @@ class AccountViewController: UIViewController {
     
     lazy var forgetPasswordButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(r: 255, g: 96, b: 136)
+        button.backgroundColor = UIColor(r: 186, g: 0, b: 28)
         button.setTitle("", for: UIControl.State())
         button.setTitleColor(UIColor.white, for: UIControl.State())
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -149,10 +149,16 @@ class AccountViewController: UIViewController {
                 }
                 return
             } else {
-                // show profile view
+                // log user in, and show home screen
+                // Go back to homescreen
                 let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-                let vc = st.instantiateViewController(withIdentifier: "Profile")
+                let vc = st.instantiateInitialViewController()
                 (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+//                self.dismiss(animated: true, completion: nil)
+                // show profile view
+//                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+//                let vc = st.instantiateViewController(withIdentifier: "Profile")
+//                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
             }
         })
         
@@ -312,7 +318,7 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(r: 12, g: 16, b: 23)
+        view.backgroundColor = UIColor(r: 13, g: 13, b: 13)
         
         view.addSubview(inputContainerView)
         view.addSubview(loginRegisterButton)

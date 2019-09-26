@@ -1,9 +1,9 @@
 //
 //  ImageViewController.swift
-//  ARKitImageRecognition
+//  ingine
 //
-//  Created by Armen Nikoghosyan on 4/3/19.
-//  Copyright © 2019 Apple. All rights reserved.
+//  Created by McNels on 4/3/19.
+//  Copyright © 2019 ingine. All rights reserved.
 //
 
 import UIKit
@@ -128,6 +128,9 @@ class ImageViewController: UIViewController, UITextFieldDelegate {
 
         }
        
+        // refresh configuration on main screen
+        ViewController().restartExperience()
+        // go back to home screen
         let vc = st.instantiateInitialViewController()
         (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
     }
