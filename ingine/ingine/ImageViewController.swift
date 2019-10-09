@@ -20,6 +20,11 @@ class ImageViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = true
+        } else {
+            // Fallback on earlier versions
+        }
         imageView.image = image
         db = Firestore.firestore()
         

@@ -14,11 +14,19 @@ class CropViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //in order: top left, top right, bottom right, bottom left
         cropView.configureWithCorners(corners: [CGPoint(x: 150, y: 800),
                                                 CGPoint(x: 1150, y: 800),
                                                 CGPoint(x: 1150, y: 1800),
                                                 CGPoint(x: 150, y: 1800)], on: mImageView)
+        // Screen width.
+//        let screenWidth: CGFloat = UIScreen.main.bounds.width
+//        let screenHeight: CGFloat = UIScreen.main.bounds.height
+        
+//        cropView.configureWithCorners(corners: [CGPoint(x: 50, y: 50),
+//                                                CGPoint(x: screenWidth - 50, y: 50),
+//                                                CGPoint(x: screenWidth - 50, y: screenHeight - 50),
+//                                                CGPoint(x: 50, y: screenHeight - 50)], on: mImageView)
 
     }
     

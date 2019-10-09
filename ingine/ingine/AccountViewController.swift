@@ -77,6 +77,7 @@ class AccountViewController: UIViewController {
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Full Name"
+        tf.textColor = .black
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -91,6 +92,7 @@ class AccountViewController: UIViewController {
     let emailTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Email address"
+        tf.textColor = .black
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -105,6 +107,7 @@ class AccountViewController: UIViewController {
     let passwordTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Password"
+        tf.textColor = .black
         tf.isSecureTextEntry = true
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf

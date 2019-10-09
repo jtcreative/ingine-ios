@@ -33,7 +33,12 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.white
+        if #available(iOS 13.0, *) {
+            cv.backgroundColor = UIColor.tertiarySystemBackground
+        } else {
+            // Fallback on earlier versions
+            cv.backgroundColor = UIColor.white
+        }
         return cv
     }()
     

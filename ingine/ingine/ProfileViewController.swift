@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import SafariServices
 
 //class Setting: NSObject {
 //    let name: String
@@ -130,6 +131,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // Set number of rows in the table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemsArray.count
+    }
+    
+    // show url on cell clicked
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("row selected: \(indexPath.row)")
+        guard let url = URL(string: itemsArray[indexPath.row].itemURL) else {
+            //Show an invalid URL error alert
+            return
+        }
+        
+        // Show the associated link in the in-app browser
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
+
+        
     }
     
     // Retrieve ingineered item infro from firebase

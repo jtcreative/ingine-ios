@@ -147,7 +147,7 @@ extension ARCamera.TrackingState {
             return "Initializing"
         case .limited(.relocalizing):
             return "Recovering from session interruption"
-        case .limited(_):
+        default:
             return "Loading..."
         }
     }

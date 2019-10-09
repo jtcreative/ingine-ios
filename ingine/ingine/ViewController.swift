@@ -132,7 +132,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 // logged in; send user to crop screen
                 let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
                 let vc = st.instantiateViewController(withIdentifier: "cropVC") as! CropViewController
-                self.show(vc, sender: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.show(vc, sender: nil) // might change
                 vc.loadImageForCrop(image: image)
             } else {
                 // not logged in; send to login screen
@@ -440,7 +441,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    // handle tap gesture on ingine indicator that reveals the link saved in the image
+    // handle tap gesture on the ingine indicator that reveals the link saved in the image
     @objc func search(sender: MyTapGesture) {
         let sceneView = sender.view as! ARSCNView
         let location = sender.location(in: sceneView)
