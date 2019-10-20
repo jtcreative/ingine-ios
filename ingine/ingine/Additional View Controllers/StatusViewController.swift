@@ -136,7 +136,7 @@ extension ARCamera.TrackingState {
     var presentationString: String {
         switch self {
         case .notAvailable:
-            return "TRACKING UNAVAILABLE"
+            return "CONTENT UNAVAILABLE"
         case .normal:
             return "TRACKING NORMAL"
         case .limited(.excessiveMotion):
@@ -144,11 +144,9 @@ extension ARCamera.TrackingState {
         case .limited(.insufficientFeatures):
             return "TRACKING LIMITED\nLow detail"
         case .limited(.initializing):
-            return "Initializing"
+            return "Initializing..."
         case .limited(.relocalizing):
             return "Recovering from session interruption"
-        default:
-            return "Loading..."
         }
     }
 

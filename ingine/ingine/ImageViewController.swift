@@ -12,6 +12,7 @@ import Firebase
 class ImageViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var urlBox: UITextField!
+    @IBOutlet weak var nameBox: UITextField!
     @IBOutlet weak var visibilitySwitch: UISwitch!
     var image : UIImage?
     lazy var storage = Storage.storage()
@@ -85,6 +86,7 @@ class ImageViewController: UIViewController, UITextFieldDelegate {
                     self.storageURL = (url?.absoluteString)!
                     print(self.storageURL)
                     var matchURL = ""
+                    let itemName = self.nameBox.text ?? ""
                     let email = Auth.auth().currentUser?.email ?? ""
                     if self.urlBox.text?.hasPrefix("https://") ?? false || self.urlBox.text?.hasPrefix("http://") ?? false {
                         matchURL = self.urlBox.text ?? ""
@@ -95,7 +97,7 @@ class ImageViewController: UIViewController, UITextFieldDelegate {
                     // Save ingineered item in firebase pairs folder
                     var ref: DocumentReference? = nil
                     ref = self.db.collection("pairs").addDocument(data: [
-                        "name": "\(Int(Date.timeIntervalSinceReferenceDate * 1000))",
+                        "name": itemName,
                         "refImage": self.storageURL,
                         "matchURL": matchURL,
                         "user": email,
@@ -134,7 +136,7 @@ class ImageViewController: UIViewController, UITextFieldDelegate {
         }
        
         // refresh configuration on main screen
-        ViewController().restartExperience()
+//        ViewController().restartExperience()
         // go back to home screen
         let vc = st.instantiateInitialViewController()
         (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc

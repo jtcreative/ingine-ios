@@ -165,7 +165,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
         // refesh config every 60 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 60.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 30.0) { [weak self] in
             self?.refreshConfig()
         }
 //        var refreshTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(ViewController.refreshConfig), userInfo: nil, repeats: true)
@@ -415,9 +415,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         DispatchQueue.main.async {
-            let imageName = referenceImage.name ?? ""
+//            let imageName = referenceImage.name ?? ""
             self.statusViewController.cancelAllScheduledMessages()
-            self.statusViewController.showMessage("Detected image “\(imageName)”")
+            self.statusViewController.showMessage("Augmented image detected!")
         }
     }
     

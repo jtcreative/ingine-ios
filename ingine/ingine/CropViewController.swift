@@ -15,18 +15,23 @@ class CropViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //in order: top left, top right, bottom right, bottom left
-        cropView.configureWithCorners(corners: [CGPoint(x: 150, y: 800),
-                                                CGPoint(x: 1150, y: 800),
-                                                CGPoint(x: 1150, y: 1800),
-                                                CGPoint(x: 150, y: 1800)], on: mImageView)
-        // Screen width.
-//        let screenWidth: CGFloat = UIScreen.main.bounds.width
-//        let screenHeight: CGFloat = UIScreen.main.bounds.height
+//        cropView.configureWithCorners(corners: [CGPoint(x: 150, y: 800),
+//                                                CGPoint(x: 1150, y: 800),
+//                                                CGPoint(x: 1150, y: 1800),
+//                                                CGPoint(x: 150, y: 1800)], on: mImageView)
+        // Screen width. // view.frame.size.height // UIScreen.main.bounds.width / UIScreen.main.nativeScale
         
-//        cropView.configureWithCorners(corners: [CGPoint(x: 50, y: 50),
-//                                                CGPoint(x: screenWidth - 50, y: 50),
-//                                                CGPoint(x: screenWidth - 50, y: screenHeight - 50),
-//                                                CGPoint(x: 50, y: screenHeight - 50)], on: mImageView)
+        let screenWidth: CGFloat = UIScreen.main.bounds.width * UIScreen.main.nativeScale
+        let screenHeight: CGFloat = UIScreen.main.bounds.height * UIScreen.main.nativeScale
+//        print(UIScreen.main.bounds.width)
+//        print(UIScreen.main.bounds.height)
+//        print(UIScreen.main.scale)
+//        print(UIScreen.main.nativeScale)
+        
+        cropView.configureWithCorners(corners: [CGPoint(x: 100, y: 100),
+                                                CGPoint(x: screenWidth - 100, y: 100),
+                                                CGPoint(x: screenWidth - 100, y: screenHeight - 100),
+                                                CGPoint(x: 100, y: screenHeight - 100)], on: mImageView)
 
     }
     
