@@ -115,12 +115,13 @@ class AccountViewController: PortraitViewController {
     
     @objc func handleLoginOrRegister() {
         spinnerView.startAnimating()
-        loginRegisterButton.isUserInteractionEnabled = false
         loginRegisterSegmentedControl.selectedSegmentIndex == 0 ? handleLogin() : handleRegister()
     }
     
     func handleLogin() {
+        loginRegisterButton.isUserInteractionEnabled = false
         guard let email = emailTextField.text?.lowercased(), let password = passwordTextField.text else {
+            loginRegisterButton.isUserInteractionEnabled = true
             print("Form is not valid!")
             return
         }
@@ -154,9 +155,7 @@ class AccountViewController: PortraitViewController {
             } else {
                 // log user in, and show home screen
                 // Go back to homescreen
-                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-                let vc = st.instantiateInitialViewController()
-                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+                self.openMainViewController()
 //                self.dismiss(animated: true, completion: nil)
                 // show profile view
 //                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
@@ -211,11 +210,18 @@ class AccountViewController: PortraitViewController {
     }
     
     func handleRegister() {
-        guard let email = emailTextField.text, let username = nameTextField.text, let password = passwordTextField.text else {
+        loginRegisterButton.isUserInteractionEnabled = false
+        guard let email = emailTextField.text,
+            let username = nameTextField.text,
+            let password = passwordTextField.text else {
+            self.loginRegisterButton.isUserInteractionEnabled = true
             print("Form is not valid!")
             return
         }
-        if email.isEmpty || password.isEmpty || username.isEmpty {
+        
+        guard !email.isEmpty,
+            !password.isEmpty,
+            !username.isEmpty else {
             self.spinnerView.stopAnimating()
             self.loginRegisterButton.isUserInteractionEnabled = true
             self.displayAlert(title: "Invalid Form", message: "Please fill in all fields!")
@@ -237,6 +243,7 @@ class AccountViewController: PortraitViewController {
                     case .networkError:
                         self.displayAlert(title: "Netword Error", message: "No network connection!")
                     default:
+                        self.displayAlert(title: "Netword Error", message: "Unknown error")
                         print("unknown error")
                         print(error)
                     }
@@ -244,7 +251,8 @@ class AccountViewController: PortraitViewController {
                 return
             } else {
                 
-                guard let uid = Auth.auth().currentUser?.uid else {
+                guard user != nil else {
+                    self.loginRegisterButton.isUserInteractionEnabled = true
                     return
                 }
 
@@ -254,9 +262,13 @@ class AccountViewController: PortraitViewController {
                 ]) { err in
                     if let err = err {
                         print("Error writing document: \(err)")
+                        self.loginRegisterButton.isUserInteractionEnabled = false
                     } else {
                         print("Document successfully written!")
-                        self.dismiss(animated: true, completion: nil)
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: true, completion: nil)
+                            self.openMainViewController()
+                        }
                     }
                 }
             }
@@ -496,6 +508,15 @@ class AccountViewController: PortraitViewController {
         }
     }
     
+    func openMainViewController() {
+        DispatchQueue.main.async {
+            // log user in, and show home screen
+            // Go back to homescreen
+            let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+            let vc = st.instantiateInitialViewController()
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+        }
+    }
     
 }
 

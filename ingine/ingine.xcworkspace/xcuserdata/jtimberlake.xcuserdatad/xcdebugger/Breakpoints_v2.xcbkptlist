@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "5D775C00-FFD1-4CA3-A7C8-05B6238168C1"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ingine/Additional View Controllers/StatusViewController.swift"
@@ -34,6 +34,54 @@
             endingLineNumber = "118"
             landmarkName = "handleSelection(choice:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BD03F43F-F12F-4B85-9357-F1D686F624CB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/AccountViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "handleRegister()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BD03F43F-F12F-4B85-9357-F1D686F624CB - d760a3221c2a1598"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ingine.AccountViewController.handleRegister() -&gt; ()"
+                  moduleName = "ingine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jtimberlake/Projects/ingine-ios/ingine/ingine/AccountViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "231"
+                  endingLineNumber = "231"
+                  offsetFromSymbolStart = "1068">
+               </Location>
+               <Location
+                  uuid = "BD03F43F-F12F-4B85-9357-F1D686F624CB - f4bf73a5b624cbdd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ingine.AccountViewController.handleRegister() -&gt; ()"
+                  moduleName = "ingine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jtimberlake/Projects/ingine-ios/ingine/ingine/AccountViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "232"
+                  endingLineNumber = "232"
+                  offsetFromSymbolStart = "396">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
