@@ -12,7 +12,7 @@ import Firebase
 import Photos
 
 @IBDesignable
-class AccountViewController: UIViewController {
+class AccountViewController: PortraitViewController {
 
     var db : Firestore!
     let spinnerView: UIActivityIndicatorView = {

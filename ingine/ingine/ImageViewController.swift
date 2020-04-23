@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ImageViewController: UIViewController, UITextFieldDelegate {
+class ImageViewController: PortraitViewController, UITextFieldDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var urlBox: UITextField!
     @IBOutlet weak var nameBox: UITextField!

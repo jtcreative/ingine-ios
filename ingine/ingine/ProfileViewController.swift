@@ -141,10 +141,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             return
         }
         
+
         // Show the associated link in the in-app browser
         let safariVC = SFSafariViewController(url: url)
         present(safariVC, animated: true)
-
         
     }
     
@@ -227,4 +227,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     
+}
+
+extension ProfileViewController {
+    override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
 }

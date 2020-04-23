@@ -12,7 +12,7 @@ import UIKit
 import Firebase
 import SafariServices
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
     
     // Scene initializations
@@ -473,8 +473,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
 }
 
+extension ViewController {
+    override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+}
+
 class MyTapGesture: UITapGestureRecognizer {
     var url = String()
 }
-
 

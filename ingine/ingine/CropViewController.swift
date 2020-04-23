@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CropViewController: UIViewController {
+class CropViewController: PortraitViewController {
     @IBOutlet weak var mImageView: UIImageView!
     let cropView = SECropView()
     
