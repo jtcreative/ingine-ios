@@ -275,11 +275,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 // Remove empty entry at the beginning of listUrl
                 listUrl.removeValue(forKey: "")
                 var count : Int = 0
+                let total = listUrl.count
                 
                 DispatchQueue.global(qos: .background).async {
                     // Create a ref image out of the images in firebase
+                    
                     for url in listUrl.keys {
                         count = count + 1
+                        NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating Tracked Image Library", fromStartingIndex: count, toEndingIndex: total))
                         let imageUrl = URL(string: url)!
                         let imageData:NSData = NSData(contentsOf: imageUrl)!
                         let image = UIImage(data: imageData as Data)
@@ -291,9 +294,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         newReferenceImage.name = listUrl[url]
                         newReferenceImages.insert(newReferenceImage)
                     }
-                    
+                NotificationCenter.default.post(Notification.progressEndNotification(message: "Updae Completed"))
                     completion(.success(newReferenceImages))
                 }
+                
 //                var configuration:ARConfiguration!
 //                if #available(iOS 12.0, *) {
 //                    configuration = ARImageTrackingConfiguration()

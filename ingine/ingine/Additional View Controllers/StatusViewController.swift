@@ -49,13 +49,15 @@ class StatusViewController: UIViewController {
     // MARK: - Message Handling
 	
 	func showMessage(_ text: String, autoHide: Bool = true) {
-        // Cancel any previous hide timer.
-        messageHideTimer?.invalidate()
+        DispatchQueue.main.async {
+            // Cancel any previous hide timer.
+            self.messageHideTimer?.invalidate()
 
-        messageLabel.text = text
+            self.messageLabel.text = text
 
-        // Make sure status is showing.
-        setMessageHidden(false, animated: true)
+            // Make sure status is showing.
+            self.setMessageHidden(false, animated: true)
+        }
 
         if autoHide {
             messageHideTimer = Timer.scheduledTimer(withTimeInterval: displayDuration, repeats: false, block: { [weak self] _ in
@@ -132,6 +134,39 @@ class StatusViewController: UIViewController {
 	}
 }
 
+extension StatusViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(onLoadingProgressUpdate(_:)), name: Notification.Name.init(rawValue: NotificatioType.ProgressUpdateNofication.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onLoadingProgressCompleted(_:)), name: Notification.Name.init(rawValue: NotificatioType.ProgressCompleteNotification.rawValue), object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func onLoadingProgressUpdate(_ notification: Notification) {
+        guard let dict = notification.userInfo,
+            let message = dict[NotificationProgressUserInfoType.Message.rawValue] as? String,
+            let startIndex = dict[NotificationProgressUserInfoType.StartingIndex.rawValue] as? Int,
+            let endIndex = dict[NotificationProgressUserInfoType.EndingIndex.rawValue] as? Int else {
+                return
+        }
+    
+        showMessage("\(message)\n\(startIndex) out of \(endIndex)", autoHide: false)
+    }
+    
+    @objc func onLoadingProgressCompleted(_ notification: Notification) {
+        guard let dict = notification.userInfo,
+            let message = dict[NotificationProgressUserInfoType.Message.rawValue] as? String else {
+                return
+        }
+        
+        showMessage("\(message)", autoHide: true)
+    }
+}
+
 extension ARCamera.TrackingState {
     var presentationString: String {
         switch self {
@@ -163,3 +198,4 @@ extension ARCamera.TrackingState {
         }
     }
 }
+ 
