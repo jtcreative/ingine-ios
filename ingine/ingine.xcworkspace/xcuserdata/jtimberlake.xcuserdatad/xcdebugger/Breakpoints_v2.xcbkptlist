@@ -46,42 +46,26 @@
             filePath = "ingine/AccountViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
             landmarkName = "handleRegister()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BD03F43F-F12F-4B85-9357-F1D686F624CB - d760a3221c2a1598"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ingine.AccountViewController.handleRegister() -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jtimberlake/Projects/ingine-ios/ingine/ingine/AccountViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "231"
-                  endingLineNumber = "231"
-                  offsetFromSymbolStart = "1068">
-               </Location>
-               <Location
-                  uuid = "BD03F43F-F12F-4B85-9357-F1D686F624CB - f4bf73a5b624cbdd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRAuthDataResult&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ingine.AccountViewController.handleRegister() -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jtimberlake/Projects/ingine-ios/ingine/ingine/AccountViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "232"
-                  endingLineNumber = "232"
-                  offsetFromSymbolStart = "396">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF088DE3-9A2A-48DA-8739-A4624245C235"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/Additional View Controllers/StatusViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "onLoadingProgressUpdate(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

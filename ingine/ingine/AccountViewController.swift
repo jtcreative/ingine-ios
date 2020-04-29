@@ -35,6 +35,13 @@ class AccountViewController: PortraitViewController {
         sc.translatesAutoresizingMaskIntoConstraints = false
         sc.tintColor = UIColor(r: 0, g: 188, b: 255)
         sc.selectedSegmentIndex = 1
+        if #available(iOS 13.0, *) {
+            sc.selectedSegmentTintColor = .white
+        } else {
+            // Fallback on earlier versions
+        }
+        sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+        sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
         sc.addTarget(self, action: #selector(handleLoginRegisterChange), for: .valueChanged)
         return sc
     }()
