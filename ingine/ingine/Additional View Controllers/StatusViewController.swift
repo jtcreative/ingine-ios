@@ -154,7 +154,7 @@ extension StatusViewController {
                 return
         }
     
-        showMessage("\(message)\n\(Double((Double(startIndex)/Double(endIndex))*100).rounded(toPlaces: 1))% Complete", autoHide: false)
+        showMessage("\(message)\n\(Double((Double(startIndex)/Double(endIndex))*100).rounded(toPlaces: 0))% Complete", autoHide: false)
     }
     
     @objc func onLoadingProgressCompleted(_ notification: Notification) {
