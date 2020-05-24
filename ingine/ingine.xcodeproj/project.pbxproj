@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		182E5951245960ED005EB2F5 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182E5950245960ED005EB2F5 /* Double+Extensions.swift */; };
+		18C8CD67247A0E3900389719 /* ImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8CD66247A0E3900389719 /* ImageLoadingService.swift */; };
+		18CAF674246F545D00469299 /* ARImageDownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CAF673246F545D00469299 /* ARImageDownloadService.swift */; };
 		18FDD2222451721D00C3B131 /* NotificationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD2212451721D00C3B131 /* NotificationUtils.swift */; };
 		18FDD224245187C000C3B131 /* PortraitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD223245187C000C3B131 /* PortraitViewController.swift */; };
 		8A927EC6D4DFD44678351FE6 /* Pods_ingine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		182E5950245960ED005EB2F5 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		18C8CD66247A0E3900389719 /* ImageLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadingService.swift; sourceTree = "<group>"; };
+		18CAF673246F545D00469299 /* ARImageDownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARImageDownloadService.swift; sourceTree = "<group>"; };
 		18FDD2212451721D00C3B131 /* NotificationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUtils.swift; sourceTree = "<group>"; };
 		18FDD223245187C000C3B131 /* PortraitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitViewController.swift; sourceTree = "<group>"; };
 		28EF1BCF6424AC43142E7E15 /* Pods-ingine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.release.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18CAF672246F534C00469299 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				18CAF673246F545D00469299 /* ARImageDownloadService.swift */,
+				18C8CD66247A0E3900389719 /* ImageLoadingService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		18FDD220245171FF00C3B131 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +167,7 @@
 		EEC7CD5D22999F1E00B33B47 /* ingine */ = {
 			isa = PBXGroup;
 			children = (
+				18CAF672246F534C00469299 /* Services */,
 				18FDD220245171FF00C3B131 /* Utils */,
 				EEC7CD5E22999F1E00B33B47 /* AppDelegate.swift */,
 				EE7F35C5229CCD5100AE9089 /* ViewController+ARSessionDelegate.swift */,
@@ -302,6 +316,8 @@
 				EE28D4D322A5A07E002CA261 /* ProfileViewController.swift in Sources */,
 				EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */,
 				182E5951245960ED005EB2F5 /* Double+Extensions.swift in Sources */,
+				18CAF674246F545D00469299 /* ARImageDownloadService.swift in Sources */,
+				18C8CD67247A0E3900389719 /* ImageLoadingService.swift in Sources */,
 				EE7F35CC229CCD5500AE9089 /* ImageViewController.swift in Sources */,
 				EE7F35CB229CCD5500AE9089 /* CropViewController.swift in Sources */,
 				EE7F35D7229CCDE400AE9089 /* Array+shift.swift in Sources */,
@@ -475,7 +491,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6N73FJLHY8;
+				DEVELOPMENT_TEAM = QHZZ6Z276N;
 				INFOPLIST_FILE = ingine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -12,6 +12,8 @@ extension ViewController: ARSessionDelegate {
     // MARK: - ARSessionDelegate
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        
+        objc_sync_enter(camera)
         statusViewController.showTrackingQualityInfo(for: camera.trackingState, autoHide: true)
 
         switch camera.trackingState {
@@ -20,6 +22,7 @@ extension ViewController: ARSessionDelegate {
         case .normal:
             statusViewController.cancelScheduledMessage(for: .trackingStateEscalation)
         }
+        objc_sync_exit(camera)
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {

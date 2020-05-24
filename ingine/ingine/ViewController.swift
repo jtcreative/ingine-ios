@@ -14,6 +14,15 @@ import SafariServices
 
 class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
+    var arAssets = [ARImageAsset]()
+    let arQueue = DispatchQueue(label: "ArrrayQueue")
+    let maxNumImages = 50
+    
+    var currentImgIndex = 0
+    var downloadCount = 0
+    var isReloading = false
+    
+    var arImageCycleTimer : Timer?
     
     // Scene initializations
     @IBOutlet var sceneView: ARSCNView!
@@ -79,7 +88,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     
     @objc func refreshConfig()
     {
-        self.restartExperience()
+        //todo jt need to improve this
+        //self.restartExperience()
     }
     
     // handle swipe gestures from home screen
@@ -161,7 +171,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             self.resetTracking()
             if let configuration = self.session.configuration {
-                self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                self.session.run(configuration, options: [.resetTracking])
             }
         }
         // refesh config every 60 seconds
@@ -188,188 +198,23 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         // If logged in, show public + own ingineered items
         if Auth.auth().currentUser?.uid != nil {
             // logged in
-            
-            self.showToLoggedIn { (result) in
-                switch result {
-                    case .success (let refImgSet) :
-                        var configuration:ARConfiguration!
-                        if #available(iOS 12.0, *) {
-                            configuration = ARImageTrackingConfiguration()
-                            (configuration as! ARImageTrackingConfiguration).maximumNumberOfTrackedImages = refImgSet.count
-                            (configuration as! ARImageTrackingConfiguration).trackingImages = refImgSet
-                            
-                        } else {
-                            // Fallback on earlier versions
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                            self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
-                        }
-                    
-                    case .failure (let error) :
-                        print("ref images could not be downloaded. Error: \(error)")
-                    
-                }
-                
-            }
+            self.showToLoggedIn()
         } else {
             // if not logged in, show public images only
-            self.showToPublic { (result) in
-                switch result {
-                case .success (let refImgSet) :
-                    var configuration:ARConfiguration!
-                    if #available(iOS 12.0, *) {
-                        configuration = ARImageTrackingConfiguration()
-                        (configuration as! ARImageTrackingConfiguration).maximumNumberOfTrackedImages = refImgSet.count
-                        (configuration as! ARImageTrackingConfiguration).trackingImages = refImgSet
-                        
-                    } else {
-                        // Fallback on earlier versions
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                        self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
-                    }
-                    
-                case .failure (let error) :
-                    print("ref images could not be downloaded. Error: \(error)")
-                    
-                }
-                
-            }
+            self.showToPublic()
         }
         
     }
     
     typealias completionHandler = (Result<Set<ARReferenceImage>, Error>) -> ()
     // show ingineered items to logged in users
-    func showToLoggedIn(_ completion: @escaping completionHandler) {
-        var listUrl : [String:String] = ["":""]
-        var newReferenceImages = Set<ARReferenceImage>()
-        
-        // Email login
-        db.collection("pairs").getDocuments { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting ingineered items: \(err)")
-                completion(.failure(err))
-            } else {
-                print("no error getting ingineered items")
-                // filter out public/private ingineered items around here
-                for document in querySnapshot!.documents {
-                    
-                    // display public items
-                    if document.get("public") as? Bool == true {
-                        // add refimage as key and matchUrl as value
-                        listUrl[document.data()["refImage"] as! String] = document.data()["matchURL"] as? String
-                    }
-                    // display items that the user uploaded regardless if they are public or not
-                    if document.get("user") as? String == Auth.auth().currentUser?.email {
-                        // add refimage as key and matchUrl as value
-                        listUrl[document.data()["refImage"] as! String] = document.data()["matchURL"] as? String
-                    }
-                    
-                }
-                
-                // Remove empty entry at the beginning of listUrl
-                listUrl.removeValue(forKey: "")
-                var count : Int = 0
-                let total = listUrl.count
-                
-                DispatchQueue.global(qos: .background).async {
-                    // Create a ref image out of the images in firebase
-                    
-                    for url in listUrl.keys {
-                        count = count + 1
-                        NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating Tracked Image Library", fromStartingIndex: count, toEndingIndex: total))
-                        let imageUrl = URL(string: url)!
-                        let imageData:NSData = NSData(contentsOf: imageUrl)!
-                        let image = UIImage(data: imageData as Data)
-                        let cgImage = image!.cgImage
-                        
-                        // TODO get physical width from image metadata of the image
-                        let newReferenceImage = ARReferenceImage.init(cgImage!, orientation: .up, physicalWidth: 0.2)
-                        //                    newReferenceImage.name = "Test Image \(count)"
-                        newReferenceImage.name = listUrl[url]
-                        newReferenceImages.insert(newReferenceImage)
-                    }
-                NotificationCenter.default.post(Notification.progressEndNotification(message: "Updae Completed"))
-                    completion(.success(newReferenceImages))
-                }
-                
-//                var configuration:ARConfiguration!
-//                if #available(iOS 12.0, *) {
-//                    configuration = ARImageTrackingConfiguration()
-//                    (configuration as! ARImageTrackingConfiguration).maximumNumberOfTrackedImages = newReferenceImages.count
-//                    (configuration as! ARImageTrackingConfiguration).trackingImages = newReferenceImages
-//
-//                } else {
-//                    // Fallback on earlier versions
-//                }
-//
-//                self.session.run(configuration)
-//                self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
-            }
-        }
-        
-        
+    func showToLoggedIn() {
+        reloadArAssets(isPublic: false)
     }
     
     // show ingineered items to users that are not logged in
-    func showToPublic(_ completion: @escaping completionHandler) {
-        var listUrl : [String:String] = ["":""]
-        var newReferenceImages = Set<ARReferenceImage>()
-        
-        // if not logged in, show public images only
-        db.collection("pairs").whereField("public", isEqualTo: true).getDocuments { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting ingineered items: \(err)")
-                completion(.failure(err))
-            } else {
-                print("no error getting ingineered items")
-                for document in querySnapshot!.documents {
-                    // add refimage as key and matchUrl as value
-                    listUrl[document.data()["refImage"] as! String] = document.data()["matchURL"] as? String
-                }
-                
-                // Remove empty entry at the beginning of listUrl
-                listUrl.removeValue(forKey: "")
-                var count : Int = 0
-                
-                DispatchQueue.global(qos: .background).async {
-                    // Create a ref image out of the images in firebase
-                    for url in listUrl.keys {
-                        count = count + 1
-                        let imageUrl = URL(string: url)!
-                        let imageData:NSData = NSData(contentsOf: imageUrl)!
-                        let image = UIImage(data: imageData as Data)
-                        let cgImage = image!.cgImage
-                        
-                        // TODO get physical width from image metadata of the image
-                        let newReferenceImage = ARReferenceImage.init(cgImage!, orientation: .up, physicalWidth: 0.2)
-                        //                    newReferenceImage.name = "Test Image \(count)"
-                        newReferenceImage.name = listUrl[url]
-                        newReferenceImages.insert(newReferenceImage)
-                    }
-                    
-                    completion(.success(newReferenceImages))
-                }
-//                var configuration:ARConfiguration!
-//                if #available(iOS 12.0, *) {
-//                    configuration = ARImageTrackingConfiguration()
-//                    (configuration as! ARImageTrackingConfiguration).maximumNumberOfTrackedImages = newReferenceImages.count
-//                    (configuration as! ARImageTrackingConfiguration).trackingImages = newReferenceImages
-//
-//                } else {
-//                    // Fallback on earlier versions
-//                }
-//
-//                self.session.run(configuration)
-//                self.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
-            }
-        }
-        
+    func showToPublic() {
+        reloadArAssets(isPublic: true)
     }
     
     // MARK: - ARSCNViewDelegate (Image detection results)
@@ -481,5 +326,192 @@ extension ViewController {
 
 class MyTapGesture: UITapGestureRecognizer {
     var url = String()
+}
+
+
+//AR session run and updates
+extension ViewController {
+    func reloadArAssets(isPublic:Bool) {
+        cancelTimer()
+        isReloading = true
+        var query = db.collection("pairs").limit(to: 1000)
+        
+        if isPublic {
+            query = query.whereField("public", isEqualTo: true)
+        }
+        
+        query.getDocuments { (querySnapshot, err) in
+            guard err == nil,
+                let documents = querySnapshot?.documents else {
+                return
+            }
+
+            var arAssets = [ARImageAsset]()
+            
+            arAssets = documents.filter { (doc) -> Bool in
+                (doc.get("public") as? Bool) == true
+            }.filter { (doc) -> Bool in
+                ((doc.get("matchURL") as? String) != nil &&
+                (doc.get("refImage") as? String) != nil)
+            }.map({ (doc) -> ARImageAsset in
+                let name = (doc.get("matchURL") as! String)
+                let url = (doc.get("refImage") as! String)
+                return ARImageAsset(name: name, imageUrl: url)
+            })
+            
+            ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
+            self.isReloading = false
+            NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
+        }
+    }
+    
+    func removeUnusedAssets(assets:[ARImageAsset]) {
+        
+        arQueue.sync {
+            assets.forEach { (asset) in
+                ImageLoadingService.main.remove(forKey: asset.imageUrl)
+                if let index = arAssets.firstIndex(of: asset) {
+                    arAssets.remove(at: index)
+                }
+            }
+        }
+    }
+    
+   @objc func cycleNextArAssets(_ sender:Timer) {
+        guard isReloading == false else {
+            cancelTimer()
+            return
+        }
+    
+        DispatchQueue.init(label: "back").async { [weak self] in
+            guard let strongSelf = self else { return }
+            
+            strongSelf.cancelTimer()
+            
+            let semaphore = DispatchSemaphore(value: 1)
+            var imagesToAdd = Set<ARReferenceImage>()
+            
+            //this while loop assumes that there will be a valid arImage reference in the list
+            //this is could create an infinite loop in
+            while(strongSelf.arAssets.count > 0 && imagesToAdd.count < 1) {
+                var endIndex = min((strongSelf.currentImgIndex + strongSelf.maxNumImages), (strongSelf.arAssets.count - 1))
+                var imagesToRemove = [ARImageAsset]()
+                for i in strongSelf.currentImgIndex...endIndex  {
+                    guard strongSelf.isReloading == false else { break }
+                    
+                    let asset = strongSelf.arAssets[i]
+                    
+                    guard let imageData = ImageLoadingService.main.get(forKey: asset.imageUrl),
+                        let image = UIImage(data: imageData as Data),
+                        let cgImage = image.cgImage else {
+                        imagesToRemove.append(asset)
+                        continue
+                    }
+                    
+                    let newReferenceImage = ARReferenceImage.init(cgImage, orientation: .up, physicalWidth: CGFloat(0.5))
+                    newReferenceImage.name = asset.name
+
+                    if #available(iOS 13.0, *) {
+                        newReferenceImage.validate { (error) in
+                            defer { semaphore.signal() }
+                            
+                            guard error == nil else {
+                                imagesToRemove.append(asset)
+                                return
+                            }
+                            
+                            imagesToAdd.insert(newReferenceImage)
+                        }
+                        semaphore.wait()
+                    } else {
+                        imagesToAdd.insert(newReferenceImage)
+                    }
+                }
+                strongSelf.removeUnusedAssets(assets: imagesToRemove)
+                strongSelf.currentImgIndex = endIndex < (strongSelf.arAssets.count - 1) ? endIndex : 0
+            }
+            
+            guard strongSelf.isReloading == false else {
+                strongSelf.cancelTimer()
+                return
+            }
+            
+            strongSelf.resetArImageConfiguration(withNewImage: imagesToAdd)
+            strongSelf.startTimer()
+            print("cycled through arImages at index \(strongSelf.currentImgIndex)")
+        }
+    }
+    
+    
+    func resetArImageConfiguration(withNewImage imageSets:Set<ARReferenceImage>) {
+        
+        if #available(iOS 12.0, *) {
+            let configuration = ARImageTrackingConfiguration()
+            configuration.maximumNumberOfTrackedImages = imageSets.count
+            configuration.trackingImages = imageSets
+            DispatchQueue.main.sync { [weak self] in
+                //self.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                self?.session.run(configuration, options: .resetTracking)
+                self?.statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
+            }
+        } else {
+            // Fallback on earlier versions
+            DispatchQueue.main.async {
+                self.statusViewController.scheduleMessage("Sorry. You do not have an iPhone with ARkit.", inSeconds: 7.5, messageType: .contentPlacement)
+            }
+        }
+        
+    }
+}
+
+//ARImageDownloadServiceDelegate methods
+extension ViewController: ARImageDownloadServiceDelegate {
+    
+    func onImageDownloaded(status: ARImageDownloadStatus, asset: ARImageAsset?, index: Int, total: Int) {
+        
+        arQueue.sync {
+            guard status != .Error,
+                let arAsset = asset,
+                arAssets.contains(arAsset) == false else {
+                print("ref image could not be downloaded. Error: \(status)")
+                NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Skipping item \(index)", fromStartingIndex: index, toEndingIndex: total))
+                return
+            }
+        
+            arAssets.append(arAsset)
+        }
+        NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating with item \(index)", fromStartingIndex: index, toEndingIndex: total))
+    }
+    
+    func onOperationCompleted(status:ARImageDownloadStatus) {
+        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update complete"))
+        
+        guard status != .Error else {
+            print("all images could not be downloaded. Error: \(status)")
+            return
+        }
+        
+        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
+        startTimer()
+    }
+    
+    
+}
+
+extension ViewController {
+    
+    func startTimer() {
+        guard arImageCycleTimer == nil else { return }
+        
+        arImageCycleTimer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(cycleNextArAssets(_:)), userInfo: nil, repeats: true)
+        
+        arImageCycleTimer?.fire()
+    }
+    
+    func cancelTimer() {
+        guard arImageCycleTimer != nil else { return }
+        arImageCycleTimer?.invalidate()
+        arImageCycleTimer = nil
+    }
 }
 
