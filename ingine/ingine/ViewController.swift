@@ -16,7 +16,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
     var arAssets = [ARImageAsset]()
     let arQueue = DispatchQueue(label: "ArrrayQueue")
-    let maxNumImages = 50
+    let maxNumImages = 200
     
     var currentImgIndex = 0
     var downloadCount = 0
@@ -27,6 +27,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     // Scene initializations
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBOutlet weak var userButton: UIButton?
     let cameraButton = UIButton.init()
     
     /// The view controller that displays the status and "restart experience" UI.
@@ -159,6 +160,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     // SYSTEM FUNCTIONS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -184,6 +186,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         session.pause()
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Session management (Image detection setup)
@@ -331,10 +334,13 @@ class MyTapGesture: UITapGestureRecognizer {
 
 //AR session run and updates
 extension ViewController {
-    func reloadArAssets(isPublic:Bool) {
+    func reloadArAssets(isPublic:Bool, userId:String? = nil) {
+        guard let userDocID = userId else {
+            return
+        }
         cancelTimer()
         isReloading = true
-        var query = db.collection("pairs").limit(to: 1000)
+        var query = db.collection("pairs").whereField("user", isEqualTo: userDocID).limit(to: 1000)
         
         if isPublic {
             query = query.whereField("public", isEqualTo: true)
@@ -437,7 +443,7 @@ extension ViewController {
             }
             
             strongSelf.resetArImageConfiguration(withNewImage: imagesToAdd)
-            strongSelf.startTimer()
+            //strongSelf.startTimer()
             print("cycled through arImages at index \(strongSelf.currentImgIndex)")
         }
     }
@@ -492,7 +498,8 @@ extension ViewController: ARImageDownloadServiceDelegate {
         }
         
         NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
-        startTimer()
+        cycleNextArAssets(Timer.init())
+        //startTimer()
     }
     
     
@@ -512,6 +519,27 @@ extension ViewController {
         guard arImageCycleTimer != nil else { return }
         arImageCycleTimer?.invalidate()
         arImageCycleTimer = nil
+    }
+}
+
+extension ViewController {
+    @IBAction func handleUserSelect(_ sender:UIButton) {
+        performSegue(withIdentifier: "selectUser", sender: nil)
+    }
+}
+
+extension ViewController {
+    @objc func onUserSelected(_ notification: Notification) {
+        guard let dict = notification.userInfo,
+            let documentId = dict[NotificationProgressUserInfoType.UserDocumentId.rawValue] as? String else {
+                return
+        }
+        
+        reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: documentId)
+        
+        DispatchQueue.main.async {
+            self.userButton?.setTitle(documentId, for: .normal)
+        }
     }
 }
 

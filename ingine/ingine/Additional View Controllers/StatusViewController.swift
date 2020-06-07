@@ -32,12 +32,13 @@ class StatusViewController: PortraitViewController {
     @IBOutlet weak private var messageLabel: UILabel!
     
     @IBOutlet weak private var restartExperienceButton: UIButton!
+        
 
     // MARK: - Properties
     
     /// Trigerred when the "Restart Experience" button is tapped.
     var restartExperienceHandler: () -> Void = {}
-    
+        
     /// Seconds before the timer message should fade out. Adjust if the app needs longer transient messages.
     private let displayDuration: TimeInterval = 6
     
