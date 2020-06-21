@@ -310,7 +310,7 @@
                                     <constraint firstAttribute="width" constant="60.5" id="oF2-xK-2Sl"/>
                                 </constraints>
                                 <color key="tintColor" red="0.5490196078431373" green="0.070588235294117646" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" backgroundImage="camButton"/>
+                                <state key="normal" backgroundImage="homeButton"/>
                                 <connections>
                                     <action selector="goBackHome" destination="CJT-JP-PuX" eventType="touchUpInside" id="Bto-IU-0HU"/>
                                 </connections>
@@ -565,7 +565,6 @@
     </scenes>
     <resources>
         <image name="Sign out" width="85.333335876464844" height="85.333335876464844"/>
-        <image name="camButton" width="32" height="32"/>
         <image name="homeButton" width="33.333332061767578" height="33.333332061767578"/>
         <image name="moreButton" width="26.666666030883789" height="8"/>
         <image name="restart" width="20" height="23"/>
