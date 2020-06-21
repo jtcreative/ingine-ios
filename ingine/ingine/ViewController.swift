@@ -95,19 +95,22 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         //todo jt need to improve this
         //self.restartExperience()
     }
+
+    @IBAction func goToProfileSetting() {
+        if isLoggedIn() {
+            // send to profile view
+            performSegue(withIdentifier: "toProfile", sender: nil)
+        } else {
+            let login = AccountViewController()
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+        }
+    }
     
     // handle swipe gestures from home screen
     @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
         if (sender.direction == .left) {
             print("Swipe Left")
-            if isLoggedIn() {
-                // send to profile view
-                performSegue(withIdentifier: "toProfile", sender: nil)
-            } else {
-                let login = AccountViewController()
-                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-            }
-            
+            goToProfileSetting()
         }
         
         if (sender.direction == .right) {
@@ -115,6 +118,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             // send to settings view
         }
     }
+    
     
     @IBAction func modalDismissed(segue: UIStoryboardSegue) {
       // You can use segue.source to retrieve the VC

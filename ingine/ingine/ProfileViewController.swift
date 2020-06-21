@@ -201,6 +201,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    @IBAction func goBackHome() {
+        performSegue(withIdentifier: "toHome", sender: nil)
+    }
+    
     /////////////////////////////////////////////////////////////////////////////
     
     // handle swipe gestures from home screen
@@ -208,7 +212,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if (sender.direction == .right) {
             print("Swipe Right")
             // go back home
-            performSegue(withIdentifier: "toHome", sender: nil)
+            goBackHome()
         }
     }
     
