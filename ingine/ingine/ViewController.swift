@@ -262,11 +262,11 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             node.addChildNode(planeNode)
             
             // Put 3d model
-            let ingineScene = SCNScene(named: "ingine.scn")!
+            let ingineScene = SCNScene(named: "pin_marker.scn")!
             let ingineNode = ingineScene.rootNode.childNode(withName: "ingine", recursively: true)!
             
             // correct upside down orientation
-            ingineNode.eulerAngles.x = .pi
+            ingineNode.eulerAngles.x = (.pi / 8) * 5
             ingineNode.position.z = 0.15
             
             planeNode.addChildNode(ingineNode)

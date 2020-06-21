@@ -20,6 +20,7 @@
 		18C6EDE9249F5AD100BCFC5A /* UserDefaultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6EDE8249F5AD100BCFC5A /* UserDefaultUtils.swift */; };
 		18C6EDEC249F688100BCFC5A /* ic_take_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C6EDEA249F688100BCFC5A /* ic_take_photo.png */; };
 		18C6EDED249F688100BCFC5A /* ic_ham_offset.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C6EDEB249F688100BCFC5A /* ic_ham_offset.png */; };
+		18C6EDF1249F848E00BCFC5A /* pin_marker.scn in Resources */ = {isa = PBXBuildFile; fileRef = 18C6EDF0249F848E00BCFC5A /* pin_marker.scn */; };
 		18C8CD67247A0E3900389719 /* ImageLoadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8CD66247A0E3900389719 /* ImageLoadingService.swift */; };
 		18CAF674246F545D00469299 /* ARImageDownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CAF673246F545D00469299 /* ARImageDownloadService.swift */; };
 		18FDD2222451721D00C3B131 /* NotificationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD2212451721D00C3B131 /* NotificationUtils.swift */; };
@@ -65,6 +66,7 @@
 		18C6EDE8249F5AD100BCFC5A /* UserDefaultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtils.swift; sourceTree = "<group>"; };
 		18C6EDEA249F688100BCFC5A /* ic_take_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_take_photo.png; sourceTree = "<group>"; };
 		18C6EDEB249F688100BCFC5A /* ic_ham_offset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_ham_offset.png; sourceTree = "<group>"; };
+		18C6EDF0249F848E00BCFC5A /* pin_marker.scn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pin_marker.scn; sourceTree = "<group>"; };
 		18C8CD66247A0E3900389719 /* ImageLoadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadingService.swift; sourceTree = "<group>"; };
 		18CAF673246F545D00469299 /* ARImageDownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARImageDownloadService.swift; sourceTree = "<group>"; };
 		18FDD2212451721D00C3B131 /* NotificationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUtils.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 		EEC7CD5D22999F1E00B33B47 /* ingine */ = {
 			isa = PBXGroup;
 			children = (
+				18C6EDF0249F848E00BCFC5A /* pin_marker.scn */,
 				18CAF672246F534C00469299 /* Services */,
 				18FDD220245171FF00C3B131 /* Utils */,
 				EEC7CD5E22999F1E00B33B47 /* AppDelegate.swift */,
@@ -303,6 +306,7 @@
 				18C6EDE5249F37E800BCFC5A /* tutorial5.png in Resources */,
 				EEC7CD73229CBED800B33B47 /* GoogleService-Info.plist in Resources */,
 				18C6EDEC249F688100BCFC5A /* ic_take_photo.png in Resources */,
+				18C6EDF1249F848E00BCFC5A /* pin_marker.scn in Resources */,
 				18C6EDE2249F37E800BCFC5A /* tutorial3.png in Resources */,
 				18C6EDE7249F37E800BCFC5A /* tutorial2.png in Resources */,
 				EE7F35E2229CCF2200AE9089 /* Main.storyboard in Resources */,
