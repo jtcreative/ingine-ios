@@ -78,6 +78,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             
             let config = ARImageTrackingConfiguration()
             self.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+            
+            self.openTutorialPage(isForFirstTimers: true)
         }
         
 //        resetTracking()
@@ -85,6 +87,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         statusViewController.restartExperienceHandler = { [unowned self] in
             self.restartExperience()
         }
+        
     }
     
     @objc func refreshConfig()
@@ -543,3 +546,12 @@ extension ViewController {
     }
 }
 
+extension ViewController {
+    func openTutorialPage(isForFirstTimers: Bool = false) {
+        guard !isForFirstTimers || UserDefaults.getValue(forSetting: .DidViewTutorialPage) == nil else {
+            return
+        }
+        
+        self.performSegue(withIdentifier: "tutorialSegue", sender: nil)
+    }
+}

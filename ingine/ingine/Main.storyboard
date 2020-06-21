@@ -165,12 +165,13 @@
                         <outlet property="userButton" destination="uzp-AJ-xnk" id="Npm-NX-k35"/>
                         <segue destination="CJT-JP-PuX" kind="presentation" identifier="toProfile" modalPresentationStyle="fullScreen" id="qv4-2L-CJx"/>
                         <segue destination="gf9-or-FLu" kind="presentation" identifier="selectUser" id="eb1-UV-N8a"/>
+                        <segue destination="Uw7-XE-qtv" kind="presentation" identifier="tutorialSegue" id="aEg-Aa-vof"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
                 <exit id="RAR-nF-fNo" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="872" y="107"/>
+            <point key="canvasLocation" x="829" y="20"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="agJ-vq-Z25">
@@ -524,6 +525,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rai-0v-Wmt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="871" y="875"/>
+        </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="pIi-PL-cJp">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Uw7-XE-qtv" customClass="TutorialViewController" customModule="ingine" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pv2-fK-1lw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-362" y="141"/>
         </scene>
     </scenes>
     <resources>
