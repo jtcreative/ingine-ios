@@ -11,9 +11,12 @@ import SceneKit
 import UIKit
 import Firebase
 import SafariServices
+import Connectivity
 
 class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
+    let connectivity: Connectivity = Connectivity()
+
     var arAssets = [ARImageAsset]()
     let arQueue = DispatchQueue(label: "ArrrayQueue")
     let maxNumImages = 200
@@ -28,6 +31,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var userButton: UIButton?
+    @IBOutlet weak var alertLabel: UILabel?
+    @IBOutlet weak var alertHeightAnchor: NSLayoutConstraint?
     let cameraButton = UIButton.init()
     
     /// The view controller that displays the status and "restart experience" UI.
@@ -45,6 +50,15 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         return sceneView.session
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        initConnectivityListener()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initConnectivityListener()
+    }
     
     // MARK: - View Controller Life Cycle
     
@@ -172,6 +186,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        connectivity.startNotifier()
         
         // Prevent the screen from being dimmed to avoid interuppting the AR experience.
         UIApplication.shared.isIdleTimerDisabled = true
@@ -193,6 +208,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         session.pause()
+        connectivity.stopNotifier()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -557,5 +573,48 @@ extension ViewController {
         }
         
         self.performSegue(withIdentifier: "tutorialSegue", sender: nil)
+    }
+}
+
+extension ViewController {
+    func initConnectivityListener() {
+        let connectivityChanged: (Connectivity) -> Void = { [weak self] connectivity in
+             self?.updateConnectionStatus(connectivity.status)
+        }
+        
+        connectivity.whenConnected = connectivityChanged
+        connectivity.whenDisconnected = connectivityChanged
+    }
+    
+    func updateConnectionStatus(_ status: ConnectivityStatus) {
+
+        switch status {
+
+            case .connectedViaWiFiWithoutInternet,
+                 .connectedViaCellularWithoutInternet,
+                 .notConnected:
+                showAlertBar(color: .red, message: "Not Connected To The Internet")
+                break
+            case .determining:
+                showAlertBar(color: .yellow, message: "Searching For A Connection")
+                break
+            case .connected,
+                 .connectedViaWiFi,
+                 .connectedViaCellular:
+                hideAlertBar()
+                break
+        }
+            
+    }
+    
+    func showAlertBar(color: UIColor, message:String) {
+        alertLabel?.backgroundColor = color
+        alertLabel?.text = message
+        alertHeightAnchor?.constant = 21
+    }
+    
+    func hideAlertBar() {
+        alertHeightAnchor?.constant = 0
+        alertLabel?.isHidden = true
     }
 }

@@ -11,5 +11,6 @@ target 'ingine' do
   pod 'Firebase/Storage'
   pod 'Firebase/Firestore'
   pod 'EasyStash'
+  pod 'Connectivity'
 
 end
