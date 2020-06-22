@@ -249,7 +249,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
         let referenceImage = imageAnchor.referenceImage
         // Get matchUrls from Firebase, so that when ingine model is clicked it goes to the appropriate url
-        self.registerGestureRecognizer(matchURL: referenceImage.name ?? "")
+        let nodeName = referenceImage.name ?? "ingine"
+        //self.registerGestureRecognizer(matchURL: referenceImage.name ?? "")
         
         updateQueue.async {
             
@@ -275,18 +276,18 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             //            planeNode.runAction(self.imageHighlightAction)
             
             // Add the plane visualization to the scene.
-            node.addChildNode(planeNode)
+             node.addChildNode(planeNode)
             
             // Put 3d model
             let ingineScene = SCNScene(named: "pin_marker.scn")!
             let ingineNode = ingineScene.rootNode.childNode(withName: "ingine", recursively: true)!
+            ingineNode.name = nodeName
             
             // correct upside down orientation
             ingineNode.eulerAngles.x = (.pi / 8) * 5
             ingineNode.position.z = 0.15
             
             planeNode.addChildNode(ingineNode)
-            
         }
         
         DispatchQueue.main.async {
@@ -311,9 +312,36 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     func registerGestureRecognizer(matchURL: String) {
         DispatchQueue.main.async {
             let tap = MyTapGesture(target: self, action: #selector(self.search))
-            self.sceneView.addGestureRecognizer(tap)
             tap.url = matchURL
+            self.sceneView.addGestureRecognizer(tap)
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+        /*
+         1. Get The Current Touch Location
+         2. Check That We Have Touched A Valid Node
+         3. Check If The Node Has A Name
+         4. Handle The Touch
+         */
+
+        guard let touchLocation = touches.first?.location(in: sceneView),
+            let hitNode = self.sceneView.hitTest(touchLocation, options: nil).first?.node,
+            let nodeName = hitNode.name,
+            let url = URL(string: nodeName)
+            else {
+                //No Node Has Been Tapped
+                return
+
+        }
+        
+        // Show the associated link in the in-app browser
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
+        //Handle Event Here e.g. PerformSegue
+        //print(nodeName)
+
     }
     
     // handle tap gesture on the ingine indicator that reveals the link saved in the image
@@ -618,3 +646,4 @@ extension ViewController {
         alertLabel?.isHidden = true
     }
 }
+
