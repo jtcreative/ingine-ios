@@ -93,7 +93,6 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             let config = ARImageTrackingConfiguration()
             self.session.run(config, options: [.resetTracking, .removeExistingAnchors])
             
-            self.openTutorialPage(isForFirstTimers: true)
         }
         
 //        resetTracking()
@@ -113,7 +112,11 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     @IBAction func goToProfileSetting() {
         if isLoggedIn() {
             // send to profile view
-            performSegue(withIdentifier: "toProfile", sender: nil)
+            //presentationController.
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                //performSegue(withIdentifier: "toProfile", sender: nil)
+                mainViewController.nextPage()
+            }
         } else {
             let login = AccountViewController()
             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
@@ -122,7 +125,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     
     // handle swipe gestures from home screen
     @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
-        if (sender.direction == .left) {
+        /*if (sender.direction == .left) {
             print("Swipe Left")
             goToProfileSetting()
         }
@@ -130,7 +133,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         if (sender.direction == .right) {
             print("Swipe Right")
             // send to settings view
-        }
+        }*/
     }
     
     
@@ -203,6 +206,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             self?.refreshConfig()
         }
 //        var refreshTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(ViewController.refreshConfig), userInfo: nil, repeats: true)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -594,15 +598,6 @@ extension ViewController {
     }
 }
 
-extension ViewController {
-    func openTutorialPage(isForFirstTimers: Bool = false) {
-        guard !isForFirstTimers || UserDefaults.getValue(forSetting: .DidViewTutorialPage) == nil else {
-            return
-        }
-        
-        self.performSegue(withIdentifier: "tutorialSegue", sender: nil)
-    }
-}
 
 extension ViewController {
     func initConnectivityListener() {

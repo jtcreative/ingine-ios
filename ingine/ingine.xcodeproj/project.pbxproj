@@ -26,6 +26,7 @@
 		18FDD2222451721D00C3B131 /* NotificationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD2212451721D00C3B131 /* NotificationUtils.swift */; };
 		18FDD224245187C000C3B131 /* PortraitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD223245187C000C3B131 /* PortraitViewController.swift */; };
 		8A927EC6D4DFD44678351FE6 /* Pods_ingine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */; };
+		D34CCAF924AC101000096DAA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34CCAF824AC101000096DAA /* MainViewController.swift */; };
 		EE16B7D22308E71A0002397D /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D12308E7190002397D /* OptionCell.swift */; };
 		EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D32308F06C0002397D /* OptionsLauncher.swift */; };
 		EE28D4D122A59301002CA261 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE28D4D022A59301002CA261 /* AccountViewController.swift */; };
@@ -74,6 +75,7 @@
 		28EF1BCF6424AC43142E7E15 /* Pods-ingine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.release.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.release.xcconfig"; sourceTree = "<group>"; };
 		77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ingine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C5AD77DEDED43366A7DA8D3 /* Pods-ingine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.debug.xcconfig"; sourceTree = "<group>"; };
+		D34CCAF824AC101000096DAA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EE16B7D12308E7190002397D /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		EE16B7D32308F06C0002397D /* OptionsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsLauncher.swift; sourceTree = "<group>"; };
 		EE28D4D022A59301002CA261 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				18715793248CDC5700EAAF3D /* UserViewController.swift */,
 				180106892499AE91007B5E80 /* TutorialViewController.swift */,
 				180106AD2499F351007B5E80 /* TutorialImageViewController.swift */,
+				D34CCAF824AC101000096DAA /* MainViewController.swift */,
 			);
 			path = ingine;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				EE7F35D9229CCDE400AE9089 /* SECropView.swift in Sources */,
 				EE7F35C9229CCD5500AE9089 /* ViewController+ARSessionDelegate.swift in Sources */,
 				EE7F35DB229CCDE400AE9089 /* SECropError.swift in Sources */,
+				D34CCAF924AC101000096DAA /* MainViewController.swift in Sources */,
 				180106AE2499F351007B5E80 /* TutorialImageViewController.swift in Sources */,
 				EE7F35D6229CCDE400AE9089 /* SECornerView.swift in Sources */,
 				EEC7CD6322999F1E00B33B47 /* ViewController.swift in Sources */,
@@ -529,7 +533,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QHZZ6Z276N;
+				DEVELOPMENT_TEAM = N43MJH5W89;
 				INFOPLIST_FILE = ingine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -551,7 +555,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QHZZ6Z276N;
+				DEVELOPMENT_TEAM = N43MJH5W89;
 				INFOPLIST_FILE = ingine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (

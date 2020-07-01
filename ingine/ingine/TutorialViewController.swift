@@ -133,7 +133,7 @@ extension TutorialViewController {
     @objc func backPage() {
         guard let currentPage = viewControllers?.first,
               let currentIndex = pageViews.firstIndex(of: currentPage),
-              currentIndex == 0 else {
+              currentIndex > 0 else {
             return
         }
     

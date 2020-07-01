@@ -525,6 +525,17 @@ class AccountViewController: PortraitViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        isLoggedIn()
+    }
+    
+    // Check if user is logged in
+    func isLoggedIn() {
+        if Auth.auth().currentUser?.uid != nil {
+            self.openMainViewController()
+        }
+        
+    }
 }
 
 extension UIColor {

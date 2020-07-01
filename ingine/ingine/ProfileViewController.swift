@@ -202,18 +202,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func goBackHome() {
-        performSegue(withIdentifier: "toHome", sender: nil)
+        //performSegue(withIdentifier: "toHome", sender: nil)
+        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+            //performSegue(withIdentifier: "toProfile", sender: nil)
+            mainViewController.backPage()
+        }
     }
     
     /////////////////////////////////////////////////////////////////////////////
     
     // handle swipe gestures from home screen
     @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
-        if (sender.direction == .right) {
+        /*if (sender.direction == .right) {
             print("Swipe Right")
             // go back home
             goBackHome()
-        }
+        }*/
     }
     
     
@@ -224,6 +228,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             try firebaseAuth.signOut()
 //            performSegue(withIdentifier: "toHome", sender: nil)
 //            navigationController?.popToRootViewController(animated: true)
+             let login = AccountViewController()
+             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
