@@ -292,8 +292,9 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             ingineNode.name = nodeName
             
             // correct upside down orientation
-            ingineNode.eulerAngles.x = (.pi / 8) * 5
-            ingineNode.position.z = 0.15
+            ingineNode.eulerAngles.x = (.pi / 2)
+            ingineNode.position.z = 0.05
+            ingineNode.position.y += 0.10
             
             planeNode.addChildNode(ingineNode)
         }
