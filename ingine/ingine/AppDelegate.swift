@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         let db = Firestore.firestore()
+        ImageLoadingService.main
         return true
     }
 
