@@ -190,6 +190,7 @@
                         <outlet property="alertHeightAnchor" destination="hvA-7d-R5F" id="xen-3N-Xso"/>
                         <outlet property="alertLabel" destination="DpU-5B-PRG" id="Veu-cW-V7Y"/>
                         <outlet property="blurView" destination="R5W-V8-6lY" id="oF2-lD-Srf"/>
+                        <outlet property="homeButton" destination="3q6-VE-auo" id="UzX-88-Vrl"/>
                         <outlet property="sceneView" destination="E6c-py-dvH" id="Gr4-Uw-Z4A"/>
                         <outlet property="userButton" destination="uzp-AJ-xnk" id="Npm-NX-k35"/>
                         <segue destination="CJT-JP-PuX" kind="presentation" identifier="toProfile" modalPresentationStyle="fullScreen" id="qv4-2L-CJx"/>

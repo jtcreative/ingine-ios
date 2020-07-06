@@ -33,6 +33,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     @IBOutlet weak var userButton: UIButton?
     @IBOutlet weak var alertLabel: UILabel?
     @IBOutlet weak var alertHeightAnchor: NSLayoutConstraint?
+    @IBOutlet weak var homeButton: UIButton?
     let cameraButton = UIButton.init()
     
     /// The view controller that displays the status and "restart experience" UI.
@@ -81,10 +82,13 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             // Camera button setup
             self.cameraButton.frame = CGRect.init(x: 0, y: 0, width: 80, height: 80)
             self.cameraButton.setImage(UIImage.init(named: "camera"), for: .normal)
-            self.cameraButton.center = CGPoint.init(x: self.view.center.x, y: self.view.frame.size.height - 60)
+            //self.cameraButton.center = CGPoint.init(x: self.view.center.x, y: self.view.frame.size.height - 60)
             self.cameraButton.addTarget(self, action: #selector(self.takePhotoAction), for: .touchUpInside)
             self.sceneView.addSubview(self.cameraButton)
             self.sceneView.autoenablesDefaultLighting = true
+            self.cameraButton.translatesAutoresizingMaskIntoConstraints = false
+            self.cameraButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+            self.cameraButton.centerYAnchor.constraint(equalTo: self.homeButton!.centerYAnchor).isActive = true
             
             // Gestures setup
             self.view.addGestureRecognizer(leftSwipe)
