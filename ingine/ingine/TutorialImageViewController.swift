@@ -38,3 +38,13 @@ class TutorialImageViewController : UIViewController {
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }
+
+extension TutorialImageViewController {
+    override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+}
