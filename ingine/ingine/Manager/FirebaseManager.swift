@@ -9,13 +9,14 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import Combine
 
 //MARK: Firebase Constants
 
+// ENUMS
 enum FirebaseAuthType{
     case signIn, signUp,signOut,forgotPassword
 }
-
 
 @objc enum FirebaseDatabaseType:Int{
     case singleItem, multipleItem, user, docRef, deleteDoc,query, snapshotQuery
@@ -27,13 +28,13 @@ enum FirebaseAuthType{
 
 //MARK: Firebase Protocols
 
-// TODO: Firebase Auth
+// MARK: Firebase Auth
 
 protocol FirebaseAuthDelegate:class {
     func auth(_ user: AuthDataResult?, type: FirebaseAuthType, isSuccess:Bool)
 }
 
-// TODO: Firebase Firestore
+//MARK:  Firebase Firestore
 
 @objc protocol FirebaseDatabaseDelegate:class {
     @objc optional func databaseUpdate(_ isSuccess:Bool)
@@ -45,8 +46,7 @@ protocol FirebaseAuthDelegate:class {
    
 }
 
-
-// TODO: Firebase Storage
+// MARK: Firebase Storage
 
 @objc protocol FirebaseStorageDelegate:class {
     @objc optional func media(_ url:String?, isSuccess:Bool, type:FirebaseStorageType)
@@ -113,7 +113,6 @@ class FirebaseManager:NSObject{
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
         
             if let error = error {
-                // self.loginRegisterButton.isUserInteractionEnabled = true
                 if let errCode = AuthErrorCode(rawValue: error._code) {
                     switch errCode {
                     case .invalidEmail:
@@ -280,7 +279,6 @@ class FirebaseManager:NSObject{
     
     // get collection with limit
     func getCollection(_ collectionName:String, hasLimit:Bool = false, limit:Int = 0, type:FirebaseDatabaseType){
-        
         
         db.collection(collectionName).limit(to: limit).getDocuments { (querySnapshot, error) in
             if let error = error{

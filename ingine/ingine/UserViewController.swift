@@ -57,6 +57,7 @@ extension UserViewController {
 
 extension UserViewController {
     private func reloadUsers() {
+        // get user collection
         firebaseManager?.getCollection("users",hasLimit: true, limit: 10000 ,type: .snapshotQuery)
     }
 }
