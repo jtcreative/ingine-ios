@@ -27,7 +27,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
 //    var profileController : ProfileViewController?
     var db: Firestore! = Firestore.firestore()
     var itemID : String = ""
-    
+    var firebaseManager:FirebaseManager?
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -49,9 +49,10 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         return [Option(name: "Edit URL", imageName: "settings"), Option(name: "Change visibility", imageName: "privacy"), Option(name: "Delete item", imageName: "cancel")]
     }()
     
+    
     func showOptions(identification: String) {
         itemID = identification
-        
+        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: nil)
         //show menu
         if let window = UIApplication.shared.keyWindow {
             
@@ -212,39 +213,31 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         }
         
         if Auth.auth().currentUser?.uid != nil {
-            self.db.collection("pairs").document(itemID).updateData([
+            let dict = [
                 "matchURL" : link
-            ]) { err in
-                if let err = err {
-                    print("Error editing URL: \(err)")
-                } else {
-                    print("URL successfully changed!")
-                }
-            }
+            ]
+            firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+            
+            
+            
         } else {
             print("not logged in at editing url screen")
         }
         
-        self.handleDismiss()
+        
     }
     
     // DELETE ITEM
     func deleteItem() {
         print("trying to delete")
         if Auth.auth().currentUser?.uid != nil {
+            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
             
-            db.collection("pairs").document(itemID).delete() { err in
-                if let err = err {
-                    print("Error removing document: \(err)")
-                } else {
-                    print("Document successfully removed!")
-                }
-            }
         } else {
             print("not logged in at deleting item screen")
         }
         
-        self.handleDismiss()
+      //  self.handleDismiss()
     }
     
     // CHANGE VISIBILITY
@@ -258,16 +251,11 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         }
         
         if Auth.auth().currentUser?.uid != nil {
-            
-            self.db.collection("pairs").document(itemID).updateData([
+            let dict = [
                 "public" : status
-            ]) { err in
-                if let err = err {
-                    print("Error getting changing item's visibility setting: \(err)")
-                } else {
-                    print("Visibility setting successfully changed!")
-                }
-            }
+            ]
+            firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+          
             
         } else {
             print("not logged in at changing visibilty screen")

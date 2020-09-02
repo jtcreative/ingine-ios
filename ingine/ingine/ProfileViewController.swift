@@ -29,7 +29,7 @@ class IngineeredItemViewCell: UITableViewCell {
     @IBOutlet weak var visibilityStatus: UILabel!
     @IBOutlet weak var timeStamp: UILabel!
     var id : String = ""
-
+   
     let optionsLauncher = OptionsLauncher()
     @IBAction func showOptions(_ sender: UIButton) {
         optionsLauncher.showOptions(identification: id)
@@ -55,9 +55,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var header: UIView!
     
+     var firebaseSnapshotId = ""
+    var firebaseManager:FirebaseManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        db = Firestore.firestore()
+        // init firebase manager
+        firebaseManager = FirebaseManager(self, databaseDelegate: self, storageDelegate: nil)
+//        db = Firestore.firestore()
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
@@ -78,21 +83,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // ingineeredItemsTableView.separatorStyle = .none
         
+        
+        
     }
     
     // Check if user is logged in
     func isLoggedIn() {
         if Auth.auth().currentUser?.uid != nil {
             let id = Auth.auth().currentUser?.email ?? ""
-            db.collection("users").document(id).getDocument { (document, error) in
-                if let document = document, document.exists {
-                    // set title of profile page to full name of logged in user
-                    self.userName.text = document.data()?["fullName"] as? String
-    
-                } else {
-                    print("user does not exist")
-                }
-            }
+            
+            firebaseManager?.getSingleDocument("users", documentName: id, type: .user)
+            
+//            db.collection("users").document(id).getDocument { (document, error) in
+//                if let document = document, document.exists {
+//                    // set title of profile page to full name of logged in user
+//                    self.userName.text = document.data()?["fullName"] as? String
+//
+//                } else {
+//                    print("user does not exist")
+//                }
+//            }
         } else {
             print("not logged in by email")
             // send to login screen
@@ -153,51 +163,59 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("retrieving data from firebase...")
         
         // Populate cell elements with data from firebase
-        if Auth.auth().currentUser?.uid != nil {
-            let id = Auth.auth().currentUser?.email ?? ""
-            let itemsDB = db.collection("users").document(id)
-            
-            itemsDB.addSnapshotListener { documentSnapshot, error in
-                guard let document1 = documentSnapshot else {
-                    print("Error fetching snapshots: \(error!)")
-                    return
-                }
-                guard document1.data() != nil else {
-                    print("Document data was empty.")
-                    return
-                }
-                
-                if let document = documentSnapshot, document.exists {
-                    // iterate over fields for the logged in user, looking for the field names
-                    for k in document.data()!.keys {
-                        if k != "fullName" {
-                            self.db.collection("pairs").document(k).getDocument { (reference, error) in
-                                if let ref = reference, ref.exists {
-                                    var item = IngineeredItem()
-                                    item.id = k
-                                    item.itemName = (ref.data()?["name"] as? String)!
-                                    item.refImage = (ref.data()?["refImage"] as? String)!
-                                    item.itemURL = (ref.data()?["matchURL"] as? String)!
-                                    item.visStatus = (ref.data()?["public"] as? Bool)!
-                                    
-                                    self.itemsArray.append(item)
-                                    self.configureTableView()
-                                    self.ingineeredItemsTableView.reloadData()
-                                } else {
-                                    // couldn't get document referred to
-                                }
-                            }
-                            
-                        } else {
-                            print("k is fullName")
-                        }
-                    }
-
-                }
-
-            }
-                
-        }
+         let id = Auth.auth().currentUser?.email ?? ""
+        
+        firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
+        
+        
+//        if Auth.auth().currentUser?.uid != nil {
+//
+//            let itemsDB = db.collection("users").document(id)
+//
+//            itemsDB.addSnapshotListener { documentSnapshot, error in
+//                guard let document1 = documentSnapshot else {
+//                    print("Error fetching snapshots: \(error!)")
+//                    return
+//                }
+//                guard document1.data() != nil else {
+//                    print("Document data was empty.")
+//                    return
+//                }
+//
+//
+//                if let document = documentSnapshot, document.exists {
+//                    // iterate over fields for the logged in user, looking for the field names
+//
+//                    for k in document.data()!.keys {
+//                        if k != "fullName" {
+//                            self.db.collection("pairs").document(k).getDocument { (reference, error) in
+//
+//                                if let ref = reference, ref.exists {
+//                                    var item = IngineeredItem()
+//                                    item.id = k
+//                                    item.itemName = (ref.data()?["name"] as? String)!
+//                                    item.refImage = (ref.data()?["refImage"] as? String)!
+//                                    item.itemURL = (ref.data()?["matchURL"] as? String)!
+//                                    item.visStatus = (ref.data()?["public"] as? Bool)!
+//
+//                                    self.itemsArray.append(item)
+//                                    self.configureTableView()
+//                                    self.ingineeredItemsTableView.reloadData()
+//                                } else {
+//                                    // couldn't get document referred to
+//                                }
+//                            }
+//
+//                        } else {
+//                            print("k is fullName")
+//                        }
+//                    }
+//
+//                }
+//
+//            }
+//
+//        }
         
     }
     
@@ -223,16 +241,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func signOut(_ sender: Any) {
         print("sign out button pressed")
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-//            performSegue(withIdentifier: "toHome", sender: nil)
-//            navigationController?.popToRootViewController(animated: true)
-             let login = AccountViewController()
-             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
+        firebaseManager?.signOut()
+    
         
     }
 
