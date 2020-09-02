@@ -12,9 +12,9 @@ import Firebase
 
 class UserViewController: UITableViewController {
     private var db = Firestore.firestore()
-    private var users = [QueryDocumentSnapshot]()
+    var users = [QueryDocumentSnapshot]()
     var selectedUser : QueryDocumentSnapshot?
-    
+    var firebaseManager:FirebaseManager?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -24,6 +24,10 @@ class UserViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        
+        // init firebase manager
+        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: nil)
+        
         self.refreshControl?.beginRefreshing()
         reloadUsers()
     }
@@ -53,26 +57,6 @@ extension UserViewController {
 
 extension UserViewController {
     private func reloadUsers() {
-        let query = db.collection("users").limit(to: 10000)
-        
-        query.getDocuments { (snapShot, error) in
-            guard error == nil,
-                let documents = snapShot?.documents else {
-                return
-            }
-            
-            for document in documents {
-                self.users.append(document)
-            }
-            
-            self.users.sort { (doc1, doc2) -> Bool in
-                return doc1.documentID.lowercased() < doc2.documentID.lowercased()
-            }
-            
-            DispatchQueue.main.async {
-                self.refreshControl?.endRefreshing()
-                self.tableView.reloadData()
-            }
-        }
+        firebaseManager?.getCollection("users",hasLimit: true, limit: 10000 ,type: .snapshotQuery)
     }
 }

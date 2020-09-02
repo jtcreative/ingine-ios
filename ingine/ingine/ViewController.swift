@@ -24,7 +24,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     var currentImgIndex = 0
     var downloadCount = 0
     var isReloading = false
-    
+    var isPublic = false
     var arImageCycleTimer : Timer?
     
     // Scene initializations
@@ -35,7 +35,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     @IBOutlet weak var alertHeightAnchor: NSLayoutConstraint?
     @IBOutlet weak var homeButton: UIButton?
     let cameraButton = UIButton.init()
-    
+    var firebaseManager:FirebaseManager?
     /// The view controller that displays the status and "restart experience" UI.
     lazy var statusViewController: StatusViewController = {
         return children.lazy.compactMap({ $0 as? StatusViewController }).first!
@@ -67,6 +67,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         
         db = Firestore.firestore()
+        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: nil)
         
         // setup login/signup/profile page access
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
@@ -404,35 +405,11 @@ extension ViewController {
         }
         cancelTimer()
         isReloading = true
-        var query = db.collection("pairs").whereField("user", isEqualTo: userDocID).limit(to: 1000)
+        self.isPublic = isPublic
         
-        if isPublic {
-            query = query.whereField("public", isEqualTo: true)
-        }
-        
-        query.getDocuments { (querySnapshot, err) in
-            guard err == nil,
-                let documents = querySnapshot?.documents else {
-                return
-            }
-
-            var arAssets = [ARImageAsset]()
-            
-            arAssets = documents.filter { (doc) -> Bool in
-                (doc.get("public") as? Bool) == true
-            }.filter { (doc) -> Bool in
-                ((doc.get("matchURL") as? String) != nil &&
-                (doc.get("refImage") as? String) != nil)
-            }.map({ (doc) -> ARImageAsset in
-                let name = (doc.get("matchURL") as! String)
-                let url = (doc.get("refImage") as! String)
-                return ARImageAsset(name: name, imageUrl: url)
-            })
-            
-            ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
-            self.isReloading = false
-            NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
-        }
+        // search assest for AR render
+        firebaseManager?.query("pairs", fieldName: "user", isEqualTo: userDocID, hasLimit: true, limit: 1000, type: .query)
+       
     }
     
     func removeUnusedAssets(assets:[ARImageAsset]) {

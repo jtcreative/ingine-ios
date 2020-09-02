@@ -18,7 +18,7 @@ enum FirebaseAuthType{
 
 
 @objc enum FirebaseDatabaseType:Int{
-    case singleItem, multipleItem, user, docRef, deleteDoc
+    case singleItem, multipleItem, user, docRef, deleteDoc,query, snapshotQuery
 }
 
 @objc enum FirebaseStorageType:Int{
@@ -40,6 +40,9 @@ protocol FirebaseAuthDelegate:class {
     @objc optional func databaseDocument(_ snapshot:DocumentSnapshot?, isSuccess:Bool, type:FirebaseDatabaseType)
     @objc optional func databaseDocRef(ref:DocumentReference?, isSuccess:Bool, type:FirebaseDatabaseType)
      @objc optional func deleteDocument(_ isSuccess:Bool, type:FirebaseDatabaseType)
+    @objc optional func query(_ document:[QueryDocumentSnapshot], isSuccess:Bool, type:FirebaseDatabaseType)
+    @objc optional func queryWith(_ query:Query?, isSuccess:Bool, type:FirebaseDatabaseType)
+   
 }
 
 
@@ -272,6 +275,53 @@ class FirebaseManager:NSObject{
                 
             }
         }
+    }
+    
+    
+    // get collection with limit
+    func getCollection(_ collectionName:String, hasLimit:Bool = false, limit:Int = 0, type:FirebaseDatabaseType){
+        
+        
+        db.collection(collectionName).limit(to: limit).getDocuments { (querySnapshot, error) in
+            if let error = error{
+               print("get collection error \(error)")
+                self.databaseDelegate?.query?([], isSuccess: false, type: type)
+            }else{
+                if let document = querySnapshot?.documents{
+                self.databaseDelegate?.query?(document, isSuccess: true, type: type)
+                }
+            }
+        }
+    }
+    
+    // query
+    func query(_ collectionName:String, fieldName:String, isEqualTo:Any, hasLimit:Bool = false, limit:Int = 0, type:FirebaseDatabaseType){
+        var query : Query?
+        if hasLimit{
+            query = db.collection(collectionName).whereField(fieldName, isEqualTo: isEqualTo).limit(to: limit)
+        }else{
+            query = db.collection(collectionName).whereField(fieldName, isEqualTo: isEqualTo)
+        }
+        self.databaseDelegate?.queryWith?(query, isSuccess: true, type: type)
+        
+        
+        
+        
+    }
+    
+    // already have query
+    
+    func queryWith(_ query:Query, fieldName:String,isEqualTo:Any, type:FirebaseDatabaseType ){
+        query.whereField(fieldName, isEqualTo: isEqualTo)
+        query.getDocuments(completion: { (querySnapshot, error) in
+             guard error == nil,
+                           let documents = querySnapshot?.documents else {
+                            self.databaseDelegate?.query?([], isSuccess: false, type: type)
+                           return
+                }
+            self.databaseDelegate?.query?(documents, isSuccess: true, type: type)
+            
+        })
     }
     
     // delete document data

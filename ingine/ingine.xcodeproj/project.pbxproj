@@ -27,6 +27,8 @@
 		18FDD224245187C000C3B131 /* PortraitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD223245187C000C3B131 /* PortraitViewController.swift */; };
 		8A927EC6D4DFD44678351FE6 /* Pods_ingine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */; };
 		97342A4024FEA52A004F86B4 /* OptionsLauncherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97342A3F24FEA52A004F86B4 /* OptionsLauncherExtension.swift */; };
+		97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */; };
+		97653FAC250007BB00274A91 /* UserViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */; };
 		97BCFCEA24FD1AF000AA1E2B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCE924FD1AF000AA1E2B /* FirebaseManager.swift */; };
 		97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */; };
 		97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */; };
@@ -81,6 +83,8 @@
 		77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ingine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C5AD77DEDED43366A7DA8D3 /* Pods-ingine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.debug.xcconfig"; sourceTree = "<group>"; };
 		97342A3F24FEA52A004F86B4 /* OptionsLauncherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsLauncherExtension.swift; sourceTree = "<group>"; };
+		97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCE924FD1AF000AA1E2B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 				97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */,
 				97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */,
 				97342A3F24FEA52A004F86B4 /* OptionsLauncherExtension.swift */,
+				97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */,
+				97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */,
 			);
 			path = ExtensionClasses;
 			sourceTree = "<group>";
@@ -406,10 +412,12 @@
 				D34CCAF924AC101000096DAA /* MainViewController.swift in Sources */,
 				97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */,
 				180106AE2499F351007B5E80 /* TutorialImageViewController.swift in Sources */,
+				97653FAC250007BB00274A91 /* UserViewControllerExtension.swift in Sources */,
 				EE7F35D6229CCDE400AE9089 /* SECornerView.swift in Sources */,
 				EEC7CD6322999F1E00B33B47 /* ViewController.swift in Sources */,
 				97BCFCF124FD665D00AA1E2B /* ImageViewControllerExtension.swift in Sources */,
 				EE28D4D322A5A07E002CA261 /* ProfileViewController.swift in Sources */,
+				97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */,
 				EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */,
 				182E5951245960ED005EB2F5 /* Double+Extensions.swift in Sources */,
 				18CAF674246F545D00469299 /* ARImageDownloadService.swift in Sources */,
