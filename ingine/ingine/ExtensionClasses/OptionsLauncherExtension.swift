@@ -15,9 +15,11 @@ extension OptionsLauncher:FirebaseDatabaseDelegate{
     func deleteDocument(_ isSuccess: Bool, type: FirebaseDatabaseType) {
         switch type {
         case .deleteDoc:
-             if isSuccess{
-                       self.handleDismiss()
-                   }
+            if isSuccess{
+                let id = Auth.auth().currentUser?.email ?? ""
+                firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
+                self.handleDismiss()
+            }
         default:
             break
         }
@@ -25,6 +27,10 @@ extension OptionsLauncher:FirebaseDatabaseDelegate{
     
     func databaseUpdate(_ isSuccess: Bool) {
         if isSuccess{
+            
+            let id = Auth.auth().currentUser?.email ?? ""
+            firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
+            
             self.handleDismiss()
         }
     }

@@ -265,7 +265,7 @@ class FirebaseManager:NSObject{
     }
     
     // get all documents
-    func getDocuments(_ collectionName:String, documentName:String, type: FirebaseDatabaseType){
+    func  getDocuments(_ collectionName:String, documentName:String, type: FirebaseDatabaseType){
         db.collection(collectionName).document(documentName).addSnapshotListener { (snapshot, error) in
             if error != nil{
                 self.databaseDelegate?.databaseDocument?(nil, isSuccess: false, type: type)
