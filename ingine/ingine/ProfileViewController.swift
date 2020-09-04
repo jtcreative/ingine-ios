@@ -54,7 +54,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var ingineeredItemsTableView: UITableView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var header: UIView!
-    
+    var userImage = ""
      var firebaseSnapshotId = ""
     var firebaseManager:FirebaseManager?
     
@@ -164,11 +164,24 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func goBackHome() {
         //performSegue(withIdentifier: "toHome", sender: nil)
-        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-            //performSegue(withIdentifier: "toProfile", sender: nil)
-            mainViewController.backPage()
+//        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+//            //performSegue(withIdentifier: "toProfile", sender: nil)
+//            mainViewController.backPage()
+//     }
+         performSegue(withIdentifier: "demoAccount", sender: nil)
+        
+        
+      
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "demoAccount" {
+            if let controller = segue.destination as? DemoAccountViewController{
+                controller.userImageStr = userImage
+            }
         }
     }
+    
     
     /////////////////////////////////////////////////////////////////////////////
     

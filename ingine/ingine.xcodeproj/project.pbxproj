@@ -29,6 +29,7 @@
 		97342A4024FEA52A004F86B4 /* OptionsLauncherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97342A3F24FEA52A004F86B4 /* OptionsLauncherExtension.swift */; };
 		97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */; };
 		97653FAC250007BB00274A91 /* UserViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */; };
+		97793C4D2501576700319E87 /* DemoAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97793C4C2501576700319E87 /* DemoAccountViewController.swift */; };
 		97BCFCEA24FD1AF000AA1E2B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCE924FD1AF000AA1E2B /* FirebaseManager.swift */; };
 		97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */; };
 		97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */; };
@@ -85,6 +86,7 @@
 		97342A3F24FEA52A004F86B4 /* OptionsLauncherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsLauncherExtension.swift; sourceTree = "<group>"; };
 		97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewControllerExtension.swift; sourceTree = "<group>"; };
+		97793C4C2501576700319E87 /* DemoAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoAccountViewController.swift; sourceTree = "<group>"; };
 		97BCFCE924FD1AF000AA1E2B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -181,6 +183,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		97793C4B2501574100319E87 /* DemoAccount */ = {
+			isa = PBXGroup;
+			children = (
+				97793C4C2501576700319E87 /* DemoAccountViewController.swift */,
+			);
+			path = DemoAccount;
+			sourceTree = "<group>";
+		};
 		97BCFCE824FD1AC500AA1E2B /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +257,7 @@
 		EEC7CD5D22999F1E00B33B47 /* ingine */ = {
 			isa = PBXGroup;
 			children = (
+				97793C4B2501574100319E87 /* DemoAccount */,
 				97BCFCED24FD655500AA1E2B /* ExtensionClasses */,
 				97BCFCE824FD1AC500AA1E2B /* Manager */,
 				18C6EDF0249F848E00BCFC5A /* pin_marker.scn */,
@@ -425,6 +436,7 @@
 				EE7F35CC229CCD5500AE9089 /* ImageViewController.swift in Sources */,
 				97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */,
 				EE7F35CB229CCD5500AE9089 /* CropViewController.swift in Sources */,
+				97793C4D2501576700319E87 /* DemoAccountViewController.swift in Sources */,
 				EE7F35D7229CCDE400AE9089 /* Array+shift.swift in Sources */,
 				97BCFCEA24FD1AF000AA1E2B /* FirebaseManager.swift in Sources */,
 				EEC7CD5F22999F1E00B33B47 /* AppDelegate.swift in Sources */,

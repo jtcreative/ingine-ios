@@ -77,6 +77,7 @@ extension ProfileViewController: FirebaseDatabaseDelegate{
             if let document = snapshot, document.exists {
                 // set title of profile page to full name of logged in user
                 self.userName.text = document.data()?["fullName"] as? String
+                self.userImage = document.data()?["profileImage"] as! String
                 
             } else {
                 print("user does not exist")
