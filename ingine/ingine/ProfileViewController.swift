@@ -164,11 +164,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func goBackHome() {
         //performSegue(withIdentifier: "toHome", sender: nil)
-//        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-//            //performSegue(withIdentifier: "toProfile", sender: nil)
-//            mainViewController.backPage()
-//     }
-         performSegue(withIdentifier: "demoAccount", sender: nil)
+        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+            //performSegue(withIdentifier: "toProfile", sender: nil)
+            mainViewController.backPage()
+     }
+        // performSegue(withIdentifier: "demoAccount", sender: nil)
         
         
       
