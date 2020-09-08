@@ -62,7 +62,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         // init firebase manager
         firebaseManager = FirebaseManager(self, databaseDelegate: self, storageDelegate: nil)
-//        db = Firestore.firestore()
+        db = Firestore.firestore()
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
@@ -74,7 +74,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Configure table view
         configureTableView()
-        
+        addFollowers()
         // Check if user logged in by email
         isLoggedIn()
         
@@ -85,6 +85,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         
         
+    }
+    
+    
+    func addFollowers()
+    {
+         let id = Auth.auth().currentUser?.email ?? ""
+        
+        let dict = ["follower":[["userId":"12432skdjh","username":"Mike"],["userId":"sdf345dfs","username":"John"]]]
+        db.collection("users").document(id).updateData(dict) { (error) in
+            if let error = error{
+                 print("Document error:\(error)")
+            }else{
+                print("Document is written successfully")
+            }
+        }
     }
     
     // Check if user is logged in

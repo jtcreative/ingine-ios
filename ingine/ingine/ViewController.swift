@@ -12,6 +12,7 @@ import UIKit
 import Firebase
 import SafariServices
 import Connectivity
+import Combine
 
 class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
@@ -68,6 +69,9 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         
         db = Firestore.firestore()
         firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: nil)
+        
+        NotificatonBinding.shared.registerPublisher(name: .progressUpdate, type: ImageLoadingStatus.self)
+               NotificatonBinding.shared.delegate = self
         
         // setup login/signup/profile page access
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
@@ -189,6 +193,10 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     // SYSTEM FUNCTIONS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+         
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
     }
     
@@ -523,24 +531,48 @@ extension ViewController: ARImageDownloadServiceDelegate {
                 let arAsset = asset,
                 arAssets.contains(arAsset) == false else {
                 print("ref image could not be downloaded. Error: \(status)")
-                NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Skipping item \(index)", fromStartingIndex: index, toEndingIndex: total))
+             //   NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Skipping item \(index)", fromStartingIndex: index, toEndingIndex: total))
+                    
+                  
+                    
+                    let imgMod = ImageLoadingStatus(message: "Skipping item \(index)", startIndex: index, endIndex: total)
+                    
+                    NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
+                   
+                    
+                    
+                    
+                    
+                    
                 return
             }
         
             arAssets.append(arAsset)
         }
-        NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating with item \(index)", fromStartingIndex: index, toEndingIndex: total))
+        
+      
+                
+        let imgMod = ImageLoadingStatus(message: "Updating with item \(index)", startIndex: index, endIndex: total)
+        
+           NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
+                          
+        
+     //   NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating with item \(index)", fromStartingIndex: index, toEndingIndex: total))
     }
     
     func onOperationCompleted(status:ARImageDownloadStatus) {
-        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update complete"))
         
+        NotificatonBinding.shared.registerPublisher(name: .progressEnd, type: String.self)
+        
+        NotificationCenter.default.post(name: .progressEnd, object: "Update Complete")
+        //NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Complete"))
         guard status != .Error else {
             print("all images could not be downloaded. Error: \(status)")
             return
         }
         
-        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
+//        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
+        NotificationCenter.default.post(name: .progressEnd, object: "Update Completed")
         cycleNextArAssets(Timer.init())
         //startTimer()
     }

@@ -34,6 +34,7 @@
 		97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */; };
 		97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */; };
 		97BCFCF124FD665D00AA1E2B /* ImageViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */; };
+		97DEB06825069F670070A5EF /* NotificationDataBindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */; };
 		D34CCAF924AC101000096DAA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34CCAF824AC101000096DAA /* MainViewController.swift */; };
 		EE16B7D22308E71A0002397D /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D12308E7190002397D /* OptionCell.swift */; };
 		EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D32308F06C0002397D /* OptionsLauncher.swift */; };
@@ -91,6 +92,7 @@
 		97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewControllerExtension.swift; sourceTree = "<group>"; };
+		97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDataBindingExtension.swift; sourceTree = "<group>"; };
 		D34CCAF824AC101000096DAA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EE16B7D12308E7190002397D /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		EE16B7D32308F06C0002397D /* OptionsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsLauncher.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		97BCFCED24FD655500AA1E2B /* ExtensionClasses */ = {
 			isa = PBXGroup;
 			children = (
+				97DEB06625069F480070A5EF /* DataBinding */,
 				97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */,
 				97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */,
 				97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */,
@@ -210,6 +213,14 @@
 				97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */,
 			);
 			path = ExtensionClasses;
+			sourceTree = "<group>";
+		};
+		97DEB06625069F480070A5EF /* DataBinding */ = {
+			isa = PBXGroup;
+			children = (
+				97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */,
+			);
+			path = DataBinding;
 			sourceTree = "<group>";
 		};
 		EE7F35CD229CCDE300AE9089 /* CropView */ = {
@@ -428,6 +439,7 @@
 				EEC7CD6322999F1E00B33B47 /* ViewController.swift in Sources */,
 				97BCFCF124FD665D00AA1E2B /* ImageViewControllerExtension.swift in Sources */,
 				EE28D4D322A5A07E002CA261 /* ProfileViewController.swift in Sources */,
+				97DEB06825069F670070A5EF /* NotificationDataBindingExtension.swift in Sources */,
 				97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */,
 				EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */,
 				182E5951245960ED005EB2F5 /* Double+Extensions.swift in Sources */,
@@ -591,7 +603,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = N43MJH5W89;
 				INFOPLIST_FILE = ingine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -613,7 +625,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = N43MJH5W89;
 				INFOPLIST_FILE = ingine/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

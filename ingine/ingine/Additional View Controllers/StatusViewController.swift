@@ -138,7 +138,9 @@ class StatusViewController: PortraitViewController {
 extension StatusViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(onLoadingProgressUpdate(_:)), name: Notification.Name.init(rawValue: NotificatioType.ProgressUpdateNofication.rawValue), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(onLoadingProgressCompleted(_:)), name: Notification.Name.init(rawValue: NotificatioType.ProgressCompleteNotification.rawValue), object: nil)
     }
     
@@ -148,23 +150,23 @@ extension StatusViewController {
     }
     
     @objc func onLoadingProgressUpdate(_ notification: Notification) {
-        guard let dict = notification.userInfo,
-            let message = dict[NotificationProgressUserInfoType.Message.rawValue] as? String,
-            let startIndex = dict[NotificationProgressUserInfoType.StartingIndex.rawValue] as? Int,
-            let endIndex = dict[NotificationProgressUserInfoType.EndingIndex.rawValue] as? Int else {
-                return
-        }
-    
-        showMessage("\(message)\n\(Double((Double(startIndex)/Double(endIndex))*100).rounded(toPlaces: 0))% Complete", autoHide: false)
+//        guard let dict = notification.userInfo,
+//            let message = dict[NotificationProgressUserInfoType.Message.rawValue] as? String,
+//            let startIndex = dict[NotificationProgressUserInfoType.StartingIndex.rawValue] as? Int,
+//            let endIndex = dict[NotificationProgressUserInfoType.EndingIndex.rawValue] as? Int else {
+//                return
+//        }
+//
+//        showMessage("\(message)\n\(Double((Double(startIndex)/Double(endIndex))*100).rounded(toPlaces: 0))% Complete", autoHide: false)
     }
     
     @objc func onLoadingProgressCompleted(_ notification: Notification) {
-        guard let dict = notification.userInfo,
-            let message = dict[NotificationProgressUserInfoType.Message.rawValue] as? String else {
-                return
-        }
-        
-        showMessage("\(message)", autoHide: true)
+//        guard let dict = notification.userInfo,
+//            let message = dict[NotificationProgressUserInfoType.Message.rawValue] as? String else {
+//                return
+//        }
+//
+//        showMessage("\(message)", autoHide: true)
     }
 }
 

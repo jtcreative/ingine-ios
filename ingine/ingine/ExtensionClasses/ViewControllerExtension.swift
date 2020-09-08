@@ -35,12 +35,33 @@ extension ViewController:FirebaseDatabaseDelegate{
                        
                        ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
                        self.isReloading = false
-                       NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
-     
+            //                       NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
+            
+            let imgMod = ImageLoadingStatus(message: "Updating notification", startIndex: 0, endIndex: arAssets.count)
+            
+            NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
+            
             
            
         default:
             break
+        }
+    }
+}
+
+
+
+//  MARK: Notificaton Binding Protocol
+
+
+extension ViewController:NotificatoinBindingDelegate{
+    func recieve<T>(_ value: T) {
+        if let imageStatus = value as? ImageLoadingStatus{
+      
+            self.statusViewController.showMessage("\(imageStatus.message)\n\(Double((Double(imageStatus.startIndex)/Double(imageStatus.endIndex))*100).rounded(toPlaces: 0))% Complete", autoHide: false)
+        }
+        if let msg = value as? String{
+            self.statusViewController.showMessage(msg, autoHide: true)
         }
     }
 }
