@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 import Firebase
 import Photos
-
+import Combine
 @IBDesignable
 class AccountViewController: PortraitViewController {
 
     var db : Firestore!
-    var firebaseManager:FirebaseManager?
-    
+   
+   
     let spinnerView: UIActivityIndicatorView = {
         let sv = UIActivityIndicatorView()
         sv.translatesAutoresizingMaskIntoConstraints = false
@@ -140,10 +140,11 @@ class AccountViewController: PortraitViewController {
             self.displayAlert(title: "Invalid Form", message: "Please fill in all fields!")
             return
         }
-        // Sign in with firebase 
-        firebaseManager?.signIn(email, password: password)
- 
-        
+        // Sign in with firebase
+
+        login(email, password:password)
+      
+    
     }
     
     func displayAlert(title: String, message: String) {
@@ -159,8 +160,8 @@ class AccountViewController: PortraitViewController {
             return
         }
         
-        firebaseManager?.forgotPassword(email)
-    
+//        firebaseManager?.forgotPassword(email)
+        forgotPassword(email)
         
     }
     
@@ -188,8 +189,8 @@ class AccountViewController: PortraitViewController {
         }
         
         // Create account with Firebase Manager
-        firebaseManager?.signUp(email, password: password)
- 
+//        firebaseManager?.signUp(email, password: password)
+            signUp(email, password: password)
     }
     
     
@@ -266,10 +267,7 @@ class AccountViewController: PortraitViewController {
         
         setupForgetPasswordButton()
         setupKeyboardObservers()
-        db = Firestore.firestore()
-        
-        // Firebase manager delegate
-        firebaseManager = FirebaseManager(self, databaseDelegate: self, storageDelegate: nil)
+       
         
         // Add swipe gestures to view
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))

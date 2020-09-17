@@ -47,6 +47,15 @@ struct IngineeredItem {
     var itemURL = ""
     var visStatus = false
 }
+struct TestItem:Codable {
+    var id :String?
+    var name:String?
+    var refImage:String?
+    var matchURL:String?
+    var `public` :Bool?
+}
+
+
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var itemsArray : [IngineeredItem] = [IngineeredItem]()
@@ -56,13 +65,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var header: UIView!
     var userImage = ""
      var firebaseSnapshotId = ""
-    var firebaseManager:FirebaseManager?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // init firebase manager
-        firebaseManager = FirebaseManager(self, databaseDelegate: self, storageDelegate: nil)
-        db = Firestore.firestore()
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
@@ -74,7 +81,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Configure table view
         configureTableView()
-        addFollowers()
+    //    addFollowers()
         // Check if user logged in by email
         isLoggedIn()
         
@@ -102,21 +109,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    // Check if user is logged in
-    func isLoggedIn() {
-        if Auth.auth().currentUser?.uid != nil {
-            let id = Auth.auth().currentUser?.email ?? ""
-            
-            firebaseManager?.getSingleDocument("users", documentName: id, type: .user)
-            
-        } else {
-            print("not logged in by email")
-            // send to login screen
-            let login = AccountViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-        }
-        
-    }
+   
     
     // Configure table view height
     func configureTableView() {
@@ -164,19 +157,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-    // Retrieve ingineered item infro from firebase
-    func retrieveItems() {
-        print("retrieving data from firebase...")
-        
-        // Populate cell elements with data from firebase
-         let id = Auth.auth().currentUser?.email ?? ""
-        
-        firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
-        
-  
-        
-    }
-    
+   
     @IBAction func goBackHome() {
         //performSegue(withIdentifier: "toHome", sender: nil)
         if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
@@ -211,8 +192,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     @IBAction func signOut(_ sender: Any) {
-        print("sign out button pressed")
-        firebaseManager?.signOut()
+       
+//        firebaseManager?.signOut()
+        IFirebase.shared.signOut().sink(receiveCompletion: { (completion) in
+            switch completion{
+            case .finished: print("fnished")
+            case .failure(let error) : print(error.localizedDescription)
+            }
+        }) { (_) in
+            print("Sign out pressed")
+            let login = AccountViewController()
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+        }.store(in: &IFirebase.shared.cancelBag)
     
         
     }

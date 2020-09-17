@@ -11,15 +11,18 @@ import Foundation
 import Firebase
 
 
-//MARK: Auth Methods
-extension ImageViewController: FirebaseStorageDelegate{
-    func media(_ url: String?, isSuccess: Bool, type: FirebaseStorageType) {
-        switch type {
-        case .image:
-            if !isSuccess{
-                return
+extension ImageViewController{
+    
+    func uploadArImage(_ imageData:Data){
+        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            self.storageURL = url ?? ""
+        }) { (url) in
+            self.storageURL = url
             var matchURL = ""
             let itemName = self.nameBox.text ?? ""
             let email = Auth.auth().currentUser?.email ?? ""
@@ -36,50 +39,39 @@ extension ImageViewController: FirebaseStorageDelegate{
                 "user": email,
                 "public": self.visibilitySwitch.isOn
                 ] as [String : Any]
-            firebaseManager?.updateDocument(dict: dict, collectionName: "pairs", type: .docRef)
-          
             
             
+            IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { (ref) in
+                let email = Auth.auth().currentUser?.email ?? ""
+                // Save a reference in users folder
+                let documentRefString = self.db.collection("pairs").document(ref.documentID)
+                let userRefKey = ref.documentID
+                
+                let dict = [
+                    userRefKey: self.db.document(documentRefString.path)
+                ]
+                IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+                    switch completion
+                    {
+                    case .finished : print("finish")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }) { (_) in
+                    let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+                    let vc = st.instantiateInitialViewController()
+                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+                }.store(in: &IFirebaseDatabase.shared.cancelBag )
+            }).store(in: &IFirebaseDatabase.shared.cancelBag)
             
             
-            
-        default:
-            break
-        }
+        }.store(in: &IFirebaseStorage.shared.cancelBag)
     }
-   
 }
-
-//MARK: Database Methods
-extension ImageViewController: FirebaseDatabaseDelegate{
-    func databaseUpdate(_ isSuccess: Bool) {
-        if isSuccess{
-                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-            let vc = st.instantiateInitialViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
-        }
-    }
-    
-    func databaseDocRef(ref: DocumentReference?, isSuccess: Bool, type:FirebaseDatabaseType) {
-        switch type {
-        case .docRef:
-            if !isSuccess{
-                return
-            }
-              let email = Auth.auth().currentUser?.email ?? ""
-            // Save a reference in users folder
-            let documentRefString = self.db.collection("pairs").document(ref?.documentID ?? "")
-            let userRefKey = ref?.documentID
-            
-              let dict = [
-                  userRefKey ?? "" : self.db.document(documentRefString.path)
-              ]
-              firebaseManager?.updateData(dict: dict, collectionName: "users", documentName: email)
-            
-        default:
-            break
-        }
-    }
-    
-}
-

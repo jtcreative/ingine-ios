@@ -10,28 +10,28 @@ import Foundation
 import Firebase
 
 
-extension OptionsLauncher:FirebaseDatabaseDelegate{
-    
-    func deleteDocument(_ isSuccess: Bool, type: FirebaseDatabaseType) {
-        switch type {
-        case .deleteDoc:
-            if isSuccess{
-                let id = Auth.auth().currentUser?.email ?? ""
-                firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
-                self.handleDismiss()
-            }
-        default:
-            break
-        }
-    }
-    
-    func databaseUpdate(_ isSuccess: Bool) {
-        if isSuccess{
-            
-            let id = Auth.auth().currentUser?.email ?? ""
-            firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
-            
-            self.handleDismiss()
-        }
-    }
-}
+//extension OptionsLauncher:FirebaseDatabaseDelegate{
+//
+//    func deleteDocument(_ isSuccess: Bool, type: FirebaseDatabaseType) {
+//        switch type {
+//        case .deleteDoc:
+//            if isSuccess{
+//                let id = Auth.auth().currentUser?.email ?? ""
+//                firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
+//                self.handleDismiss()
+//            }
+//        default:
+//            break
+//        }
+//    }
+//
+//    func databaseUpdate(_ isSuccess: Bool) {
+//        if isSuccess{
+//
+//            let id = Auth.auth().currentUser?.email ?? ""
+//            firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
+//
+//            self.handleDismiss()
+//        }
+//    }
+//}

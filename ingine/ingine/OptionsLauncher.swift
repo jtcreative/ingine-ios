@@ -27,7 +27,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
 //    var profileController : ProfileViewController?
     var db: Firestore! = Firestore.firestore()
     var itemID : String = ""
-    var firebaseManager:FirebaseManager?
+    
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -52,7 +52,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
     
     func showOptions(identification: String) {
         itemID = identification
-        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: nil)
+        
         //show menu
         if let window = UIApplication.shared.keyWindow {
             
@@ -216,7 +216,17 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
             let dict = [
                 "matchURL" : link
             ]
-            firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+           // firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+            IFirebaseDatabase.shared.updateData("pairs", document: itemID, data: dict).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { (_) in
+                 self.handleDismiss()
+            }.store(in: &IFirebaseDatabase.shared.cancelBag)
             
             
             
@@ -231,7 +241,18 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
     func deleteItem() {
         print("trying to delete")
         if Auth.auth().currentUser?.uid != nil {
-            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
+//            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
+            IFirebaseDatabase.shared.deleteDocument("pairs", document: itemID).sink(receiveCompletion: { (completion) in
+                           switch completion
+                           {
+                           case .finished : print("finish")
+                           case .failure(let error):
+                               print(error.localizedDescription)
+                           }
+                       }) { (_) in
+                            self.handleDismiss()
+                       }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                       
             
         } else {
             print("not logged in at deleting item screen")
@@ -254,8 +275,18 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
             let dict = [
                 "public" : status
             ]
-            firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
-          
+//            firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+          IFirebaseDatabase.shared.updateData("pairs", document: itemID, data: dict).sink(receiveCompletion: { (completion) in
+                         switch completion
+                         {
+                         case .finished : print("finish")
+                         case .failure(let error):
+                             print(error.localizedDescription)
+                         }
+                     }) { (_) in
+                          self.handleDismiss()
+                     }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                     
             
         } else {
             print("not logged in at changing visibilty screen")

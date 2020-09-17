@@ -15,14 +15,14 @@ class DemoAccountViewController: UIViewController {
     
 
     var imagePicker:UIImagePickerController?
-    var firebaseManager:FirebaseManager?
+   
     var userImageStr = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker = UIImagePickerController()
         imagePicker?.delegate = self
         
-        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: self)
+     //   firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: self)
 
         
         let imageUrl = URL(string: userImageStr)!
@@ -36,14 +36,14 @@ class DemoAccountViewController: UIViewController {
         imagePicker?.sourceType = .photoLibrary
         present(imagePicker!, animated: true, completion: nil)
         guard let imageData = userImage!.image?.jpegData(compressionQuality: 0.8) else { return }
-        firebaseManager?.uploadImage(imageData, type: .image)
+       // firebaseManager?.uploadImage(imageData, type: .image)
     }
     
     
     @IBAction func upload(_ sender:UIButton){
    
            guard let imageData = userImage!.image?.jpegData(compressionQuality: 0.8) else { return }
-           firebaseManager?.uploadImage(imageData, type: .image)
+          // firebaseManager?.uploadImage(imageData, type: .image)
        }
        
 
@@ -61,21 +61,21 @@ extension DemoAccountViewController:UIImagePickerControllerDelegate, UINavigatio
     }
 }
 
-extension DemoAccountViewController:FirebaseStorageDelegate{
-    func media(_ url: String?, isSuccess: Bool, type: FirebaseStorageType) {
-        if isSuccess{
-            let dict = ["profileImage":url]
-            let email = Auth.auth().currentUser?.email ?? ""
-            firebaseManager?.updateData(dict: dict as [String : Any], collectionName: "users", documentName: email)
-        }
-        
-    }
-    
-}
-extension DemoAccountViewController:FirebaseDatabaseDelegate{
-    func databaseUpdate(_ isSuccess: Bool) {
-        if isSuccess{
-            dismiss(animated: true, completion: nil)
-        }
-    }
-}
+//extension DemoAccountViewController:FirebaseStorageDelegate{
+//    func media(_ url: String?, isSuccess: Bool, type: FirebaseStorageType) {
+//        if isSuccess{
+//            let dict = ["profileImage":url]
+//            let email = Auth.auth().currentUser?.email ?? ""
+//          //  firebaseManager?.updateData(dict: dict as [String : Any], collectionName: "users", documentName: email)
+//        }
+//        
+//    }
+//
+//}
+//extension DemoAccountViewController:FirebaseDatabaseDelegate{
+//    func databaseUpdate(_ isSuccess: Bool) {
+//        if isSuccess{
+//            dismiss(animated: true, completion: nil)
+//        }
+//    }
+//}

@@ -7,48 +7,6 @@
 //
 
 import UIKit
-import Firebase
-
-extension ViewController:FirebaseDatabaseDelegate{
-    
-    func queryWith(_ query: Query?, isSuccess: Bool, type: FirebaseDatabaseType) {
-        if type == .query{
-
-            firebaseManager?.queryWith(query!, fieldName: "public", isEqualTo: true, type: .snapshotQuery)
-        }
-    }
-    func query(_ document: [QueryDocumentSnapshot], isSuccess: Bool, type: FirebaseDatabaseType) {
-        switch type {
-        case .snapshotQuery:
-            var arAssets = [ARImageAsset]()
-                       
-                       arAssets = document.filter { (doc) -> Bool in
-                           (doc.get("public") as? Bool) == true
-                       }.filter { (doc) -> Bool in
-                           ((doc.get("matchURL") as? String) != nil &&
-                               (doc.get("refImage") as? String) != nil)
-                       }.map({ (doc) -> ARImageAsset in
-                           let name = (doc.get("matchURL") as! String)
-                           let url = (doc.get("refImage") as! String)
-                           return ARImageAsset(name: name, imageUrl: url)
-                       })
-                       
-                       ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
-                       self.isReloading = false
-            //                       NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
-            
-            let imgMod = ImageLoadingStatus(message: "Updating notification", startIndex: 0, endIndex: arAssets.count)
-            
-            NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
-            
-            
-           
-        default:
-            break
-        }
-    }
-}
-
 
 
 //  MARK: Notificaton Binding Protocol
@@ -63,5 +21,34 @@ extension ViewController:NotificatoinBindingDelegate{
         if let msg = value as? String{
             self.statusViewController.showMessage(msg, autoHide: true)
         }
+    }
+}
+
+extension ViewController{
+    func renderArAssets(docId: String){
+        IFirebaseDatabase.shared.query("pairs", fieldName: "user", isEqualTo: docId)
+            .sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { (document) in
+                var arAssets = [ARImageAsset]()
+                //            let document = snapshot.documents
+                arAssets = document.filter { $0.public ?? false}.map({ (doc) ->  ARImageAsset  in
+                    return ARImageAsset(name: doc.matchURL ?? "", imageUrl: doc.refImage ??  "")
+                })
+                
+                
+                ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
+                self.isReloading = false
+                //                       NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
+                
+                let imgMod = ImageLoadingStatus(message: "Updating notification", startIndex: 0, endIndex: arAssets.count)
+                
+                NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
+        }.store(in: &IFirebaseDatabase.shared.cancelBag)
     }
 }

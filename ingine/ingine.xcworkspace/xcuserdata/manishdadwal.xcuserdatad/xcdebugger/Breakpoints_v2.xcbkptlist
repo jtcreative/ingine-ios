@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "51D292B6-E4F7-4954-87C1-15FFECA4A0B4"
-            shouldBeEnabled = "Yes"
+            uuid = "3BF9C829-D1C1-474F-B56C-91222704C900"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ingine/OptionsLauncher.swift"
+            filePath = "ingine/ExtensionClasses/ProfileViewControllerExtension.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "editURL(url:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6387571F-0669-4644-AFCA-E9D12F1181B6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ingine/ExtensionClasses/DataBinding/NotificationDataBindingExtension.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "registerPublisher(name:type:)"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "retrieveItems()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

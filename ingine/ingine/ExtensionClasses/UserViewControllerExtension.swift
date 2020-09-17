@@ -8,27 +8,35 @@
 
 import UIKit
 import Firebase
-extension UserViewController:FirebaseDatabaseDelegate{
-    
-    func query(_ document: [QueryDocumentSnapshot], isSuccess: Bool, type: FirebaseDatabaseType) {
-        switch type {
-        case .snapshotQuery:
-            for doc in document {
-                self.users.append(doc)
-            }
+
+extension UserViewController {
+     func reloadUsers() {
+        // get user collection
+//        firebaseManager?.getCollection("users",hasLimit: true, limit: 10000 ,type: .snapshotQuery)
+        
+        IFirebase.shared.getUserList("users", limit: 10000)
             
-            self.users.sort { (doc1, doc2) -> Bool in
-                return doc1.documentID.lowercased() < doc2.documentID.lowercased()
-            }
-            
-            DispatchQueue.main.async {
-                self.refreshControl?.endRefreshing()
-                self.tableView.reloadData()
-            }
-        default:
-            break
-        }
+            .sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { (snapshot) in
+                for doc in snapshot {
+                    self.users.append(doc)
+                }
+                
+                self.users.sort { (doc1, doc2) -> Bool in
+                    return doc1.documentID.lowercased() < doc2.documentID.lowercased()
+                }
+                
+                DispatchQueue.main.async {
+                    self.refreshControl?.endRefreshing()
+                    self.tableView.reloadData()
+                }
+        }.store(in: &IFirebase.shared.cancelBag)
     }
-    
-    
 }
+

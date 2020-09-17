@@ -13,7 +13,7 @@ import Firebase
 import SafariServices
 import Connectivity
 import Combine
-
+import FirebaseFirestoreSwift
 class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
     let connectivity: Connectivity = Connectivity()
@@ -36,7 +36,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     @IBOutlet weak var alertHeightAnchor: NSLayoutConstraint?
     @IBOutlet weak var homeButton: UIButton?
     let cameraButton = UIButton.init()
-    var firebaseManager:FirebaseManager?
+    
     /// The view controller that displays the status and "restart experience" UI.
     lazy var statusViewController: StatusViewController = {
         return children.lazy.compactMap({ $0 as? StatusViewController }).first!
@@ -67,8 +67,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        db = Firestore.firestore()
-        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: nil)
+     
         
         NotificatonBinding.shared.registerPublisher(name: .progressUpdate, type: ImageLoadingStatus.self)
                NotificatonBinding.shared.delegate = self
@@ -416,7 +415,8 @@ extension ViewController {
         self.isPublic = isPublic
         
         // search assest for AR render
-        firebaseManager?.query("pairs", fieldName: "user", isEqualTo: userDocID, hasLimit: true, limit: 1000, type: .query)
+
+       renderArAssets(docId: userDocID)
        
     }
     

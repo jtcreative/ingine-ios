@@ -17,7 +17,7 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
     var image : UIImage?
     lazy var storage = Storage.storage()
     var storageURL : String = ""
-    var firebaseManager: FirebaseManager?
+    
     var db: Firestore!
     
     override func viewDidLoad() {
@@ -27,7 +27,7 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
         } else {
             // Fallback on earlier versions
         }
-        firebaseManager = FirebaseManager(nil, databaseDelegate: self, storageDelegate: self)
+      
         imageView.image = image
         db = Firestore.firestore()
         
@@ -65,7 +65,8 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
 
        
         guard let imageData = image!.jpegData(compressionQuality: 0.8) else { return }
-        firebaseManager?.uploadImage(imageData, type: .image)
+//        firebaseManager?.uploadImage(imageData, type: .image)
+        uploadArImage(imageData)
 
     }
 }
