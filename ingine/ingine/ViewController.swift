@@ -12,7 +12,8 @@ import UIKit
 import Firebase
 import SafariServices
 import Connectivity
-
+import Combine
+import FirebaseFirestoreSwift
 class ViewController: PortraitViewController, ARSCNViewDelegate {
     var db: Firestore!
     let connectivity: Connectivity = Connectivity()
@@ -24,7 +25,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     var currentImgIndex = 0
     var downloadCount = 0
     var isReloading = false
-    
+    var isPublic = false
     var arImageCycleTimer : Timer?
     
     // Scene initializations
@@ -66,7 +67,10 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        db = Firestore.firestore()
+     
+        
+        NotificatonBinding.shared.registerPublisher(name: .progressUpdate, type: ImageLoadingStatus.self)
+               NotificatonBinding.shared.delegate = self
         
         // setup login/signup/profile page access
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
@@ -188,6 +192,10 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     // SYSTEM FUNCTIONS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+         
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
     }
     
@@ -404,35 +412,12 @@ extension ViewController {
         }
         cancelTimer()
         isReloading = true
-        var query = db.collection("pairs").whereField("user", isEqualTo: userDocID).limit(to: 1000)
+        self.isPublic = isPublic
         
-        if isPublic {
-            query = query.whereField("public", isEqualTo: true)
-        }
-        
-        query.getDocuments { (querySnapshot, err) in
-            guard err == nil,
-                let documents = querySnapshot?.documents else {
-                return
-            }
+        // search assest for AR render
 
-            var arAssets = [ARImageAsset]()
-            
-            arAssets = documents.filter { (doc) -> Bool in
-                (doc.get("public") as? Bool) == true
-            }.filter { (doc) -> Bool in
-                ((doc.get("matchURL") as? String) != nil &&
-                (doc.get("refImage") as? String) != nil)
-            }.map({ (doc) -> ARImageAsset in
-                let name = (doc.get("matchURL") as! String)
-                let url = (doc.get("refImage") as! String)
-                return ARImageAsset(name: name, imageUrl: url)
-            })
-            
-            ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
-            self.isReloading = false
-            NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
-        }
+       renderArAssets(docId: userDocID)
+       
     }
     
     func removeUnusedAssets(assets:[ARImageAsset]) {
@@ -546,24 +531,48 @@ extension ViewController: ARImageDownloadServiceDelegate {
                 let arAsset = asset,
                 arAssets.contains(arAsset) == false else {
                 print("ref image could not be downloaded. Error: \(status)")
-                NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Skipping item \(index)", fromStartingIndex: index, toEndingIndex: total))
+             //   NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Skipping item \(index)", fromStartingIndex: index, toEndingIndex: total))
+                    
+                  
+                    
+                    let imgMod = ImageLoadingStatus(message: "Skipping item \(index)", startIndex: index, endIndex: total)
+                    
+                    NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
+                   
+                    
+                    
+                    
+                    
+                    
                 return
             }
         
             arAssets.append(arAsset)
         }
-        NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating with item \(index)", fromStartingIndex: index, toEndingIndex: total))
+        
+      
+                
+        let imgMod = ImageLoadingStatus(message: "Updating with item \(index)", startIndex: index, endIndex: total)
+        
+           NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
+                          
+        
+     //   NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating with item \(index)", fromStartingIndex: index, toEndingIndex: total))
     }
     
     func onOperationCompleted(status:ARImageDownloadStatus) {
-        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update complete"))
         
+        NotificatonBinding.shared.registerPublisher(name: .progressEnd, type: String.self)
+        
+        NotificationCenter.default.post(name: .progressEnd, object: "Update Complete")
+        //NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Complete"))
         guard status != .Error else {
             print("all images could not be downloaded. Error: \(status)")
             return
         }
         
-        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
+//        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
+        NotificationCenter.default.post(name: .progressEnd, object: "Update Completed")
         cycleNextArAssets(Timer.init())
         //startTimer()
     }

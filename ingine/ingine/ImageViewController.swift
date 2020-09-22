@@ -17,6 +17,7 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
     var image : UIImage?
     lazy var storage = Storage.storage()
     var storageURL : String = ""
+    
     var db: Firestore!
     
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
         } else {
             // Fallback on earlier versions
         }
+      
         imageView.image = image
         db = Firestore.firestore()
         
@@ -60,85 +62,11 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
     }
     
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
-        let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        
-        // Upload image
-//        let imageData = UIImageJPEGRepresentation(image!, 0.8)
-        let imageData = image!.jpegData(compressionQuality: 0.8)
-        
-//        let imagePath = Auth.auth().currentUser!.uid + "/\(Int(Date.timeIntervalSinceReferenceDate * 1000)).jpg"
-        let imagePath = "/\(Int(Date.timeIntervalSinceReferenceDate * 1000)).jpg"
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpeg"
-        
-        //Upload and save content to appropriate user
-        if Auth.auth().currentUser?.uid != nil {
-            // User is logged in
-            let storageRef = self.storage.reference(withPath: imagePath)
-            storageRef.putData(imageData!, metadata: metadata) { (metadata, error) in
-                if let error = error {
-                    print("Error uploading: \(error)")
-                    return
-                }
-                print("no error")
-                // Get download url from firestore storage
-                storageRef.downloadURL { (url, error) in
-                    self.storageURL = (url?.absoluteString)!
-                    print(self.storageURL)
-                    var matchURL = ""
-                    let itemName = self.nameBox.text ?? ""
-                    let email = Auth.auth().currentUser?.email ?? ""
-                    if self.urlBox.text?.hasPrefix("https://") ?? false || self.urlBox.text?.hasPrefix("http://") ?? false {
-                        matchURL = self.urlBox.text ?? ""
-                    }else {
-                        matchURL = "http://\(self.urlBox.text ?? "")"
-                    }
-                    
-                    // Save ingineered item in firebase pairs folder
-                    var ref: DocumentReference? = nil
-                    ref = self.db.collection("pairs").addDocument(data: [
-                        "name": itemName,
-                        "refImage": self.storageURL,
-                        "matchURL": matchURL,
-                        "user": email,
-                        "public": self.visibilitySwitch.isOn
-                    ]) { err in
-                        if let err = err {
-                            print("Error adding document: \(err)")
-                        } else {
-                            print("Document added with ID!")
-                        }
-                    }
-                    
-                    // Save a reference in users folder
-                    let documentRefString = self.db.collection("pairs").document(ref?.documentID ?? "")
-                    let userRefKey = ref?.documentID
 
-                    self.db.collection("users").document(email).updateData([
-                        userRefKey ?? "" : self.db.document(documentRefString.path)
-                    ]) { err in
-                        if let err = err {
-                            print("Error getting reference to document: \(err)")
-                        } else {
-                            print("Reference successfully written!")
-                        }
-                    }
-
-                }
-                
-            }
-            
-            
-        } else {
-            // User is not logged in // This point should never be reached at runtime // alert user
-            print("not logged in at matching screen")
-
-        }
        
-        // refresh configuration on main screen
-//        ViewController().restartExperience()
-        // go back to home screen
-        let vc = st.instantiateInitialViewController()
-        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+        guard let imageData = image!.jpegData(compressionQuality: 0.8) else { return }
+//        firebaseManager?.uploadImage(imageData, type: .image)
+        uploadArImage(imageData)
+
     }
 }

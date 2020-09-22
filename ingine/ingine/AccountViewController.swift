@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 import Firebase
 import Photos
-
+import Combine
 @IBDesignable
 class AccountViewController: PortraitViewController {
 
     var db : Firestore!
+   
+   
     let spinnerView: UIActivityIndicatorView = {
         let sv = UIActivityIndicatorView()
         sv.translatesAutoresizingMaskIntoConstraints = false
@@ -138,40 +140,11 @@ class AccountViewController: PortraitViewController {
             self.displayAlert(title: "Invalid Form", message: "Please fill in all fields!")
             return
         }
-        
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-            self.spinnerView.stopAnimating()
-            if let error = error {
-                self.loginRegisterButton.isUserInteractionEnabled = true
-                if let errCode = AuthErrorCode(rawValue: error._code) {
-                    switch errCode {
-                    case .userNotFound:
-                        self.displayAlert(title: "Email Not Found", message: "Please check your email!")
-                    case .invalidEmail:
-                        self.displayAlert(title: "Invalid Email", message: "Please check your email format!")
-                    case .wrongPassword:
-                        self.displayAlert(title: "Wrong Password", message: "Please check your password!")
-                    case .networkError:
-                        self.displayAlert(title: "Netword Error", message: "No network connection!")
-                    default:
-                        print("unknown error")
-                        print(error)
-                    }
-                }
-                return
-            } else {
-                // log user in, and show home screen
-                // Go back to homescreen
-                self.openMainViewController()
-//                self.dismiss(animated: true, completion: nil)
-                // show profile view
-//                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-//                let vc = st.instantiateViewController(withIdentifier: "Profile")
-//                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
-            }
-        })
-        
-        
+        // Sign in with firebase
+
+        login(email, password:password)
+      
+    
     }
     
     func displayAlert(title: String, message: String) {
@@ -187,28 +160,8 @@ class AccountViewController: PortraitViewController {
             return
         }
         
-        Auth.auth().sendPasswordReset(withEmail: email, completion: { (error) in
-            
-            if let error = error {
-                if let errCode = AuthErrorCode(rawValue: error._code) {
-                    switch errCode {
-                    case .invalidEmail:
-                        self.displayAlert(title: "Invalid Email", message: "Please check your email format!")
-                    case .networkError:
-                        self.displayAlert(title: "Netword Error", message: "No network connection!")
-                    case .userNotFound:
-                        self.displayAlert(title: "No User Found", message: "No user record found!")
-                    default:
-                        print("unknown error")
-                        print(error)
-                    }
-                }
-            }else{
-                self.emailTextField.text = ""
-                self.displayAlert(title: "Success", message: "Password reset email sent!")
-                
-            }
-        })
+//        firebaseManager?.forgotPassword(email)
+        forgotPassword(email)
         
     }
     
@@ -235,53 +188,9 @@ class AccountViewController: PortraitViewController {
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
-            self.spinnerView.stopAnimating()
-            if let error = error {
-                self.loginRegisterButton.isUserInteractionEnabled = true
-                if let errCode = AuthErrorCode(rawValue: error._code) {
-                    switch errCode {
-                    case .invalidEmail:
-                        self.displayAlert(title: "Invalid Email", message: "Please check your email format!")
-                    case .emailAlreadyInUse:
-                        self.displayAlert(title: "Email Already Registered", message: "Please use another email!")
-                    case .weakPassword:
-                        self.displayAlert(title: "Weak Password", message: "Your password is too weak!")
-                    case .networkError:
-                        self.displayAlert(title: "Netword Error", message: "No network connection!")
-                    default:
-                        self.displayAlert(title: "Netword Error", message: "Unknown error")
-                        print("unknown error")
-                        print(error)
-                    }
-                }
-                return
-            } else {
-                
-                guard user != nil else {
-                    self.loginRegisterButton.isUserInteractionEnabled = true
-                    return
-                }
-
-                // update database with newly created user
-                self.db.collection("users").document(email).setData([
-                    "fullName": username
-                ]) { err in
-                    if let err = err {
-                        print("Error writing document: \(err)")
-                        self.loginRegisterButton.isUserInteractionEnabled = false
-                    } else {
-                        print("Document successfully written!")
-                        DispatchQueue.main.async {
-                            self.dismiss(animated: true, completion: nil)
-                            self.openMainViewController()
-                        }
-                    }
-                }
-            }
-        })
-        
-        
+        // Create account with Firebase Manager
+//        firebaseManager?.signUp(email, password: password)
+            signUp(email, password: password)
     }
     
     
@@ -358,7 +267,7 @@ class AccountViewController: PortraitViewController {
         
         setupForgetPasswordButton()
         setupKeyboardObservers()
-        db = Firestore.firestore()
+       
         
         // Add swipe gestures to view
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))

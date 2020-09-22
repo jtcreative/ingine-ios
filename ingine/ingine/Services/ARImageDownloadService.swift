@@ -23,6 +23,17 @@ struct ARImageAsset: Equatable {
     }
 }
 
+struct ARImageAssetTest: Equatable,Codable {
+    let `public`:Bool?
+    let matchURL:String?
+    var refImage:String?
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return (lhs.matchURL == rhs.matchURL && lhs.refImage == rhs.refImage)
+    }
+}
+
+
 class ARImageDownloadService {
     
     static private var downloadService:ARImageDownloadService?

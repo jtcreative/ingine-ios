@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5PD-VP-D4d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5PD-VP-D4d">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -98,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g9h-Vm-ZUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="-280.24553571428572"/>
+            <point key="canvasLocation" x="113" y="-319"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -328,6 +328,7 @@
                                 <state key="normal" backgroundImage="homeButton"/>
                                 <connections>
                                     <action selector="goBackHome" destination="CJT-JP-PuX" eventType="touchUpInside" id="Bto-IU-0HU"/>
+                                    <segue destination="nUV-Ec-n8z" kind="show" identifier="demoAccount" id="84a-88-4fZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -568,6 +569,66 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rai-0v-Wmt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="871" y="875"/>
+        </scene>
+        <!--Demo Account View Controller-->
+        <scene sceneID="a6L-YK-B1v">
+            <objects>
+                <viewController storyboardIdentifier="DemoAccountViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nUV-Ec-n8z" customClass="DemoAccountViewController" customModule="ingine" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VhI-aI-Pta">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9v4-VV-Ddi">
+                                <rect key="frame" x="116" y="100" width="182" height="182"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="9v4-VV-Ddi" secondAttribute="height" multiplier="1:1" id="Id2-FV-6R3"/>
+                                    <constraint firstAttribute="height" constant="182" id="mmB-Jp-v0k"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7cd-Y3-fId">
+                                <rect key="frame" x="107" y="332" width="200" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="MUb-51-8iW"/>
+                                    <constraint firstAttribute="height" constant="44" id="XUN-Wn-7no"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Choose Profile.."/>
+                                <connections>
+                                    <action selector="choosePhoto:" destination="nUV-Ec-n8z" eventType="touchUpInside" id="LmX-5a-etX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gl7-fy-5Ba">
+                                <rect key="frame" x="107" y="416" width="200" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="b5y-Zc-gYf"/>
+                                    <constraint firstAttribute="height" constant="44" id="s46-uX-GHS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Upload"/>
+                                <connections>
+                                    <action selector="upload:" destination="nUV-Ec-n8z" eventType="touchUpInside" id="JLi-85-V2h"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Gl7-fy-5Ba" firstAttribute="centerX" secondItem="7cd-Y3-fId" secondAttribute="centerX" id="WpC-HC-mNE"/>
+                            <constraint firstItem="7cd-Y3-fId" firstAttribute="top" secondItem="9v4-VV-Ddi" secondAttribute="bottom" constant="50" id="gmC-3V-rp2"/>
+                            <constraint firstItem="9v4-VV-Ddi" firstAttribute="top" secondItem="qS0-Lk-xPr" secondAttribute="top" constant="100" id="h3B-X4-spD"/>
+                            <constraint firstItem="7cd-Y3-fId" firstAttribute="centerX" secondItem="9v4-VV-Ddi" secondAttribute="centerX" id="nvN-mF-45F"/>
+                            <constraint firstItem="Gl7-fy-5Ba" firstAttribute="top" secondItem="7cd-Y3-fId" secondAttribute="bottom" constant="40" id="oek-2d-RWE"/>
+                            <constraint firstItem="9v4-VV-Ddi" firstAttribute="centerX" secondItem="qS0-Lk-xPr" secondAttribute="centerX" id="zmo-c7-hdz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qS0-Lk-xPr"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QFs-Ww-uCd"/>
+                    <connections>
+                        <outlet property="userImage" destination="9v4-VV-Ddi" id="PLw-7O-v8c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fo2-aU-h8I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1605.7971014492755" y="874.55357142857144"/>
         </scene>
         <!--Tutorial View Controller-->
         <scene sceneID="pIi-PL-cJp">

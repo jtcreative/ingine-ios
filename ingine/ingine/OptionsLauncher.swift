@@ -49,6 +49,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         return [Option(name: "Edit URL", imageName: "settings"), Option(name: "Change visibility", imageName: "privacy"), Option(name: "Delete item", imageName: "cancel")]
     }()
     
+    
     func showOptions(identification: String) {
         itemID = identification
         
@@ -212,39 +213,52 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         }
         
         if Auth.auth().currentUser?.uid != nil {
-            self.db.collection("pairs").document(itemID).updateData([
+            let dict = [
                 "matchURL" : link
-            ]) { err in
-                if let err = err {
-                    print("Error editing URL: \(err)")
-                } else {
-                    print("URL successfully changed!")
+            ]
+           // firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+            IFirebaseDatabase.shared.updateData("pairs", document: itemID, data: dict).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            }
+            }) { (_) in
+                 self.handleDismiss()
+            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            
+            
+            
         } else {
             print("not logged in at editing url screen")
         }
         
-        self.handleDismiss()
+        
     }
     
     // DELETE ITEM
     func deleteItem() {
         print("trying to delete")
         if Auth.auth().currentUser?.uid != nil {
+//            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
+            IFirebaseDatabase.shared.deleteDocument("pairs", document: itemID).sink(receiveCompletion: { (completion) in
+                           switch completion
+                           {
+                           case .finished : print("finish")
+                           case .failure(let error):
+                               print(error.localizedDescription)
+                           }
+                       }) { (_) in
+                            self.handleDismiss()
+                       }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                       
             
-            db.collection("pairs").document(itemID).delete() { err in
-                if let err = err {
-                    print("Error removing document: \(err)")
-                } else {
-                    print("Document successfully removed!")
-                }
-            }
         } else {
             print("not logged in at deleting item screen")
         }
         
-        self.handleDismiss()
+      //  self.handleDismiss()
     }
     
     // CHANGE VISIBILITY
@@ -258,16 +272,21 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         }
         
         if Auth.auth().currentUser?.uid != nil {
-            
-            self.db.collection("pairs").document(itemID).updateData([
+            let dict = [
                 "public" : status
-            ]) { err in
-                if let err = err {
-                    print("Error getting changing item's visibility setting: \(err)")
-                } else {
-                    print("Visibility setting successfully changed!")
-                }
-            }
+            ]
+//            firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
+          IFirebaseDatabase.shared.updateData("pairs", document: itemID, data: dict).sink(receiveCompletion: { (completion) in
+                         switch completion
+                         {
+                         case .finished : print("finish")
+                         case .failure(let error):
+                             print(error.localizedDescription)
+                         }
+                     }) { (_) in
+                          self.handleDismiss()
+                     }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                     
             
         } else {
             print("not logged in at changing visibilty screen")
