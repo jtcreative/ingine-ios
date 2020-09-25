@@ -38,7 +38,7 @@ struct IngineeredItem {
     var itemURL = ""
     var visStatus = false
 }
-struct TestItem:Codable {
+struct ARItem:Codable {
     var id :String?
     var name:String?
     var refImage:String?

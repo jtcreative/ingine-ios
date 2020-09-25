@@ -12,9 +12,9 @@ import FirebaseStorage
 
 class IFirebaseStorage:IArUploadService{
     
-        typealias T = String
-       var cancelBag = Set<AnyCancellable>()
-       static var shared = IFirebaseStorage()
+    typealias T = String
+    var cancelBag = Set<AnyCancellable>()
+    static var shared = IFirebaseStorage()
     
     func uploadImage(_ imageData: Data) -> AnyPublisher<String, Error> {
         Future<String, Error>{ promise in
@@ -26,27 +26,25 @@ class IFirebaseStorage:IArUploadService{
             
             let storageRef =
                 Storage.storage().reference(withPath: imagePath)
-                     storageRef.putData(imageData, metadata: metadata) { (metadata, error) in
-                         if let error = error {
-                             print("Error uploading: \(error)")
-                             return
-                         }
-                         print("no error")
-                         // Get download url from firestore storage
-                         storageRef.downloadURL { (url, error) in
-                            if let error = error{
-                              //  self.storageDelegate?.media?(nil, isSuccess: false, type: type)
-                                promise(.failure(error))
-                            }else{
-                                promise(.success(url?.absoluteString ?? ""))
-//                                s//elf.storageDelegate?.media?(url?.absoluteString, isSuccess: true, type: type)
-                            }
-                        }}
-
+            storageRef.putData(imageData, metadata: metadata) { (metadata, error) in
+                if let error = error {
+                    print("Error uploading: \(error)")
+                    return
+                }
+                print("no error")
+                // Get download url from firestore storage
+                storageRef.downloadURL { (url, error) in
+                    if let error = error{
+                        promise(.failure(error))
+                    }else{
+                        promise(.success(url?.absoluteString ?? ""))
+                    }
+                }}
+            
         }.eraseToAnyPublisher()
     }
     
-   
+    
     
     
     
