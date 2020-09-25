@@ -9,13 +9,13 @@
 import ARKit
 import SceneKit
 import UIKit
-import Firebase
+import FirebaseAuth
 import SafariServices
 import Connectivity
 import Combine
 import FirebaseFirestoreSwift
 class ViewController: PortraitViewController, ARSCNViewDelegate {
-    var db: Firestore!
+   
     let connectivity: Connectivity = Connectivity()
 
     var arAssets = [ARImageAsset]()
@@ -70,7 +70,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
      
         
         NotificatonBinding.shared.registerPublisher(name: .progressUpdate, type: ImageLoadingStatus.self)
-               NotificatonBinding.shared.delegate = self
+        NotificatonBinding.shared.delegate = self
         
         // setup login/signup/profile page access
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
@@ -120,13 +120,12 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     @IBAction func goToProfileSetting() {
         if isLoggedIn() {
             // send to profile view
-            //presentationController.
             if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-                //performSegue(withIdentifier: "toProfile", sender: nil)
-                mainViewController.nextPage()
+                let profileVc = self.storyboard?.instantiateViewController(identifier: "Profile") as! ProfileViewController
+                mainViewController.goToController(profileVc)
             }
         } else {
-            let login = AccountViewController()
+            let login = LoginViewController()
             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
         }
     }
@@ -171,30 +170,32 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             let image = self.sceneView.snapshot()
 
             // Check if user is logged in first
-            if Auth.auth().currentUser?.uid != nil {
+     //       if Auth.auth().currentUser?.uid != nil {
                 // logged in; send user to crop screen
                 let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
                 let vc = st.instantiateViewController(withIdentifier: "cropVC") as! CropViewController
                 vc.modalPresentationStyle = .fullScreen
                 self.show(vc, sender: nil) // might change
                 vc.loadImageForCrop(image: image)
-            } else {
-                // not logged in; send to login screen
-                // alert user eventually
-                let login = AccountViewController()
-                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-            }
+          //  }
+            
+//            else {
+//                // not logged in; send to login screen
+//                // alert user eventually
+//                let login = AccountViewController()
+//                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+//            }
         
         //}
         
     }
     
+    
     // SYSTEM FUNCTIONS
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-         
-        
+        homeButton?.isHidden = isLoggedIn() ? false : true
         
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
     }
@@ -387,6 +388,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         }
     }
     
+    
+  
 }
 
 extension ViewController {

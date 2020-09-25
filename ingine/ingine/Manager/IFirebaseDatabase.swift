@@ -8,14 +8,14 @@
 
 import Foundation
 import Combine
-import Firebase
+import FirebaseFirestore
 
 
 class IFirebaseDatabase: IARService{
-  
-    typealias Q = QuerySnapshot
-  
     static var shared = IFirebaseDatabase()
+    typealias Q = QuerySnapshot
+    var db = Firestore.firestore()
+   
     var cancelBag = Set<AnyCancellable>()
     //MARK: Firebase Store
       typealias A = DocumentSnapshot

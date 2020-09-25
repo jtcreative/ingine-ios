@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 
 class ImageViewController: PortraitViewController, UITextFieldDelegate {
     @IBOutlet weak var imageView: UIImageView!
@@ -15,10 +16,9 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
     @IBOutlet weak var nameBox: UITextField!
     @IBOutlet weak var visibilitySwitch: UISwitch!
     var image : UIImage?
-    lazy var storage = Storage.storage()
+    var db = Firestore.firestore()
     var storageURL : String = ""
-    
-    var db: Firestore!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +29,20 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
         }
       
         imageView.image = image
-        db = Firestore.firestore()
+       
         
         self.urlBox.delegate = self
         
         // Observers to hide keyboard once return key pressed
+        NotificatonBinding.shared.registerPublisher(name: .sendArData, type: SendARData.self)
+       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+  
+    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -63,10 +69,31 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
     
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
 
+        // check if user already login or not
+        if Auth.auth().currentUser?.uid != nil {
+            // if user login then upload AR image asset
+            guard let imageData = image!.jpegData(compressionQuality: 0.8) else { return }
+            uploadArImage(imageData)
+        }else{
+            
+
+
+            // if user not login then send to user home vc
+            let homeVc =  HomeViewController()
+         
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                let model = SendARData(image: image, url: urlBox.text, name: nameBox.text, visibilty: visibilitySwitch.isOn)
+//                NotificationCenter.default.post(name: .sendArData, object: model)
+                mainViewController.data = model as Any
+                mainViewController.goToController(homeVc)
+                
+            }
+            view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+//            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = homeVc
+            
+        }
        
-        guard let imageData = image!.jpegData(compressionQuality: 0.8) else { return }
-//        firebaseManager?.uploadImage(imageData, type: .image)
-        uploadArImage(imageData)
+       
 
     }
 }

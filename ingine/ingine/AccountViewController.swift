@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 import Photos
 import Combine
 @IBDesignable
@@ -128,21 +129,25 @@ class AccountViewController: PortraitViewController {
     }
     
     func handleLogin() {
-        loginRegisterButton.isUserInteractionEnabled = false
-        guard let email = emailTextField.text?.lowercased(), let password = passwordTextField.text else {
-            loginRegisterButton.isUserInteractionEnabled = true
-            print("Form is not valid!")
-            return
-        }
-        if email.isEmpty || password.isEmpty {
-            self.spinnerView.stopAnimating()
-            self.loginRegisterButton.isUserInteractionEnabled = true
-            self.displayAlert(title: "Invalid Form", message: "Please fill in all fields!")
-            return
-        }
-        // Sign in with firebase
-
-        login(email, password:password)
+        
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        present(vc, animated: true, completion: nil)
+        
+//        loginRegisterButton.isUserInteractionEnabled = false
+//        guard let email = emailTextField.text?.lowercased(), let password = passwordTextField.text else {
+//            loginRegisterButton.isUserInteractionEnabled = true
+//            print("Form is not valid!")
+//            return
+//        }
+//        if email.isEmpty || password.isEmpty {
+//            self.spinnerView.stopAnimating()
+//            self.loginRegisterButton.isUserInteractionEnabled = true
+//            self.displayAlert(title: "Invalid Form", message: "Please fill in all fields!")
+//            return
+//        }
+//        // Sign in with firebase
+//
+//        login(email, password:password)
       
     
     }
@@ -277,14 +282,14 @@ class AccountViewController: PortraitViewController {
     
     // handle swipe gestures from login screen
     @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
-        if (sender.direction == .right) {
-            print("Swipe Right")
-            
-            // Go back to homescreen
-            let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-            let vc = st.instantiateInitialViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
-        }
+//        if (sender.direction == .right) {
+//            print("Swipe Right")
+//            
+//            // Go back to homescreen
+//            let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+//            let vc = st.instantiateInitialViewController()
+//            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+//        }
     }
     
     func setupSpinnerView() {

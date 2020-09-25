@@ -11,6 +11,7 @@ public enum NotificatioType : String {
     case ProgressUpdateNofication
     case ProgressCompleteNotification
     case UserProfileSelectedNotification
+    case SendARDataNotification
 }
 
 public enum NotificationProgressUserInfoType : String {

@@ -8,18 +8,9 @@
 
 import Foundation
 import UIKit
-import Firebase
 import SafariServices
-
-//class Setting: NSObject {
-//    let name: String
-//    let imageName: String
-//
-//    init(name: String, imageName: String) {
-//        self.name = name
-//        self.imageName = imageName
-//    }
-//}
+import FirebaseAuth
+import FirebaseFirestore
 
 class IngineeredItemViewCell: UITableViewCell {
 
@@ -59,8 +50,10 @@ struct TestItem:Codable {
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var itemsArray : [IngineeredItem] = [IngineeredItem]()
-    var db : Firestore!
+ 
     @IBOutlet weak var ingineeredItemsTableView: UITableView!
+    
+    @IBOutlet weak var profileHeaderView: ProfileViewHeader!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var header: UIView!
     var userImage = ""
@@ -81,13 +74,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Configure table view
         configureTableView()
-    //    addFollowers()
+        addFollowers()
         // Check if user logged in by email
         isLoggedIn()
         
         // retrieve ingineered items
         retrieveItems()
-        
+        setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
         
         
@@ -99,14 +92,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
          let id = Auth.auth().currentUser?.email ?? ""
         
-        let dict = ["follower":[["userId":"12432skdjh","username":"Mike"],["userId":"sdf345dfs","username":"John"]]]
-        db.collection("users").document(id).updateData(dict) { (error) in
+        let dict = ["follower":[["userId":"userid1234","username":"Mike"],["userId":"userid89ds","username":"John"]]]
+        Firestore.firestore().collection("users").document(id).updateData(dict) { (error) in
             if let error = error{
                  print("Document error:\(error)")
             }else{
                 print("Document is written successfully")
             }
         }
+    }
+    
+    // setup profile header view
+    private func setupProfileHeader(){
+        profileHeaderView.profileView.setRadius(profileHeaderView.profileView.frame.height / 2)
+        profileHeaderView.settingButton.addTarget(self, action: #selector(openProfileSetting), for: .touchUpInside)
     }
     
    
@@ -124,8 +123,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // set cell fields info from firebase
         cell.id = itemsArray[indexPath.row].id
         let imageUrl = URL(string: itemsArray[indexPath.row].refImage)!
-        let imageData:NSData = NSData(contentsOf: imageUrl)!
-        cell.refImage.image = UIImage(data: imageData as Data)
+        
+        DispatchQueue.global().async {
+            let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+            DispatchQueue.main.async {
+                cell.refImage.image = UIImage(data: imageData as Data)
+            }
+        }
+        
         cell.itemName.text = itemsArray[indexPath.row].itemName
         cell.itemURL.text = itemsArray[indexPath.row].itemURL
         if itemsArray[indexPath.row].visStatus {
@@ -157,6 +162,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    
+    
+    @objc func openProfileSetting(){
+         performSegue(withIdentifier: "profileSettings", sender: nil)
+    }
+    
    
     @IBAction func goBackHome() {
         //performSegue(withIdentifier: "toHome", sender: nil)
@@ -164,16 +175,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             //performSegue(withIdentifier: "toProfile", sender: nil)
             mainViewController.backPage()
      }
-        // performSegue(withIdentifier: "demoAccount", sender: nil)
+        //
         
         
       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "demoAccount" {
-            if let controller = segue.destination as? DemoAccountViewController{
-                controller.userImageStr = userImage
+        if segue.identifier == "profileSettings" {
+            if let controller = segue.destination as? ProfileSettingsViewController{
+//                controller.userImageStr = userImage
             }
         }
     }

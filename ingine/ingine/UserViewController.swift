@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import Firebase
+import FirebaseFirestore
 
 class UserViewController: UITableViewController {
     private var db = Firestore.firestore()

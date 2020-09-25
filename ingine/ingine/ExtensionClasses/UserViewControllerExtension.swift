@@ -12,8 +12,6 @@ import Firebase
 extension UserViewController {
      func reloadUsers() {
         // get user collection
-//        firebaseManager?.getCollection("users",hasLimit: true, limit: 10000 ,type: .snapshotQuery)
-        
         IFirebase.shared.getUserList("users", limit: 10000)
             
             .sink(receiveCompletion: { (completion) in

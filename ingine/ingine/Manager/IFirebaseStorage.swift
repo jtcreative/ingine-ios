@@ -8,7 +8,7 @@
 
 import Foundation
 import Combine
-import Firebase
+import FirebaseStorage
 
 class IFirebaseStorage:IArUploadService{
     

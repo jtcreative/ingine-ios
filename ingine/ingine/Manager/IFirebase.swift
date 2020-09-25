@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseAuth
 import Combine
-import Firebase
+import FirebaseFirestore
 class IFirebase: IUserService{
    
     
