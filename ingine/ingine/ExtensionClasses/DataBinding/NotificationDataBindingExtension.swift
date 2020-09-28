@@ -20,6 +20,7 @@ struct ImageLoadingStatus {
 extension Notification.Name {
     static let progressUpdate = Notification.Name(NotificatioType.ProgressUpdateNofication.rawValue)
     static let progressEnd = Notification.Name(NotificatioType.ProgressCompleteNotification.rawValue)
+    static let sendArData = Notification.Name(NotificatioType.SendARDataNotification.rawValue)
 }
 
 

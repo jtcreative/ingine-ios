@@ -10,21 +10,33 @@ import Foundation
 import UIKit
 import FirebaseAuth
 
+
+
+
 class MainViewController : UIPageViewController {
     
     lazy var pageViews : [UIViewController] = {
         return [
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
-            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile")
+            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeViewController"),
+             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController"),
+             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpViewController"),
+            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
+         
         ]
     }()
+    
+    
+    var data:Any?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if nil == Auth.auth().currentUser?.uid {
             // send to login screen
-            let login = AccountViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+//            let login = AccountViewController()
+//            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+     //       goToController(HomeViewController.self)
+            
         } else {
             self.openTutorialPage(isForFirstTimers: true)
         }
@@ -32,15 +44,32 @@ class MainViewController : UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setViewControllers([pageViews.first!], direction: .forward, animated: true, completion: { result in
-            
+
         })
-        dataSource = self
+        dataSource = nil
     }
     
 }
 
+
 extension MainViewController {
+    
+    func goToController<T:UIViewController>(_ vc:T){
+        for vc in pageViews {
+            if vc is T {
+                if let currentIndex = pageViews.firstIndex(of: vc){
+
+                    setViewControllers([pageViews[currentIndex]], direction: .forward, animated: true, completion: nil)
+                }
+            }
+            
+        }
+        
+    }
+
+    
     func backPage() {
         guard let currentPage = viewControllers?.first,
               let currentIndex = pageViews.firstIndex(of: currentPage),
@@ -79,12 +108,12 @@ extension MainViewController : UIPageViewControllerDataSource {
         let index = pageViews.firstIndex { (vc) -> Bool in
              return (vc == viewController)
          }
-         
+
          guard index != nil,
                 index! > 0 else {
              return nil
          }
-        
+
         let beforeIndex = pageViews.index(before: index!)
         return pageViews[beforeIndex]
     }
@@ -93,12 +122,12 @@ extension MainViewController : UIPageViewControllerDataSource {
          let index = pageViews.firstIndex { (vc) -> Bool in
              return (vc == viewController)
          }
-         
+
          guard index != nil,
              index! < (pageViews.count - 1) else {
              return nil
          }
-         
+
         let nextIndex = pageViews.index(after: index!)
         return pageViews[nextIndex]
     }

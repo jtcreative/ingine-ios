@@ -8,7 +8,7 @@
 
 import Foundation
 import Combine
-import Firebase
+import FirebaseFirestore
 //extension DocumentReference{
 //    struct DocumentSnapshotPublisher: Combine.Publisher {
 //

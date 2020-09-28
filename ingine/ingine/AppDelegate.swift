@@ -8,7 +8,8 @@
 
 import UIKit
 import ARKit
-import Firebase
+import FirebaseCore
+import FirebaseFirestore
 import Network
 
 @UIApplicationMain
@@ -81,7 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+//    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+//        return true
+//    }
+    
+    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
         return true
     }
     

@@ -8,7 +8,7 @@
 
 
 import Foundation
-import Firebase
+import FirebaseAuth
 
 
 extension ImageViewController{
@@ -75,3 +75,4 @@ extension ImageViewController{
         }.store(in: &IFirebaseStorage.shared.cancelBag)
     }
 }
+ 

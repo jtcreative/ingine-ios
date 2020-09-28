@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class Option: NSObject {
     // Add buttons here/or uiviews

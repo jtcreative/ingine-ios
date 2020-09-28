@@ -1,0 +1,137 @@
+//
+//  LoginViewControllerExtension.swift
+//  ingine
+//
+//  Created by Manish Dadwal on 25/09/20.
+//  Copyright © 2020 ingine. All rights reserved.
+//
+
+import UIKit
+import Firebase
+extension LoginViewController{
+    override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.portrait
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    func login( _ email: String, password:String){
+        
+        Loader.start()
+        
+        IFirebase.shared.signIn(email, password: password).sink(receiveCompletion: { (completion) in
+            switch completion {
+            case .finished: print("login finished")
+             
+                
+            case .failure(let error): // Uh-oh, an error occurred!
+                Loader.stop()
+                if let errCode = AuthErrorCode(rawValue: error._code) {
+                    switch errCode {
+                    case .userNotFound:
+                        self.displayAlert(title: "Email Not Found", message: "Please check your email!")
+                    case .invalidEmail:
+                        self.displayAlert(title: "Invalid Email", message: "Please check your email format!")
+                    case .wrongPassword:
+                        self.displayAlert(title: "Wrong Password", message: "Please check your password!")
+                    case .networkError:
+                        self.displayAlert(title: "Netword Error", message: "No network connection!")
+                    default:
+                        print("unknown error")
+                        print(error)
+                    }
+                }
+            }
+        }) { (user) in
+           // upload AR image
+            guard let imageData = self.arImage.image!.jpegData(compressionQuality: 0.8) else { return }
+            self.uploadArImage(imageData)
+            
+        }.store(in: &IFirebase.shared.cancelBag)
+    }
+    
+    // uplod ar asset image
+    func uploadArImage(_ imageData:Data){
+        // upload image
+        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("photo uploaded finish")
+            case .failure(let error):
+                Loader.stop()
+                print(error.localizedDescription)
+            }
+        }) { (url) in
+            // update doucment
+            self.updateARDataInDocument(url: url)
+          
+
+        }.store(in: &IFirebaseStorage.shared.cancelBag)
+    }
+    
+    
+  private func updateARDataInDocument(url:String){
+        var matchURL = ""
+         // update Asset url to pairs document
+         let itemName = self.sendArData?.name ?? ""
+         let email = Auth.auth().currentUser?.email ?? ""
+         if self.sendArData?.url?.hasPrefix("https://") ?? false || self.sendArData?.url?.hasPrefix("http://") ?? false {
+             matchURL = self.sendArData?.url ?? ""
+         }else {
+             matchURL = "http://\(self.sendArData?.url ?? "")"
+         }
+         
+         let dict = [
+             "name": itemName,
+             "refImage": url,
+             "matchURL": matchURL,
+             "user": email,
+             "public": self.sendArData?.visibilty ?? false
+             ] as [String : Any]
+         
+         
+         IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
+             switch completion
+             {
+             case .finished : print("ar asesst updated finish")
+             case .failure(let error):
+                 Loader.stop()
+                 print(error.localizedDescription)
+             }
+         }, receiveValue: { (ref) in
+             
+            self.updateUserDocument(ref)
+             
+         }).store(in: &IFirebaseDatabase.shared.cancelBag)
+    }
+    
+    
+  private  func updateUserDocument(_ ref:DocumentReference){
+        // update users document with pairs ref
+        let email = Auth.auth().currentUser?.email ?? ""
+        // Save a reference in users folder
+        let documentRefString = self.db.collection("pairs").document(ref.documentID)
+        let userRefKey = ref.documentID
+        
+        let dict = [
+            userRefKey: self.db.document(documentRefString.path)
+        ]
+        IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+            Loader.stop()
+            switch completion
+            {
+            case .finished : print("asset in user document finish")
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+            }
+        }) { (_) in
+            // all requests done send to next screen
+           
+            self.openMainViewController()
+        }.store(in: &IFirebaseDatabase.shared.cancelBag )
+    }
+    
+}
