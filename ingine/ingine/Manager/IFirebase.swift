@@ -88,6 +88,23 @@ class IFirebase: IUserService{
     
     
     
+    func searchUser(_ query: String, collection: String, limit: Int) -> AnyPublisher<[QueryDocumentSnapshot], Error> {
+        Future<[QueryDocumentSnapshot], Error>{ promise in
+            Firestore.firestore().collection(collection).limit(to: limit).whereField("fullName", arrayContains: query).getDocuments { (querySnapshot, error) in
+                if let error = error{
+                    print("get collection error \(error)")
+                    promise(.failure(error))
+                }else{
+                    if let document = querySnapshot?.documents{
+                        promise(.success(document))
+                    }
+                }
+            }
+            
+        }.eraseToAnyPublisher()
+    }
+    
+    
 }
 
  

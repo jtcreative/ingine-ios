@@ -25,11 +25,8 @@ class UserListCell: UITableViewCell {
         followButton.layer.borderWidth = 1
         followButton.layer.borderColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         followButton.layer.cornerRadius = 8
-        
-        
-        
-        
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
