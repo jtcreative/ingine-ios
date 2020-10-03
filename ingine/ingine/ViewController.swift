@@ -67,7 +67,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     
+     // setup bottom bar
+        configureBottomBar()
         
         NotificatonBinding.shared.registerPublisher(name: .progressUpdate, type: ImageLoadingStatus.self)
         NotificatonBinding.shared.delegate = self
@@ -84,15 +85,15 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             self.sceneView.session.delegate = self
             
             // Camera button setup
-            self.cameraButton.frame = CGRect.init(x: 0, y: 0, width: 80, height: 80)
-            self.cameraButton.setImage(UIImage.init(named: "camera"), for: .normal)
-            //self.cameraButton.center = CGPoint.init(x: self.view.center.x, y: self.view.frame.size.height - 60)
-            self.cameraButton.addTarget(self, action: #selector(self.takePhotoAction), for: .touchUpInside)
-            self.sceneView.addSubview(self.cameraButton)
-            self.sceneView.autoenablesDefaultLighting = true
-            self.cameraButton.translatesAutoresizingMaskIntoConstraints = false
-            self.cameraButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-            self.cameraButton.centerYAnchor.constraint(equalTo: self.homeButton!.centerYAnchor).isActive = true
+//            self.cameraButton.frame = CGRect.init(x: 0, y: 0, width: 80, height: 80)
+//            self.cameraButton.setImage(UIImage.init(named: "camera"), for: .normal)
+//            //self.cameraButton.center = CGPoint.init(x: self.view.center.x, y: self.view.frame.size.height - 60)
+//            self.cameraButton.addTarget(self, action: #selector(self.takePhotoAction), for: .touchUpInside)
+//            self.sceneView.addSubview(self.cameraButton)
+//            self.sceneView.autoenablesDefaultLighting = true
+//            self.cameraButton.translatesAutoresizingMaskIntoConstraints = false
+//            self.cameraButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+//            self.cameraButton.centerYAnchor.constraint(equalTo: self.homeButton!.centerYAnchor).isActive = true
             
             // Gestures setup
             self.view.addGestureRecognizer(leftSwipe)
@@ -111,10 +112,43 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         
     }
     
+    
+    // configure bottom bar tab
+    
+    private func configureBottomBar(){
+        // add bottom bar to main view
+        let bottomView = BottomBar()
+        view.addSubview(bottomView)
+        // add constrainsts
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        bottomView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0 ).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: 160).isActive = true
+        
+        // add actions to button
+        bottomView.cameraButton.addTarget(self, action: #selector(self.takePhotoAction), for: .touchUpInside)
+        bottomView.searchButton.addTarget(self, action: #selector(self.goToSearchScreen), for: .touchUpInside)
+        bottomView.profileButton.addTarget(self, action: #selector(self.goToProfileSetting), for: .touchUpInside)
+        
+        bottomView.contentView.setCustomGradient([UIColor.black, UIColor.yellow])
+        
+        
+    }
+    
     @objc func refreshConfig()
     {
         //todo jt need to improve this
         //self.restartExperience()
+    }
+    
+    @objc func goToSearchScreen(){
+        if isLoggedIn() {
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                let searchVc = self.storyboard?.instantiateViewController(identifier: "UserViewController") as! UserViewController
+                mainViewController.goToController(searchVc)
+            }
+        }
     }
 
     @IBAction func goToProfileSetting() {

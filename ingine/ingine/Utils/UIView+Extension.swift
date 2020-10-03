@@ -27,4 +27,12 @@ extension UIView{
                 
         self.layer.insertSublayer(gradientLayer, at:0)
     }
+    func setCustomGradient(_ colors:[UIColor]) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = self.bounds
+                
+        self.layer.insertSublayer(gradientLayer, at:0)
+    }
 }
