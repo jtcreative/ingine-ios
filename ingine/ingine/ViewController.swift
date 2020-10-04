@@ -67,9 +67,6 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     // setup bottom bar
-        configureBottomBar()
-        
         NotificatonBinding.shared.registerPublisher(name: .progressUpdate, type: ImageLoadingStatus.self)
         NotificatonBinding.shared.delegate = self
         
@@ -112,30 +109,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         
     }
     
-    
-    // configure bottom bar tab
-    
-    private func configureBottomBar(){
-        // add bottom bar to main view
-        let bottomView = BottomBar()
-        view.addSubview(bottomView)
-        // add constrainsts
-        bottomView.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        bottomView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0 ).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: 160).isActive = true
         
-        // add actions to button
-        bottomView.cameraButton.addTarget(self, action: #selector(self.takePhotoAction), for: .touchUpInside)
-        bottomView.searchButton.addTarget(self, action: #selector(self.goToSearchScreen), for: .touchUpInside)
-        bottomView.profileButton.addTarget(self, action: #selector(self.goToProfileSetting), for: .touchUpInside)
-        
-        bottomView.contentView.setCustomGradient([UIColor.black, UIColor.yellow])
-        
-        
-    }
-    
     @objc func refreshConfig()
     {
         //todo jt need to improve this
@@ -232,6 +206,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         homeButton?.isHidden = isLoggedIn() ? false : true
         
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
+        
+        reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: "alpha850@gmail.com")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -642,10 +618,11 @@ extension ViewController {
 
 extension ViewController {
     @objc func onUserSelected(_ notification: Notification) {
-        guard let dict = notification.userInfo,
+        let documentId = "alpha850@gmail.com"
+        /*guard let dict = notification.userInfo,
             let documentId = dict[NotificationProgressUserInfoType.UserDocumentId.rawValue] as? String else {
                 return
-        }
+        }*/
         
         reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: documentId)
         
