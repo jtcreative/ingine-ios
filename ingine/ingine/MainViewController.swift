@@ -61,7 +61,6 @@ class MainViewController : UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setViewControllers([pageViews[currentPageIndex]], direction: .forward, animated: true, completion: { result in
             self.createNavigationView()
         })

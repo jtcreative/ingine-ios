@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 
-class UserViewController: UITableViewController {
+class UserViewController: UIViewController {
     
+    @IBOutlet weak var searchContainerView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var followersSegment: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
     
     
     private var db = Firestore.firestore()
@@ -32,6 +34,10 @@ class UserViewController: UITableViewController {
     
     override func viewDidLoad() {
         // selected option color
+        searchContainerView.translatesAutoresizingMaskIntoConstraints = false
+        searchContainerView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        searchContainerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        searchContainerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         
         tableView.register(UINib(nibName: "UserListCell", bundle: nil), forCellReuseIdentifier: "UserListCell")
         tableView.tableFooterView = UIView()
@@ -43,7 +49,7 @@ class UserViewController: UITableViewController {
         // color of other options
         followersSegment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         
-        self.refreshControl?.beginRefreshing()
+        //self.refreshControl?.beginRefreshing()
         reloadUsers()
         
         // setup ui
@@ -107,12 +113,12 @@ class UserViewController: UITableViewController {
 
 //MARK:
 
-extension UserViewController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension UserViewController : UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isUserSearching ? usersSearch.count : users.count
     }
         
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
        
         let fullName = user.get("fullName") as? String
@@ -132,13 +138,13 @@ extension UserViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedUser = users[indexPath.row]
         NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.documentID))
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
         
     }
