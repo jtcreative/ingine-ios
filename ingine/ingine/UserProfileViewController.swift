@@ -1,4 +1,12 @@
 //
+//  UserProfileViewController.swift
+//  ingine
+//
+//  Created by James Timberlake on 10/4/20.
+//  Copyright © 2020 ingine. All rights reserved.
+//
+
+//
 //  ProfileViewController.swift
 //  ingine
 //
@@ -12,7 +20,7 @@ import SafariServices
 import FirebaseAuth
 import FirebaseFirestore
 
-class ProfileViewHeaderCell : UITableViewHeaderFooterView {
+class UserProfileViewHeaderCell : UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addProfileView()
@@ -35,7 +43,7 @@ class ProfileViewHeaderCell : UITableViewHeaderFooterView {
     
 }
 
-class IngineeredItemViewCell: UITableViewCell {
+class UserIngineeredItemViewCell: UITableViewCell {
 
     @IBOutlet weak var refImage: UIImageView!
     @IBOutlet weak var itemName: UILabel!
@@ -76,25 +84,10 @@ class IngineeredItemViewCell: UITableViewCell {
     
 }
 
-struct IngineeredItem {
-    var id = ""
-    var refImage = ""
-    var itemName = ""
-    var itemURL = ""
-    var visStatus = false
-}
-struct ARItem:Codable {
-    var id :String?
-    var name:String?
-    var refImage:String?
-    var matchURL:String?
-    var `public` :Bool?
-}
 
 
-
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class UserProfileViewController: UIViewController {
+    public var userId : String?
     var itemsArray : [IngineeredItem] = [IngineeredItem]()
  
     @IBOutlet weak var ingineeredItemsTableView: UITableView!
@@ -112,6 +105,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.view.backgroundColor = .white
         ingineeredItemsTableView.backgroundColor = .white
         
+        guard let currentUserId = userId else {
+            return
+        }
+        
         ingineeredItemsTableView.register(ProfileViewHeaderCell.self, forHeaderFooterViewReuseIdentifier: "ProfileViewHeaderCell")
         
         //let profileHeader = ProfileViewHeader(frame: profileHeaderView.frame)
@@ -128,12 +125,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Configure table view
         configureTableView()
-        addFollowers()
+        //addFollowers()
         // Check if user logged in by email
-        isLoggedIn()
+        //isLoggedIn()
         
         // retrieve ingineered items
-        retrieveItems()
+        //retrieveItems()
         setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
         
@@ -142,7 +139,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
-    func addFollowers()
+    func followUser()
     {
          let id = Auth.auth().currentUser?.email ?? ""
         
@@ -156,6 +153,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func unfolloeUser()
+    {
+        
+    }
+    
     // setup profile header view
     private func setupProfileHeader(){
         profileHeaderView.profileView.setRadius(profileHeaderView.profileView.frame.height / 2)
@@ -164,7 +166,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileHeaderView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         profileHeaderView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         profileHeaderView.heightAnchor.constraint(equalToConstant: 160).isActive = true
-        profileHeaderView.settingButton.addTarget(self, action: #selector(openProfileSetting), for: .touchUpInside)
+        profileHeaderView.settingButton.isHidden = true
     }
     
    
@@ -175,6 +177,56 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         ingineeredItemsTableView.estimatedRowHeight = 120
     }
     
+
+    
+    /*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let viewHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileViewHeaderCell") as? ProfileViewHeaderCell
+        return viewHeaderCell
+    }*/
+    
+    
+    
+    @objc func openProfileSetting(){
+         //performSegue(withIdentifier: "profileSettings", sender: nil)
+    }
+    
+   
+    @IBAction func goBackHome() {
+        //performSegue(withIdentifier: "toHome", sender: nil)
+        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+            //performSegue(withIdentifier: "toProfile", sender: nil)
+            mainViewController.backPage()
+     }
+        //
+        
+        
+      
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "profileSettings" {
+            if let controller = segue.destination as? ProfileSettingsViewController{
+//                controller.userImageStr = userImage
+            }
+        }
+    }
+    
+    
+    /////////////////////////////////////////////////////////////////////////////
+    
+    // handle swipe gestures from home screen
+    @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
+        /*if (sender.direction == .right) {
+            print("Swipe Right")
+            // go back home
+            goBackHome()
+        }*/
+    }
+
+    
+}
+
+extension UserProfileViewController : UITableViewDelegate, UITableViewDataSource {
     // Set cells data in table view
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "igItemCell", for: indexPath) as! IngineeredItemViewCell
@@ -224,74 +276,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         present(safariVC, animated: true)
         
     }
-    
-    /*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let viewHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileViewHeaderCell") as? ProfileViewHeaderCell
-        return viewHeaderCell
-    }*/
-    
-    
-    
-    @objc func openProfileSetting(){
-         performSegue(withIdentifier: "profileSettings", sender: nil)
-    }
-    
-   
-    @IBAction func goBackHome() {
-        //performSegue(withIdentifier: "toHome", sender: nil)
-        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-            //performSegue(withIdentifier: "toProfile", sender: nil)
-            mainViewController.backPage()
-     }
-        //
-        
-        
-      
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "profileSettings" {
-            if let controller = segue.destination as? ProfileSettingsViewController{
-//                controller.userImageStr = userImage
-            }
-        }
-    }
-    
-    
-    /////////////////////////////////////////////////////////////////////////////
-    
-    // handle swipe gestures from home screen
-    @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
-        /*if (sender.direction == .right) {
-            print("Swipe Right")
-            // go back home
-            goBackHome()
-        }*/
-    }
-    
-    
-    @IBAction func signOut(_ sender: Any) {
-       
-//        firebaseManager?.signOut()
-        IFirebase.shared.signOut().sink(receiveCompletion: { (completion) in
-            switch completion{
-            case .finished: print("fnished")
-            case .failure(let error) : print(error.localizedDescription)
-            }
-        }) { (_) in
-            print("Sign out pressed")
-            let login = AccountViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-        }.store(in: &IFirebase.shared.cancelBag)
-    
-        
-    }
-
-    
 }
 
-extension ProfileViewController {
+extension UserProfileViewController {
     override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }
 }
+
