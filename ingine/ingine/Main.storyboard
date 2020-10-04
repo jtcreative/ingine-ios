@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5PD-VP-D4d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5PD-VP-D4d">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -82,7 +80,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="wYK-n4-ypp"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aSK-t0-G4r" firstAttribute="top" secondItem="wYK-n4-ypp" secondAttribute="top" id="00T-V7-ZZG"/>
@@ -91,6 +88,7 @@
                             <constraint firstItem="1uT-CF-YpX" firstAttribute="leading" secondItem="wYK-n4-ypp" secondAttribute="leading" constant="16" id="EfQ-ka-33s"/>
                             <constraint firstItem="1uT-CF-YpX" firstAttribute="top" secondItem="aSK-t0-G4r" secondAttribute="top" constant="20" id="J9G-Za-9yG"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="wYK-n4-ypp"/>
                     </view>
                     <connections>
                         <outlet property="messageLabel" destination="x6b-bh-aZK" id="103-E5-rNP"/>
@@ -123,7 +121,7 @@
                             </visualEffectView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DpU-5B-PRG">
                                 <rect key="frame" x="0.0" y="44" width="414" height="0.0"/>
-                                <color key="backgroundColor" systemColor="darkTextColor"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="hvA-7d-R5F"/>
                                 </constraints>
@@ -140,19 +138,7 @@
                                     <segue destination="ri3-7p-e6d" kind="embed" id="uiU-1f-e8S"/>
                                 </connections>
                             </containerView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3q6-VE-auo">
-                                <rect key="frame" x="313.5" y="771.5" width="60.5" height="60.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60.5" id="USv-ee-c2w"/>
-                                    <constraint firstAttribute="width" constant="60.5" id="u4a-jU-Hj2"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" backgroundImage="homeButton"/>
-                                <connections>
-                                    <action selector="goToProfileSetting" destination="BV1-FR-VrT" eventType="touchUpInside" id="HbX-ja-eUL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzp-AJ-xnk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzp-AJ-xnk">
                                 <rect key="frame" x="50" y="120" width="314" height="30"/>
                                 <state key="normal" title="Select User">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -162,16 +148,13 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="GBj-4O-Whc"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="tnx-rc-95S" firstAttribute="top" secondItem="DpU-5B-PRG" secondAttribute="bottom" id="0Bk-v4-nBZ"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="DpU-5B-PRG" secondAttribute="trailing" id="1N5-Jf-Oks"/>
                             <constraint firstItem="DpU-5B-PRG" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" id="5Ku-6w-qWM"/>
-                            <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="3q6-VE-auo" secondAttribute="bottom" constant="30" id="5gY-PG-pYa"/>
                             <constraint firstAttribute="trailing" secondItem="R5W-V8-6lY" secondAttribute="trailing" id="J42-1v-Ihf"/>
                             <constraint firstItem="uzp-AJ-xnk" firstAttribute="centerX" secondItem="GBj-4O-Whc" secondAttribute="centerX" id="Okb-Hg-6To"/>
-                            <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="3q6-VE-auo" secondAttribute="trailing" constant="40" id="P4C-jc-HS0"/>
                             <constraint firstItem="R5W-V8-6lY" firstAttribute="leading" secondItem="RLh-bf-1c3" secondAttribute="leading" id="Yj0-Fo-B5n"/>
                             <constraint firstItem="E6c-py-dvH" firstAttribute="top" secondItem="RLh-bf-1c3" secondAttribute="top" id="boO-ZZ-neH"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" id="brT-qF-Rdk"/>
@@ -186,18 +169,13 @@
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="uzp-AJ-xnk" secondAttribute="trailing" constant="50" id="wKu-0s-Akp"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="tnx-rc-95S" secondAttribute="trailing" id="yUU-ir-Rk1"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="3q6-VE-auo"/>
-                            </mask>
-                        </variation>
+                        <viewLayoutGuide key="safeArea" id="GBj-4O-Whc"/>
                     </view>
                     <navigationItem key="navigationItem" id="SXM-8e-4Te"/>
                     <connections>
                         <outlet property="alertHeightAnchor" destination="hvA-7d-R5F" id="xen-3N-Xso"/>
                         <outlet property="alertLabel" destination="DpU-5B-PRG" id="Veu-cW-V7Y"/>
                         <outlet property="blurView" destination="R5W-V8-6lY" id="oF2-lD-Srf"/>
-                        <outlet property="homeButton" destination="3q6-VE-auo" id="UzX-88-Vrl"/>
                         <outlet property="sceneView" destination="E6c-py-dvH" id="Gr4-Uw-Z4A"/>
                         <outlet property="userButton" destination="uzp-AJ-xnk" id="Npm-NX-k35"/>
                         <segue destination="CJT-JP-PuX" kind="presentation" identifier="toProfile" modalPresentationStyle="fullScreen" id="qv4-2L-CJx"/>
@@ -222,7 +200,7 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="sectionIndexBackgroundColor" red="0.074509803920000006" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="tVh-HR-miR" customClass="ProfileViewHeader" customModule="ingine" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -320,7 +298,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="darkTextColor"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="66" id="6l3-hG-VCZ"/>
                                     <constraint firstAttribute="trailing" secondItem="lNB-97-VtW" secondAttribute="trailing" constant="20" id="New-aR-Do7"/>
@@ -329,34 +307,20 @@
                                     <constraint firstItem="pYX-a5-q33" firstAttribute="top" secondItem="OJv-dn-cjP" secondAttribute="top" constant="20" id="vjY-EH-qlR"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njz-DK-amH">
-                                <rect key="frame" x="313.5" y="771.5" width="60.5" height="60.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60.5" id="E6l-lq-4Em"/>
-                                    <constraint firstAttribute="width" constant="60.5" id="oF2-xK-2Sl"/>
-                                </constraints>
-                                <color key="tintColor" red="0.5490196078431373" green="0.070588235294117646" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" backgroundImage="homeButton"/>
-                                <connections>
-                                    <action selector="goBackHome" destination="CJT-JP-PuX" eventType="touchUpInside" id="Bto-IU-0HU"/>
-                                </connections>
-                            </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="0cc-qi-ZtI"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0cc-qi-ZtI" firstAttribute="bottom" secondItem="njz-DK-amH" secondAttribute="bottom" constant="30" id="8F1-cS-C3D"/>
                             <constraint firstItem="OJv-dn-cjP" firstAttribute="trailing" secondItem="0cc-qi-ZtI" secondAttribute="trailing" id="ABw-ZD-sA8"/>
                             <constraint firstItem="2MO-Z8-sKY" firstAttribute="top" secondItem="0cc-qi-ZtI" secondAttribute="top" id="IrE-Xw-bgz"/>
                             <constraint firstItem="2MO-Z8-sKY" firstAttribute="trailing" secondItem="0cc-qi-ZtI" secondAttribute="trailing" id="NFV-wD-LCN"/>
                             <constraint firstItem="2MO-Z8-sKY" firstAttribute="top" secondItem="OJv-dn-cjP" secondAttribute="bottom" id="Qjm-zj-ikK"/>
-                            <constraint firstItem="0cc-qi-ZtI" firstAttribute="trailing" secondItem="njz-DK-amH" secondAttribute="trailing" constant="40" id="Y4O-M9-riD"/>
                             <constraint firstAttribute="bottom" secondItem="2MO-Z8-sKY" secondAttribute="bottom" id="eGA-hA-Goy"/>
                             <constraint firstItem="OJv-dn-cjP" firstAttribute="leading" secondItem="0cc-qi-ZtI" secondAttribute="leading" id="fnx-cL-nWr"/>
                             <constraint firstItem="2MO-Z8-sKY" firstAttribute="leading" secondItem="0cc-qi-ZtI" secondAttribute="leading" id="hC6-B4-Jdx"/>
                             <constraint firstItem="2MO-Z8-sKY" firstAttribute="top" secondItem="OJv-dn-cjP" secondAttribute="bottom" id="n1s-8c-GEW"/>
                             <constraint firstItem="OJv-dn-cjP" firstAttribute="top" secondItem="4J9-FY-TXu" secondAttribute="top" id="rq1-g4-h8S"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="0cc-qi-ZtI"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="OJv-dn-cjP"/>
@@ -404,8 +368,7 @@
                                 </items>
                             </navigationBar>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="GKP-SR-S8X"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="e7q-Lo-MDR" firstAttribute="leading" secondItem="GKP-SR-S8X" secondAttribute="leading" id="51u-ik-S3O"/>
                             <constraint firstItem="vKc-3u-GEy" firstAttribute="top" secondItem="GKP-SR-S8X" secondAttribute="top" constant="-10" id="Bk3-0L-nRI"/>
@@ -415,6 +378,7 @@
                             <constraint firstItem="vKc-3u-GEy" firstAttribute="trailing" secondItem="GKP-SR-S8X" secondAttribute="trailing" id="ku2-NC-mpt"/>
                             <constraint firstItem="e7q-Lo-MDR" firstAttribute="top" secondItem="vKc-3u-GEy" secondAttribute="bottom" id="oBP-iI-Rtr"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="GKP-SR-S8X"/>
                     </view>
                     <connections>
                         <outlet property="mImageView" destination="e7q-Lo-MDR" id="GNv-22-BkI"/>
@@ -443,7 +407,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Enter a url" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="n9Y-bM-chP">
                                 <rect key="frame" x="41" y="643.5" width="332" height="28.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" systemColor="darkTextColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES"/>
                             </textField>
@@ -476,7 +440,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Enter a name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CRx-d0-buR">
                                 <rect key="frame" x="41" y="567.5" width="332" height="28.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" systemColor="darkTextColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES"/>
                             </textField>
@@ -493,7 +457,7 @@
                                 <rect key="frame" x="182.5" y="726" width="51" height="31"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insert Augmented Image Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baN-Bi-Zxa">
-                                <rect key="frame" x="78" y="538.5" width="258" height="21"/>
+                                <rect key="frame" x="77.5" y="538.5" width="259" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="b9G-1I-Yer"/>
                                 </constraints>
@@ -502,7 +466,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="sfV-qu-nDR"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="CRx-d0-buR" firstAttribute="top" secondItem="baN-Bi-Zxa" secondAttribute="bottom" constant="8" id="6SM-Jd-kog"/>
@@ -528,6 +491,7 @@
                             <constraint firstItem="uCS-jk-ilA" firstAttribute="centerX" secondItem="M8G-ea-eGZ" secondAttribute="centerX" id="t73-e2-AfO"/>
                             <constraint firstItem="rCY-Aq-Hfd" firstAttribute="centerX" secondItem="M8G-ea-eGZ" secondAttribute="centerX" id="yI4-cy-fRb"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="sfV-qu-nDR"/>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="yR4-iI-iYl" id="gYY-zB-3bU"/>
@@ -587,7 +551,6 @@
                                     <color key="selectedSegmentTintColor" name="backgroundGray"/>
                                 </segmentedControl>
                             </subviews>
-                            <viewLayoutGuide key="safeArea" id="FOG-XN-8hH"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="ufj-eX-2Lz" secondAttribute="trailing" constant="30" id="9Fw-aH-vyX"/>
@@ -599,6 +562,7 @@
                                 <constraint firstItem="3Bk-18-ZiZ" firstAttribute="trailing" secondItem="ufj-eX-2Lz" secondAttribute="trailing" id="nja-85-mcP"/>
                                 <constraint firstItem="ufj-eX-2Lz" firstAttribute="leading" secondItem="SDx-PT-CZc" secondAttribute="trailing" id="rXT-RM-3ma"/>
                             </constraints>
+                            <viewLayoutGuide key="safeArea" id="FOG-XN-8hH"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UsersCell" textLabel="RZx-fk-iWF" detailTextLabel="Igm-Cz-Q3n" style="IBUITableViewCellStyleSubtitle" id="nYV-ZT-DVf">
@@ -609,7 +573,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RZx-fk-iWF">
-                                            <rect key="frame" x="20" y="10" width="33" height="20.5"/>
+                                            <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -652,7 +616,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gl7-fy-5Ba">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gl7-fy-5Ba">
                                 <rect key="frame" x="24" y="517" width="366" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -666,7 +630,7 @@
                                     <action selector="save:" destination="nUV-Ec-n8z" eventType="touchUpInside" id="yvg-kJ-Fol"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8P-Rg-PnL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8P-Rg-PnL">
                                 <rect key="frame" x="24" y="385" width="365" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -692,7 +656,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="9v4-VV-Ddi" secondAttribute="bottom" id="8ey-m8-6cV"/>
                                     <constraint firstAttribute="height" constant="100" id="Bgo-OF-RNL"/>
@@ -767,7 +731,7 @@ When an AR Image is created by any of your following.</string>
                                     <constraint firstAttribute="trailing" secondItem="5kc-8r-vyF" secondAttribute="trailing" constant="12" id="XMQ-at-S9h"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WAb-88-AT6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WAb-88-AT6">
                                 <rect key="frame" x="24" y="451" width="366" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -782,8 +746,7 @@ When an AR Image is created by any of your following.</string>
                                 </connections>
                             </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="qS0-Lk-xPr"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="GCe-el-T9F" firstAttribute="top" secondItem="F0q-Kx-iIB" secondAttribute="bottom" constant="8" id="18O-SU-IBD"/>
                             <constraint firstItem="Gl7-fy-5Ba" firstAttribute="top" secondItem="WAb-88-AT6" secondAttribute="bottom" constant="16" id="3Ov-88-mrA"/>
@@ -807,6 +770,7 @@ When an AR Image is created by any of your following.</string>
                             <constraint firstItem="sor-Td-C30" firstAttribute="top" secondItem="caE-vr-Tr3" secondAttribute="bottom" constant="16" id="rjo-Ml-TZ5"/>
                             <constraint firstItem="qS0-Lk-xPr" firstAttribute="trailing" secondItem="n8P-Rg-PnL" secondAttribute="trailing" constant="25" id="zGK-YA-HFL"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="qS0-Lk-xPr"/>
                     </view>
                     <navigationItem key="navigationItem" id="QFs-Ww-uCd"/>
                     <connections>
@@ -846,7 +810,7 @@ When an AR Image is created by any of your following.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Hw-9H-7XE">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Hw-9H-7XE">
                                 <rect key="frame" x="22" y="794" width="370" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -878,7 +842,7 @@ When an AR Image is created by any of your following.</string>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esK-80-Xsx">
                                 <rect key="frame" x="22" y="682" width="370" height="44"/>
-                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="lDy-yy-ff4"/>
                                 </constraints>
@@ -907,7 +871,6 @@ When an AR Image is created by any of your following.</string>
                                 </constraints>
                             </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="IxB-aV-4ob"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qzT-R0-Yyj" firstAttribute="top" secondItem="IxB-aV-4ob" secondAttribute="top" id="0RB-nf-yPZ"/>
@@ -930,6 +893,7 @@ When an AR Image is created by any of your following.</string>
                             <constraint firstItem="HyX-ka-7Kp" firstAttribute="height" secondItem="QNl-B9-d3d" secondAttribute="height" multiplier="0.4" id="sTS-yb-d0q"/>
                             <constraint firstItem="h4e-Yc-eEF" firstAttribute="centerX" secondItem="qzT-R0-Yyj" secondAttribute="centerX" id="sj2-pT-5IK"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="IxB-aV-4ob"/>
                     </view>
                     <navigationItem key="navigationItem" id="5JX-RI-ChB"/>
                     <connections>
@@ -977,7 +941,7 @@ When an AR Image is created by any of your following.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8v-F0-NOc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8v-F0-NOc">
                                 <rect key="frame" x="83" y="794" width="248" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -1021,7 +985,7 @@ When an AR Image is created by any of your following.</string>
                             </textField>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gch-HP-qJI">
                                 <rect key="frame" x="24" y="453" width="366" height="44"/>
-                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="G9i-Ps-RU2"/>
                                 </constraints>
@@ -1052,7 +1016,6 @@ When an AR Image is created by any of your following.</string>
                                 </constraints>
                             </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="2tZ-lv-nsq"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kxR-u6-fit" firstAttribute="leading" secondItem="2tZ-lv-nsq" secondAttribute="leading" constant="40" id="9VW-RK-aIA"/>
@@ -1076,6 +1039,7 @@ When an AR Image is created by any of your following.</string>
                             <constraint firstItem="MX2-Dh-qC3" firstAttribute="top" secondItem="kxR-u6-fit" secondAttribute="bottom" constant="12" id="uy3-1O-HOX"/>
                             <constraint firstItem="0PT-WD-vPD" firstAttribute="trailing" secondItem="I9o-GN-eVd" secondAttribute="trailing" id="vWJ-nd-1hZ"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="2tZ-lv-nsq"/>
                     </view>
                     <connections>
                         <outlet property="arImage" destination="A4f-ZL-Ukz" id="6Gb-aR-waK"/>
@@ -1110,7 +1074,7 @@ When an AR Image is created by any of your following.</string>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4e-tQ-MVQ">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4e-tQ-MVQ">
                                                 <rect key="frame" x="83" y="721" width="248" height="44"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="19"/>
@@ -1167,7 +1131,7 @@ When an AR Image is created by any of your following.</string>
                                             </textField>
                                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5qb-SS-XoF">
                                                 <rect key="frame" x="24" y="642" width="366" height="44"/>
-                                                <color key="backgroundColor" systemColor="linkColor"/>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="xED-Ov-NtL"/>
                                                 </constraints>
@@ -1226,7 +1190,7 @@ When an AR Image is created by any of your following.</string>
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="ZEU-7Z-G2a"/>
                                                     <constraint firstAttribute="height" constant="70" id="nPv-3F-q7g"/>
@@ -1310,7 +1274,6 @@ When an AR Image is created by any of your following.</string>
                                 <viewLayoutGuide key="frameLayoutGuide" id="FyR-4J-wKZ"/>
                             </scrollView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6mV-Eo-Xds"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-wX-EZ5" firstAttribute="bottom" secondItem="6mV-Eo-Xds" secondAttribute="bottom" constant="34" id="2zJ-FJ-Fng"/>
@@ -1320,6 +1283,7 @@ When an AR Image is created by any of your following.</string>
                             <constraint firstItem="6mV-Eo-Xds" firstAttribute="trailing" secondItem="6Tk-wX-EZ5" secondAttribute="trailing" id="K4i-LZ-g2w"/>
                             <constraint firstItem="6Tk-wX-EZ5" firstAttribute="width" secondItem="hLW-aY-xdn" secondAttribute="width" id="P2o-jo-bc6"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="6mV-Eo-Xds"/>
                     </view>
                     <connections>
                         <outlet property="arImage" destination="jun-Pi-PXJ" id="1AL-dk-z1W"/>
@@ -1347,7 +1311,6 @@ When an AR Image is created by any of your following.</string>
         <image name="camera_settings" width="44.5" height="42"/>
         <image name="checked" width="42" height="44"/>
         <image name="edit" width="16" height="16"/>
-        <image name="homeButton" width="33.333332061767578" height="33.333332061767578"/>
         <image name="logo" width="1024" height="1024"/>
         <image name="moreButton" width="26.666666030883789" height="8"/>
         <image name="profile_placeholder" width="69" height="69"/>
@@ -1360,23 +1323,5 @@ When an AR Image is created by any of your following.</string>
         <namedColor name="ingineColor">
             <color red="0.74901960784313726" green="0.0" blue="0.11372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

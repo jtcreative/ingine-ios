@@ -46,7 +46,7 @@ extension SignUpViewController{
                 }
             }) {  [unowned self ](_) in
                 
-                if userProfile.image != #imageLiteral(resourceName: "profile_placeholder"){
+                if self.userProfile.image != #imageLiteral(resourceName: "profile_placeholder"){
                     self.uploadProfileImage()
                     
                 }else{

@@ -15,18 +15,33 @@ import FirebaseAuth
 
 class MainViewController : UIPageViewController {
     
+    var currentPageIndex = 1
+    
     lazy var pageViews : [UIViewController] = {
         return [
-            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
-            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeViewController"),
-             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController"),
-             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpViewController"),
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
+            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController"),
-            
-         
         ]
     }()
+    
+    lazy var bottomView : BottomBar = {
+        return BottomBar()
+    }()
+    
+    /*
+     [
+         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
+         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeViewController"),
+          UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController"),
+          UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpViewController"),
+         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
+         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController"),
+         
+      
+     ]
+     
+     **/
     
     
     var data:Any?
@@ -47,12 +62,82 @@ class MainViewController : UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setViewControllers([pageViews.first!], direction: .forward, animated: true, completion: { result in
-
+        setViewControllers([pageViews[currentPageIndex]], direction: .forward, animated: true, completion: { result in
+            self.createNavigationView()
         })
+        
+
         dataSource = nil
     }
     
+    func isLoggedIn() -> Bool {
+        var status : Bool
+        if Auth.auth().currentUser?.uid != nil {
+            print("not logged in by email")
+            status = true
+        } else {
+            status = false
+        }
+        
+        return status
+    }
+    
+}
+
+extension MainViewController {
+    public func createNavigationView() {
+        view.addSubview(bottomView)
+        // add constrainsts
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        bottomView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0 ).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        // add actions to button
+        bottomView.cameraButton.addTarget(self, action: #selector(self.goToArPage), for: .touchUpInside)
+        bottomView.searchButton.addTarget(self, action: #selector(self.goToSearchScreen), for: .touchUpInside)
+        bottomView.profileButton.addTarget(self, action: #selector(self.goToProfileSetting), for: .touchUpInside)
+        
+        bottomView.contentView.setCustomGradient([UIColor.black, UIColor.yellow])
+    }
+    
+    @objc func goToSearchScreen(){
+        if isLoggedIn() {
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                let searchVc = self.storyboard?.instantiateViewController(identifier: "UserViewController") as! UserViewController
+                mainViewController.goToController(searchVc)
+            }
+        }
+    }
+    
+    @objc func goToArPage(){
+        guard currentPageIndex != 1 else {
+            guard let vcs = self.viewControllers,
+                let arPageViewController = vcs[0] as? ViewController else { return }
+            arPageViewController.takePhotoAction()
+            return
+        }
+        if isLoggedIn() {
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                let searchVc = self.storyboard?.instantiateViewController(identifier: "ARViewController") as! ViewController
+                mainViewController.goToController(searchVc)
+            }
+        }
+    }
+
+    @IBAction func goToProfileSetting() {
+        if isLoggedIn() {
+            // send to profile view
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                let profileVc = self.storyboard?.instantiateViewController(identifier: "Profile") as! ProfileViewController
+                mainViewController.goToController(profileVc)
+            }
+        } else {
+            let login = LoginViewController()
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+        }
+    }
 }
 
 
@@ -62,11 +147,11 @@ extension MainViewController {
         for vc in pageViews {
             if vc is T {
                 if let currentIndex = pageViews.firstIndex(of: vc){
-
-                    setViewControllers([pageViews[currentIndex]], direction: .forward, animated: true, completion: nil)
+                    let direction = currentIndex < currentPageIndex ? NavigationDirection.reverse : NavigationDirection.forward
+                    currentPageIndex = currentIndex
+                    setViewControllers([pageViews[currentIndex]], direction: direction, animated: true, completion: nil)
                 }
             }
-            
         }
         
     }
