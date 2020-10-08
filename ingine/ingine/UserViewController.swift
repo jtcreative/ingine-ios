@@ -140,8 +140,13 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedUser = users[indexPath.row]
-        NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.documentID))
-        self.presentingViewController?.dismiss(animated: true, completion: nil)
+        
+        //NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.documentID))
+        //self.presentingViewController?.dismiss(animated: true, completion: nil)
+
+            let userProfileVc = self.storyboard?.instantiateViewController(identifier: "UserProfileViewController") as! UserProfileViewController
+            userProfileVc.userId = selectedUser?.documentID
+            show(userProfileVc, sender: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
