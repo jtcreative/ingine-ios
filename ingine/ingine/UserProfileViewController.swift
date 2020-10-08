@@ -43,7 +43,7 @@ class UserProfileViewHeaderCell : UITableViewHeaderFooterView {
     
 }
 
-class UserIngineeredItemViewCell: UITableViewCell {
+/*class IngineeredItemViewCell: UITableViewCell {
 
     @IBOutlet weak var refImage: UIImageView!
     @IBOutlet weak var itemName: UILabel!
@@ -82,7 +82,7 @@ class UserIngineeredItemViewCell: UITableViewCell {
         timeStamp.text = ""
     }
     
-}
+}*/
 
 
 
@@ -111,10 +111,6 @@ class UserProfileViewController: UIViewController {
         
         ingineeredItemsTableView.register(ProfileViewHeaderCell.self, forHeaderFooterViewReuseIdentifier: "ProfileViewHeaderCell")
         
-        //let profileHeader = ProfileViewHeader(frame: profileHeaderView.frame)
-        
-        //ingineeredItemsTableView.tableHeaderView = profileHeader
-        
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
@@ -130,7 +126,7 @@ class UserProfileViewController: UIViewController {
         //isLoggedIn()
         
         // retrieve ingineered items
-        //retrieveItems()
+        retrieveItems()
         setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
         
@@ -282,5 +278,74 @@ extension UserProfileViewController {
     override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }
+}
+
+extension UserProfileViewController {
+    // Retrieve ingineered item infro from firebase
+       func retrieveItems() {
+           print("retrieving data from firebase...")
+        guard let profileUserId = userId else {
+            return
+        }
+           
+           // Populate cell elements with data from firebase
+            //let id = Auth.auth().currentUser?.email ?? ""
+           
+        //   firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
+        IFirebaseDatabase.shared.getUser("users", document: profileUserId).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }) { (snapShot) in
+             guard snapShot.data() != nil else {
+                              print("Document data was empty.")
+                              return
+                          }
+                          
+                          
+            if snapShot.exists {
+                for k in snapShot.data()!.keys {
+                    if k != "fullName" {
+                        IFirebaseDatabase.shared.getAssetList("pairs", document: k).sink(receiveCompletion: { (completion) in
+                            switch completion
+                            {
+                            case .finished : print("finish")
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                            }
+                        }) { (shot) in
+                           
+                            var item = IngineeredItem()
+                                item.id = k
+                            item.itemName = shot.name ?? ""
+                            item.refImage = shot.refImage ?? ""
+                            item.itemURL = shot.matchURL ?? ""
+                            item.visStatus = shot.public ?? false
+                            self.itemsArray.append(item)
+                           
+                            self.itemsArray = self.itemsArray.unique{$0.id}
+                            print(self.itemsArray)
+                            self.profileHeaderView.arPostCount.text = "\(self.itemsArray.count)"
+                            self.configureTableView()
+                            DispatchQueue.main.async {
+                                self.ingineeredItemsTableView.reloadData()
+                            }
+                            
+                        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                        
+                        
+                    }else {
+                        print("k is fullName")
+                    }
+                    
+                }
+            }
+        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+
+           
+       }
 }
 
