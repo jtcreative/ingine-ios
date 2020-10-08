@@ -15,13 +15,14 @@ extension ProfileViewController{
      // Check if user is logged in
         func isLoggedIn() {
             if Auth.auth().currentUser?.uid != nil {
-                let id = Auth.auth().currentUser?.email ?? ""
+                let id = isOtherUser ? otherUser : Auth.auth().currentUser?.email ?? ""
                 
     //            firebaseManager?.getSingleDocument("users", documentName: id, type: .user)
                 IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
                     switch completion
                                   {
                                   case .finished : print("finish")
+                                   
                                   case .failure(let error):
                                       print(error.localizedDescription)
                                   }
@@ -29,14 +30,27 @@ extension ProfileViewController{
                     if snapshot.exists {
                         // set title of profile page to full name of logged in user
 //                        self.userName.text = snapshot.data()?["fullName"] as? String
+                        
+                        // get following
+                        let followingArray = snapshot.get("following") as? [Any]
+                        
+                        // get followers
+                        let followerArray = snapshot.get("follower") as? [Any]
+                        
+                        self.profileHeaderView.followerAndFollowingLabel.text = "Following \(followingArray?.count ?? 0 ) | \(followerArray?.count ?? 0 > 1 ? "Followers" : "Follower") \(followerArray?.count ?? 0)"
+                        
+                        
+                        
                         self.profileHeaderView.userName.text = snapshot.data()?["fullName"] as? String
                         
                         if let userImageUrl = snapshot.data()?["profileImage"] as? String{
                             let imageUrl = URL(string: userImageUrl)!
                             let imageData:NSData = NSData(contentsOf: imageUrl)!
                             self.profileHeaderView.profileImage.image = UIImage(data: imageData as Data)
+                        }else{
+                            self.profileHeaderView.profileImage.image = #imageLiteral(resourceName: "profile_placeholder")
                         }
-                       
+                        
                          
                         
                     } else {
@@ -59,9 +73,9 @@ extension ProfileViewController{
         if Auth.auth().currentUser?.uid == nil {
             return
         }
-           
+        self.itemsArray.removeAll()
            // Populate cell elements with data from firebase
-            let id = Auth.auth().currentUser?.email ?? ""
+            let id = isOtherUser ? otherUser : Auth.auth().currentUser?.email ?? ""
            
         //   firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
         IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
@@ -80,7 +94,7 @@ extension ProfileViewController{
                           
             if snapShot.exists {
                 for k in snapShot.data()!.keys {
-                    if k != "fullName" {
+                    if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following" {
                         IFirebaseDatabase.shared.getAssetList("pairs", document: k).sink(receiveCompletion: { (completion) in
                             switch completion
                             {
@@ -99,7 +113,6 @@ extension ProfileViewController{
                             self.itemsArray.append(item)
                            
                             self.itemsArray = self.itemsArray.unique{$0.id}
-                            print(self.itemsArray)
                             self.profileHeaderView.arPostCount.text = "\(self.itemsArray.count)"
                             self.configureTableView()
                             DispatchQueue.main.async {
@@ -111,6 +124,10 @@ extension ProfileViewController{
                         
                     }else {
                         print("k is fullName")
+                        self.profileHeaderView.arPostCount.text = "0"
+                        DispatchQueue.main.async {
+                            self.ingineeredItemsTableView.reloadData()
+                        }
                     }
                     
                 }

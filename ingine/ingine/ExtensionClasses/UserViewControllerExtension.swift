@@ -30,10 +30,10 @@ extension UserViewController {
                     return doc1.documentID.lowercased() < doc2.documentID.lowercased()
                 }
                 
-                DispatchQueue.main.async {
-                    //self.refreshControl?.endRefreshing()
-                    self.tableView.reloadData()
-                }
+//                DispatchQueue.main.async {
+//                    //self.refreshControl?.endRefreshing()
+//                    self.tableView.reloadData()
+//                }
         }.store(in: &IFirebase.shared.cancelBag)
     }
 }

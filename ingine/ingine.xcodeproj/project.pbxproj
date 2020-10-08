@@ -54,6 +54,8 @@
 		97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */; };
 		97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */; };
 		97BCFCF124FD665D00AA1E2B /* ImageViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */; };
+		97D32152252DAD7D0002F8BB /* Following.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D32151252DAD7D0002F8BB /* Following.swift */; };
+		97D327BF252F832000978167 /* ARItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D327BE252F831F00978167 /* ARItem.swift */; };
 		97DEB06825069F670070A5EF /* NotificationDataBindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */; };
 		97F05C0F250FD18E00C3564E /* DocumentSnapshotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C0E250FD18E00C3564E /* DocumentSnapshotPublisher.swift */; };
 		97F05C11250FDF6400C3564E /* IFirebaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */; };
@@ -137,6 +139,8 @@
 		97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewControllerExtension.swift; sourceTree = "<group>"; };
+		97D32151252DAD7D0002F8BB /* Following.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Following.swift; sourceTree = "<group>"; };
+		97D327BE252F831F00978167 /* ARItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARItem.swift; sourceTree = "<group>"; };
 		97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDataBindingExtension.swift; sourceTree = "<group>"; };
 		97F05C0E250FD18E00C3564E /* DocumentSnapshotPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSnapshotPublisher.swift; sourceTree = "<group>"; };
 		97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFirebaseDatabase.swift; sourceTree = "<group>"; };
@@ -261,6 +265,8 @@
 			isa = PBXGroup;
 			children = (
 				976D710F251CA2AF007F0257 /* SendARData.swift */,
+				97D32151252DAD7D0002F8BB /* Following.swift */,
+				97D327BE252F831F00978167 /* ARItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -565,6 +571,7 @@
 				97762B3D25224E23004FDEC2 /* BottomBar.swift in Sources */,
 				972C13672514DD0D009911B7 /* SignUpViewController.swift in Sources */,
 				D3730E1E252A49AF0027B632 /* UserProfileViewController.swift in Sources */,
+				97D32152252DAD7D0002F8BB /* Following.swift in Sources */,
 				97F05C15250FEBEA00C3564E /* IFirebaseStorage.swift in Sources */,
 				97F05C0F250FD18E00C3564E /* DocumentSnapshotPublisher.swift in Sources */,
 				97F05C13250FEADF00C3564E /* IArUploadService.swift in Sources */,
@@ -602,6 +609,7 @@
 				97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */,
 				EE7F35CB229CCD5500AE9089 /* CropViewController.swift in Sources */,
 				97793C4D2501576700319E87 /* DemoAccountViewController.swift in Sources */,
+				97D327BF252F832000978167 /* ARItem.swift in Sources */,
 				97762B4525225D05004FDEC2 /* SearchViewController.swift in Sources */,
 				EE7F35D7229CCDE400AE9089 /* Array+shift.swift in Sources */,
 				EEC7CD5F22999F1E00B33B47 /* AppDelegate.swift in Sources */,

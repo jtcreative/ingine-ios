@@ -23,65 +23,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EE4D3E27-1F5C-46FB-9914-951015DFCC07"
+            uuid = "BAAD03D8-75B5-42FA-B340-7C8111824DF4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ingine/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "pageViewController(_:viewControllerAfter:)"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "goToProfileSetting()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BA3559AB-AE9A-4873-AFD4-292C01F29B2C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ingine/MainViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "pageViewController(_:viewControllerAfter:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BA3559AB-AE9A-4873-AFD4-292C01F29B2C - e54bf6938550af65"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ingine.MainViewController.pageViewController(_: __C.UIPageViewController, viewControllerAfter: __C.UIViewController) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/manishdadwal/Documents/Manish/Projects/ingine-ios/ingine/ingine/MainViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "124"
-                  endingLineNumber = "124"
-                  offsetFromSymbolStart = "68">
-               </Location>
-               <Location
-                  uuid = "BA3559AB-AE9A-4873-AFD4-292C01F29B2C - cc0ea1195e3c2990"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIViewController) -&gt; Swift.Bool in ingine.MainViewController.pageViewController(_: __C.UIPageViewController, viewControllerAfter: __C.UIViewController) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/manishdadwal/Documents/Manish/Projects/ingine-ios/ingine/ingine/MainViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "125"
-                  endingLineNumber = "125"
-                  offsetFromSymbolStart = "40">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

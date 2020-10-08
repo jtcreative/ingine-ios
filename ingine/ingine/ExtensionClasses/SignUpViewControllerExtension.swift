@@ -51,7 +51,11 @@ extension SignUpViewController{
                     
                 }else{
                     
-                    guard let imageData = self.arImage.image!.jpegData(compressionQuality: 0.8) else { return }
+                    guard let imageData = self.arImage.image?.jpegData(compressionQuality: 0.8) else {
+                        self.openMainViewController()
+                        return
+                        
+                    }
                     self.uploadArImage(imageData)
                 }
                 

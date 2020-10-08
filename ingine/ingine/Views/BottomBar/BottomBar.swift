@@ -37,6 +37,7 @@ class BottomBar: UIView {
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
            view.frame = bounds
            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
            self.addSubview(view);
         
        

@@ -37,6 +37,7 @@ class ProfileViewHeaderCell : UITableViewHeaderFooterView {
 
 class IngineeredItemViewCell: UITableViewCell {
 
+    @IBOutlet weak var optionButton: UIButton!
     @IBOutlet weak var refImage: UIImageView!
     @IBOutlet weak var itemName: UILabel!
     @IBOutlet weak var itemURL: UILabel!
@@ -45,7 +46,7 @@ class IngineeredItemViewCell: UITableViewCell {
     @IBOutlet weak var timeStamp: UILabel!
     @IBOutlet weak var linkView: UIView!
     var id : String = ""
-   
+    var isOtherUser: Bool = false
     let optionsLauncher = OptionsLauncher()
     @IBAction func showOptions(_ sender: UIButton) {
         optionsLauncher.showOptions(identification: id)
@@ -72,24 +73,12 @@ class IngineeredItemViewCell: UITableViewCell {
         itemURL.text = ""
         viewsLabel.text = ""
         timeStamp.text = ""
+        
+        optionButton.isHidden = isOtherUser ? true : false
     }
     
 }
 
-struct IngineeredItem {
-    var id = ""
-    var refImage = ""
-    var itemName = ""
-    var itemURL = ""
-    var visStatus = false
-}
-struct ARItem:Codable {
-    var id :String?
-    var name:String?
-    var refImage:String?
-    var matchURL:String?
-    var `public` :Bool?
-}
 
 
 
@@ -103,7 +92,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var header: UIView!
     var userImage = ""
-     var firebaseSnapshotId = ""
+    var firebaseSnapshotId = ""
+    var isOtherUser = false
+    var otherUser = ""
     
     
     override func viewDidLoad() {
@@ -128,33 +119,36 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Configure table view
         configureTableView()
-        addFollowers()
+       
         // Check if user logged in by email
-        isLoggedIn()
+       
         
         // retrieve ingineered items
-        retrieveItems()
+        
         setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
         
-        
+    
         
     }
     
     
-    func addFollowers()
-    {
-         let id = Auth.auth().currentUser?.email ?? ""
-        
-        let dict = ["follower":[["userId":"userid1234","username":"Mike"],["userId":"userid89ds","username":"John"]]]
-        Firestore.firestore().collection("users").document(id).updateData(dict) { (error) in
-            if let error = error{
-                 print("Document error:\(error)")
-            }else{
-                print("Document is written successfully")
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let main = self.parent as? MainViewController{
+            self.isOtherUser = false
+            if let isOtherUser = main.isOtherUser, let otherUserID = main.selectedUserID as? String{
+                self.isOtherUser = isOtherUser
+                self.otherUser = otherUserID
+                self.profileHeaderView.settingButton.isHidden = isOtherUser ? true : false
+                
             }
         }
+        isLoggedIn()
+        retrieveItems()
     }
+    
+   
     
     // setup profile header view
     private func setupProfileHeader(){
@@ -192,6 +186,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.itemName.text = itemsArray[indexPath.row].itemName
         cell.itemURL.text = itemsArray[indexPath.row].itemURL
+        cell.isOtherUser = self.isOtherUser
         if itemsArray[indexPath.row].visStatus {
            // cell.visibilityStatus.text = "Public"
         } else {

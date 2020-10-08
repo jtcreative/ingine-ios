@@ -22,6 +22,7 @@ class MainViewController : UIPageViewController {
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController"),
+            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController")
         ]
     }()
     
@@ -45,6 +46,8 @@ class MainViewController : UIPageViewController {
     
     
     var data:Any?
+    var selectedUserID:Any?
+    var isOtherUser:Bool?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -88,6 +91,7 @@ extension MainViewController {
         view.addSubview(bottomView)
         // add constrainsts
         bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0 ).isActive = true
@@ -128,13 +132,23 @@ extension MainViewController {
     @IBAction func goToProfileSetting() {
         if isLoggedIn() {
             // send to profile view
+            selectedUserID = nil
+            isOtherUser = nil
+            
             if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
                 let profileVc = self.storyboard?.instantiateViewController(identifier: "Profile") as! ProfileViewController
                 mainViewController.goToController(profileVc)
             }
         } else {
-            let login = LoginViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+            
+            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
+                let profileVc = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as! LoginViewController
+                mainViewController.goToController(profileVc)
+            }
+            
+            
+//            let login = LoginViewController()
+//            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
         }
     }
 }
