@@ -14,8 +14,16 @@ class UserViewController: UIViewController {
     
     @IBOutlet weak var searchContainerView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var followersSegment: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var followButtons: [UIButton]!
+    
+    var noResultsLabel: UILabel = {
+        let lab = UILabel()
+        lab.textColor = .white
+        lab.text = "Search user..."
+        lab.translatesAutoresizingMaskIntoConstraints = false
+        return lab
+    }()
     
     
     private var db = Firestore.firestore()
@@ -25,6 +33,9 @@ class UserViewController: UIViewController {
     var isUserSearching = false
     var currentUser:DocumentSnapshot?
     var followingArr:[Following] = [Following]()
+    var followersArr:[Following] = [Following]()
+    var finalArr :[Following] = [Following]()
+    var isUserSeeFollowing = false
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -45,20 +56,33 @@ class UserViewController: UIViewController {
         tableView.register(UINib(nibName: "UserListCell", bundle: nil), forCellReuseIdentifier: "UserListCell")
         tableView.tableFooterView = UIView()
         
+        /// setup label
+        view.addSubview(noResultsLabel)
+        noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        
         searchTextField.addTarget(self, action: #selector(searchByText(_:)), for: .editingChanged)
         
-        followersSegment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-
-        // color of other options
-        followersSegment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
+    
         
         //self.refreshControl?.beginRefreshing()
         reloadUsers()
-        
+        setupFollowingButtons()
         // setup ui
         setupUI()
 //        getCurrentUser()
        
+    }
+    
+    private func setupFollowingButtons(){
+        
+        followButtons.forEach { btn in
+            btn.layer.cornerRadius = 6
+            btn.layer.borderWidth = 0.5
+            btn.layer.borderColor = UIColor.lightGray.cgColor
+        }
     }
     
     
@@ -81,6 +105,63 @@ class UserViewController: UIViewController {
     }
     
     //MARK: Actions
+    
+    @IBAction func followingAction(_ sender: UIButton) {
+        finalArr = followingArr
+        followButtons.forEach { btn in
+            if btn.tag == sender.tag{
+                btn.backgroundColor = .black
+                btn.setTitleColor(.white, for: .normal)
+            }else{
+                btn.backgroundColor = .white
+                btn.setTitleColor(.black, for: .normal)
+            }
+        }
+        // show no results if value is 0
+        
+        if finalArr.count > 0{
+            noResultsLabel.isHidden = true
+        }else{
+            noResultsLabel.isHidden = false
+            noResultsLabel.text = "You didn't follow anyone yet."
+        }
+        
+        isUserSeeFollowing = true
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+    }
+    @IBAction func followersAction(_ sender: UIButton) {
+        finalArr = followersArr
+        followButtons.forEach { btn in
+            if btn.tag == sender.tag{
+                btn.backgroundColor = .black
+                btn.setTitleColor(.white, for: .normal)
+            }else{
+                btn.backgroundColor = .white
+                btn.setTitleColor(.black, for: .normal)
+            }
+        }
+        
+        
+        // show no results if value is 0
+        
+        if finalArr.count > 0{
+            noResultsLabel.isHidden = true
+        }else{
+            noResultsLabel.isHidden = false
+            noResultsLabel.text = "You have no followers."
+        }
+        
+        
+        isUserSeeFollowing = true
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    
     @objc func followAction(_ sender:UIButton){
         let user = isUserSearching ? usersSearch[sender.tag] : users[sender.tag]
         if sender.isSelected{
@@ -106,7 +187,6 @@ class UserViewController: UIViewController {
         
         if let name = selectedUser.get("fullName") as? String{
             let dictNew = ["following": FieldValue.arrayUnion([["id":selectedUser.documentID,"fullName":name, "profileImage":profileImage ?? "" ]])]
-            
             
             
             IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink { (completion) in
@@ -202,6 +282,11 @@ class UserViewController: UIViewController {
     
     
     func getCurrentUser(){
+        // remove pervious values
+        followingArr.removeAll()
+        followersArr.removeAll()
+        
+        
         let id = Auth.auth().currentUser?.email ?? ""
         IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
             switch completion
@@ -214,7 +299,7 @@ class UserViewController: UIViewController {
             
             if snapshot.exists {
                 self.currentUser = snapshot
-
+                //get following
                 let followingObjectArray = snapshot.get("following") as? [Any]
                 //  add all following of current user
                 for i in (followingObjectArray ?? []){
@@ -223,14 +308,24 @@ class UserViewController: UIViewController {
                     let id = value?["id"] as? String
                     let profileImage = value?["profileImage"] as? String
                     
-                    let following = Following(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "")
+                    let following = Following(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", isFollowing: true,isFollowers: false)
                     
                     self.followingArr.append(following)
-                    
-                    
-                    
                 }
                 
+                //get followers
+                let followerObjectArray = snapshot.get("follower") as? [Any]
+                //  add all follower of current user
+                for i in (followerObjectArray ?? []){
+                    let value = i as? [String:Any]
+                    let fullName = value?["fullName"] as? String
+                    let id = value?["id"] as? String
+                    let profileImage = value?["profileImage"] as? String
+                    
+                    let follower = Following(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", isFollowing:false, isFollowers: true )
+        
+                    self.followersArr.append(follower)
+                }
             } else {
                 print("user does not exist")
                 self.currentUser = nil
@@ -243,19 +338,36 @@ class UserViewController: UIViewController {
     
     @objc func searchByText(_ textField:UITextField){
         
-   
+        // set to default followers button
+        if isUserSeeFollowing{
+            isUserSeeFollowing = false
+            followButtons.forEach { btn in
+                btn.backgroundColor = .white
+                btn.setTitleColor(.black, for: .normal)
+               
+            }
+        }
+       
         // check if text is empty or not
         if textField.text != "" {
             // check if user exists in user list
             let filterArr = self.users.filter({($0.get("fullName") as? String ?? "").lowercased().contains(textField.text ?? "") || ($0.get("fullName") as? String ?? "").uppercased().contains(textField.text ?? "")})
             isUserSearching = true
             self.usersSearch = filterArr
+            if self.usersSearch.count == 0 {
+                noResultsLabel.isHidden = false
+                noResultsLabel.text = "No user found..."
+            }else{
+                noResultsLabel.isHidden = true
+            }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }else{
+            noResultsLabel.text = "Search user..."
             // check if text is empty show all users
-            isUserSearching = false
+//            isUserSearching = false
+            self.usersSearch.removeAll()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -288,10 +400,51 @@ class UserViewController: UIViewController {
 
 extension UserViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // check if user tabbed following or followers tab
+        if isUserSeeFollowing{
+            return finalArr.count
+        }
+        // if user searching user
         return isUserSearching ? usersSearch.count : users.count
     }
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // check if user tabbed following or followers tab
+        
+        if isUserSeeFollowing{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
+            let user = finalArr[indexPath.row]
+            cell.assetCount.text = nil
+            cell.userName.text = user.fullName
+            if user.isFollowing{
+                cell.followButton.isSelected = true
+                cell.followButton.backgroundColor = .black
+                cell.followButton.setTitleColor(.white, for: .normal)
+            }else{
+                cell.followButton.isSelected = false
+                cell.followButton.backgroundColor = .white
+                cell.followButton.setTitleColor(.black, for: .normal)
+            }
+            cell.userImage.isUserInteractionEnabled = true
+            cell.userImage.tag = indexPath.row
+            cell.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userTabbed(_:))))
+                let profileUrl = user.profileImage
+                if let imageUrl = URL(string: profileUrl){
+                
+                DispatchQueue.global().async {
+                    let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                    DispatchQueue.main.async {
+                        cell.userImage.image = UIImage(data: imageData as Data)
+                    }
+                }
+            }
+            return cell
+        }
+        
+        
+        
+        
         let user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
        
         let fullName = user.get("fullName") as? String
@@ -314,6 +467,18 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
             cell.followButton.backgroundColor = .white
             cell.followButton.setTitleColor(.black, for: .normal)
         }
+        if let profileUrl = user.get("profileImage") as? String{
+            if  let imageUrl = URL(string: profileUrl){
+                
+                DispatchQueue.global().async {
+                    let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                    DispatchQueue.main.async {
+                        cell.userImage.image = UIImage(data: imageData as Data)
+                    }
+                }
+            }
+        }
+       
         
         // fetch total pairs of each user
         var totalArr = [String]()
