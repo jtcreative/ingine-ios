@@ -198,8 +198,15 @@ class ProfileSettingsViewController: UIViewController {
             }
         }) { (_) in
             print("Sign out pressed")
-            let home = HomeViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = home
+
+            DispatchQueue.main.async {
+                // Go back to homescreen
+                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+                let vc = st.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+            }
+            
+            
         }.store(in: &IFirebase.shared.cancelBag)
     }
     

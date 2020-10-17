@@ -128,6 +128,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
         
+        ingineeredItemsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
     
         
     }

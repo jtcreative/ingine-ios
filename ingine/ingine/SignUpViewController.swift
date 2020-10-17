@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 import FirebaseFirestore
 class SignUpViewController: BaseViewController {
     
@@ -30,7 +30,7 @@ class SignUpViewController: BaseViewController {
     let termsAndConditionsURL = "https://ingine.io/terms-conditions.html";
     let privacyURL            = "https://ingine.io/privacy-policy.html";
     var db = Firestore.firestore()
-    var sendArData:SendARData?
+    var arData:SendARData?
     let pickerController = UIImagePickerController()
     // MARK: View Lifecycle
     override func viewDidLoad() {
@@ -77,12 +77,10 @@ class SignUpViewController: BaseViewController {
         conditionTermsTextView.attributedText = attributedString
         
         // congifure data
-        if let main = self.parent as? MainViewController{
-            if let value = main.data as? SendARData{
-                self.sendArData = value
+            if let value = arData{
                 arImage.image = value.image
             }
-        }
+        
     }
     
     
@@ -198,10 +196,7 @@ class SignUpViewController: BaseViewController {
     
     
     @IBAction func cancel(_ sender: UIButton) {
-        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-
-            mainViewController.backPage()
-     }
+       dismiss(animated: true, completion: nil)
     }
     
     @IBAction func markTerms(_ sender: UIButton) {

@@ -20,7 +20,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var arImage: UIImageView!
     
     //MARK: Properties
-    var sendArData:SendARData?
+    var arData:SendARData?
     var db = Firestore.firestore()
     
     //MARK: View Lifecycle
@@ -52,12 +52,11 @@ class LoginViewController: BaseViewController {
         // set gradient
         view.setGradientBackground()
         
-        if let main = self.parent as? MainViewController{
-            if let value = main.data as? SendARData{
-                self.sendArData = value
-                arImage.image = value.image
-            }
+    
+        if let value = arData{
+            arImage.image = value.image
         }
+        
     }
     
     // Check if user is logged in
@@ -101,9 +100,7 @@ class LoginViewController: BaseViewController {
         handleLogin()
     }
     @IBAction func cancel(_ sender: UIButton) {
-        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-            mainViewController.backPage()
-     }
+        dismiss(animated: true, completion: nil)
     }
     
 }

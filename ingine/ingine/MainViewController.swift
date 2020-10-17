@@ -21,8 +21,7 @@ class MainViewController : UIPageViewController {
         return [
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
             UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
-            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController"),
-            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController")
+            UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController")
         ]
     }()
     
@@ -38,7 +37,6 @@ class MainViewController : UIPageViewController {
           UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpViewController"),
          UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
          UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController"),
-         
       
      ]
      
@@ -65,11 +63,16 @@ class MainViewController : UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViewControllers([pageViews[currentPageIndex]], direction: .forward, animated: true, completion: { result in
-            self.createNavigationView()
+          
         })
         
 
         dataSource = nil
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.createNavigationView()
     }
     
     func isLoggedIn() -> Bool {
@@ -91,7 +94,7 @@ extension MainViewController {
         view.addSubview(bottomView)
         // add constrainsts
         bottomView.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+       
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0 ).isActive = true
@@ -102,7 +105,7 @@ extension MainViewController {
         bottomView.searchButton.addTarget(self, action: #selector(self.goToSearchScreen), for: .touchUpInside)
         bottomView.profileButton.addTarget(self, action: #selector(self.goToProfileSetting), for: .touchUpInside)
         
-        bottomView.contentView.setCustomGradient([UIColor.black, UIColor.yellow])
+        bottomView.contentView.setCustomGradient([UIColor.black.withAlphaComponent(0.4).cgColor, UIColor.black.withAlphaComponent(0.1).cgColor])
     }
     
     @objc func goToSearchScreen(){

@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class UserViewController: UIViewController {
     
@@ -55,7 +56,7 @@ class UserViewController: UIViewController {
         searchContainerView.backgroundColor = .black
         tableView.register(UINib(nibName: "UserListCell", bundle: nil), forCellReuseIdentifier: "UserListCell")
         tableView.tableFooterView = UIView()
-        
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
         /// setup label
         view.addSubview(noResultsLabel)
         noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
