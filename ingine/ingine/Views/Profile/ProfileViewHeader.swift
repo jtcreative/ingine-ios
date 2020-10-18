@@ -12,6 +12,7 @@ class ProfileViewHeader: UIView {
     
     @IBOutlet weak var contentView:UIView!
     @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var followerAndFollowingLabel: UILabel!

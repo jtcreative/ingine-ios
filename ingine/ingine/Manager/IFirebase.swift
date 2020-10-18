@@ -90,7 +90,7 @@ class IFirebase: IUserService{
     
     func searchUser(_ query: String, collection: String, limit: Int) -> AnyPublisher<[QueryDocumentSnapshot], Error> {
         Future<[QueryDocumentSnapshot], Error>{ promise in
-            Firestore.firestore().collection(collection).limit(to: limit).whereField("fullName", arrayContains: query).getDocuments { (querySnapshot, error) in
+            Firestore.firestore().collection(collection).limit(to: limit).order(by: "fullName").start(at: [query]).end(at: ["\(query)uf8ff"]).getDocuments { (querySnapshot, error) in
                 if let error = error{
                     print("get collection error \(error)")
                     promise(.failure(error))
@@ -102,8 +102,97 @@ class IFirebase: IUserService{
             }
             
         }.eraseToAnyPublisher()
+        
     }
     
+    func searchFollowers(_ query: String, collection: String, limit: Int)-> AnyPublisher<[[String:Any]], Error> {
+           // Populate cell elements with data from firebase
+        let id = Auth.auth().currentUser?.email ?? ""
+        return Future<[[String:Any]], Error>{ promise in
+            IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    promise(.failure(error))
+                }
+            }) { (snapShot) in
+                 guard snapShot.data() != nil else {
+                    print("Document data was empty.")
+                    promise(.failure(NSError(domain: "404", code: 404, userInfo: [:])))
+                    return
+                }
+                              
+                
+                if snapShot.exists {
+                    for k in snapShot.data()!.keys {
+                        if k == "follower"{
+                           guard let followers = snapShot.get(k) as? [[String:Any]] else {
+                                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
+                                return
+                            }
+
+                            let filterArr = followers.filter({($0["fullName"] as? String ?? "").lowercased().contains(query.lowercased() )})
+                            promise(.success(filterArr))
+                            return
+                            
+                        }else {
+                            print("k is fullName")
+                        }
+                        
+                    }
+                }
+                
+                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
+            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            
+        }.eraseToAnyPublisher()
+    }
+    
+    func searchFollowings(_ query: String, collection: String, limit: Int) -> AnyPublisher<[[String:Any]], Error> {
+        let id = Auth.auth().currentUser?.email ?? ""
+        return Future<[[String:Any]], Error>{ promise in
+            IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    promise(.failure(error))
+                }
+            }) { (snapShot) in
+                 guard snapShot.data() != nil else {
+                    print("Document data was empty.")
+                    promise(.failure(NSError(domain: "404", code: 404, userInfo: [:])))
+                    return
+                }
+                              
+                
+                if snapShot.exists {
+                    for k in snapShot.data()!.keys {
+                        if k == "following"{
+                           guard let following = snapShot.get(k) as? [[String:Any]] else {
+                                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
+                                return
+                            }
+
+                            let filterArr = following.filter({($0["fullName"] as? String ?? "").lowercased().contains(query.lowercased() )})
+                            promise(.success(filterArr))
+                            return
+                            
+                        }else {
+                            print("k is fullName")
+                        }
+                        
+                    }
+                }
+                
+                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
+            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            
+        }.eraseToAnyPublisher()
+    }
     
 }
 

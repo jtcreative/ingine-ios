@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="arPostCount" destination="xta-Bf-5Va" id="QMn-fc-i6I"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="wct-Jj-wJJ"/>
+                <outlet property="followButton" destination="UQC-XG-eNl" id="b66-0F-YtQ"/>
                 <outlet property="followerAndFollowingLabel" destination="oeF-cg-b6E" id="9j2-KG-EFd"/>
                 <outlet property="profileImage" destination="qFG-5N-gLW" id="DaU-Xe-ptj"/>
                 <outlet property="profileView" destination="x1b-1c-60I" id="Ozz-94-E5c"/>
@@ -74,12 +75,19 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQC-XG-eNl">
+                    <rect key="frame" x="119" y="123" width="175" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Follow"/>
+                </button>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="npK-r9-hh4" secondAttribute="trailing" constant="16" id="14v-31-FJA"/>
                 <constraint firstItem="xta-Bf-5Va" firstAttribute="leading" secondItem="hjj-qs-X0G" secondAttribute="trailing" id="5Nk-O6-ZQ6"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oeF-cg-b6E" secondAttribute="bottom" constant="10" id="8n8-do-bXN"/>
+                <constraint firstItem="UQC-XG-eNl" firstAttribute="top" secondItem="qFG-5N-gLW" secondAttribute="bottom" constant="23" id="BBL-WA-Qo5"/>
                 <constraint firstItem="oeF-cg-b6E" firstAttribute="top" secondItem="rf3-mU-uHs" secondAttribute="bottom" id="CeS-sG-7Az"/>
                 <constraint firstItem="oeF-cg-b6E" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="FOl-Vc-HT7"/>
                 <constraint firstItem="rf3-mU-uHs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="TyY-xP-VwE"/>
@@ -89,8 +97,10 @@
                 <constraint firstItem="rf3-mU-uHs" firstAttribute="top" secondItem="qFG-5N-gLW" secondAttribute="bottom" constant="10" id="jnR-CI-OiT"/>
                 <constraint firstItem="x1b-1c-60I" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="lW7-5r-8Yz"/>
                 <constraint firstItem="xta-Bf-5Va" firstAttribute="centerY" secondItem="hjj-qs-X0G" secondAttribute="centerY" id="pAT-z4-682"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UQC-XG-eNl" secondAttribute="trailing" constant="120" id="pvh-9r-9Oe"/>
                 <constraint firstItem="hjj-qs-X0G" firstAttribute="centerY" secondItem="qFG-5N-gLW" secondAttribute="centerY" id="sQJ-dS-5JP"/>
                 <constraint firstItem="hjj-qs-X0G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="spW-Z0-01U"/>
+                <constraint firstItem="UQC-XG-eNl" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="119" id="tB3-oz-DUD"/>
                 <constraint firstItem="npK-r9-hh4" firstAttribute="top" secondItem="qFG-5N-gLW" secondAttribute="top" id="zD2-15-wUd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

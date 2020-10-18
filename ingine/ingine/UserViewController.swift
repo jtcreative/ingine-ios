@@ -10,6 +10,27 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 
+enum SearchType {
+    case all
+    case following
+    case follower
+    
+    public init?(searchType: Int) {
+        guard searchType >= 0,
+            searchType <= 2 else {
+                return nil
+        }
+        
+        if searchType == 0 {
+            self = .all
+        } else if searchType == 1 {
+            self = .following
+        } else {
+            self = .follower
+        }
+    }
+}
+
 class UserViewController: UIViewController {
     
     @IBOutlet weak var searchContainerView: UIView!
@@ -19,10 +40,12 @@ class UserViewController: UIViewController {
     
     
     private var db = Firestore.firestore()
-    var users = [QueryDocumentSnapshot]()
+    //var users = [[QueryDocumentSnapshot]]()
+    var users = [[String:Any]]()
     var usersSearch = [QueryDocumentSnapshot]()
-    var selectedUser : QueryDocumentSnapshot?
+    var selectedUser : DocumentSnapshot?
     var isUserSearching = false
+    var searchType = SearchType.all
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -49,8 +72,11 @@ class UserViewController: UIViewController {
         // color of other options
         followersSegment.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .normal)
         
+        followersSegment.addTarget(self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
+        
         //self.refreshControl?.beginRefreshing()
-        reloadUsers()
+        self.view.bringSubviewToFront(searchContainerView)
+        reloadUsers(name: searchTextField.text ?? "", forType: searchType)
         
         // setup ui
         setupUI()
@@ -91,12 +117,14 @@ class UserViewController: UIViewController {
         // check if text is empty or not
         if textField.text != "" {
             // check if user exists in user list
-            let filterArr = self.users.filter({($0.get("fullName") as! String).lowercased().contains(textField.text ?? "") || ($0.get("fullName") as! String).uppercased().contains(textField.text ?? "")})
             isUserSearching = true
-            self.usersSearch = filterArr
-            DispatchQueue.main.async {
+
+            reloadUsers(name: searchTextField.text ?? "", forType: searchType)
+            //let filterArr = self.users.filter({($0.get("fullName") as! String).lowercased().contains(textField.text ?? "") || ($0.get("fullName") as! String).uppercased().contains(textField.text ?? "")})
+            //self.usersSearch = filterArr
+            /*DispatchQueue.main.async {
                 self.tableView.reloadData()
-            }
+            }*/
         }else{
             // check if text is empty show all users
             isUserSearching = false
@@ -105,6 +133,13 @@ class UserViewController: UIViewController {
             }
         }
  
+    }
+    
+    @objc func segmentValueChanged(_ sender : UISegmentedControl) {
+        searchType = SearchType(searchType: sender.selectedSegmentIndex) ?? SearchType.all
+        isUserSearching = true
+
+        reloadUsers(name: searchTextField.text ?? "", forType: searchType)
     }
 
     
@@ -119,34 +154,46 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
     }
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
-       
-        let fullName = user.get("fullName") as? String
+        //let user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
+        let user = users[indexPath.row]
+        
+        //let fullName = user.get("fullName") as? String
+        let fullName = user["fullName"] as? String
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
         cell.userName.text = fullName
         cell.followButton.addTarget(self, action: #selector(followAction(_:)), for: .touchUpInside)
         // fetch total pairs of each user
-        var totalArr = [String]()
-        for k in user.data().keys {
+        //var totalArr = [String]()
+        /*for k in user.data().keys {
             if k != "fullName" {
                 totalArr.append(k)
             }
-        }
+        }*/
             
-        cell.assetCount.text = "\(totalArr.count) AR Assets"
+        //cell.assetCount.text = "\(totalArr.count) AR Assets"
   
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedUser = users[indexPath.row]
+        //selectedUser = users[indexPath.row]
+        
+        IFirebaseDatabase.shared.getUser("users", document: users[indexPath.row]["userId"] as! String)
+            .sink(receiveCompletion: { (error) in
+                
+            }) { (user) in
+                self.selectedUser = user
+                let userProfileVc = self.storyboard?.instantiateViewController(identifier: "UserProfileViewController") as! UserProfileViewController
+                userProfileVc.userId = user.documentID
+                self.show(userProfileVc, sender: nil)
+        }.store(in: &IFirebase.shared.cancelBag)
         
         //NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.documentID))
         //self.presentingViewController?.dismiss(animated: true, completion: nil)
 
-            let userProfileVc = self.storyboard?.instantiateViewController(identifier: "UserProfileViewController") as! UserProfileViewController
+            /*let userProfileVc = self.storyboard?.instantiateViewController(identifier: "UserProfileViewController") as! UserProfileViewController
             userProfileVc.userId = selectedUser?.documentID
-            show(userProfileVc, sender: nil)
+            show(userProfileVc, sender: nil)*/
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
