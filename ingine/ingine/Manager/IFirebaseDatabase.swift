@@ -55,12 +55,17 @@ class IFirebaseDatabase: IARService{
     }
     
     func getUser(_ collection:String, document:String) -> AnyPublisher<DocumentSnapshot, Error> {
-        let ref = Firestore.firestore().collection(collection).document(document)
-        return Publishers.SnapshotPublisher(ref, includeMetadataChanges: true)
-            .flatMap { snapshot -> AnyPublisher<DocumentSnapshot, Error> in
-                return Just(snapshot).setFailureType(to: Error.self).eraseToAnyPublisher()
-            }.eraseToAnyPublisher()
-        
+        Future<DocumentSnapshot, Error> { promise in
+            Firestore.firestore().collection(collection).document(document).getDocument { (snapshot, error) in
+                guard let user = snapshot else {
+                    promise(.failure(NSError(domain: "400", code: 400, userInfo: [:])))
+                    return
+                }
+                
+                promise(.success(user))
+            }
+            
+        }.eraseToAnyPublisher()
     }
     
     func updateData(_ collection: String, document: String, data: [String : Any]) -> AnyPublisher<Void, Error> {

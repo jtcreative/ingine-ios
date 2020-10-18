@@ -163,6 +163,9 @@ class UserProfileViewController: UIViewController {
         profileHeaderView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         profileHeaderView.heightAnchor.constraint(equalToConstant: 160).isActive = true
         profileHeaderView.settingButton.isHidden = true
+        profileHeaderView.followerAndFollowingLabel.isHidden = true
+        profileHeaderView.followButton.isHidden = false
+        profileHeaderView.followButton.layer.cornerRadius = profileHeaderView.followButton.frame.height / 2
     }
     
    
@@ -232,12 +235,14 @@ extension UserProfileViewController : UITableViewDelegate, UITableViewDataSource
         let imageUrl = URL(string: itemsArray[indexPath.row].refImage)!
         
         DispatchQueue.global().async {
-            let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            DispatchQueue.main.async {
-                cell.refImage.image = UIImage(data: imageData as Data)
+            if let imageData:NSData = NSData(contentsOf: imageUrl) { //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    cell.refImage.image = UIImage(data: imageData as Data)
+                }
             }
         }
-        
+        print("itemname: \(itemsArray[indexPath.row].itemName)")
+        print("itemname: \(itemsArray[indexPath.row].itemURL)")
         cell.itemName.text = itemsArray[indexPath.row].itemName
         cell.itemURL.text = itemsArray[indexPath.row].itemURL
         if itemsArray[indexPath.row].visStatus {
