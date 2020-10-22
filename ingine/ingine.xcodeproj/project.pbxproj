@@ -35,6 +35,7 @@
 		972ED1B92513D4910053567C /* ProfileViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 972ED1B82513D4910053567C /* ProfileViewHeader.xib */; };
 		972ED1BB2513D9110053567C /* ProfileViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972ED1BA2513D9110053567C /* ProfileViewHeader.swift */; };
 		972ED1BD2513DDA90053567C /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972ED1BC2513DDA90053567C /* ProfileSettingsViewController.swift */; };
+		9740FAEA253F5FC10024B3B1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9740FAE9253F5FC10024B3B1 /* User.swift */; };
 		9743E2D0250B59FD00590C49 /* IUSerservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743E2CF250B59FD00590C49 /* IUSerservice.swift */; };
 		9743E2D2250B60C900590C49 /* IFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743E2D1250B60C900590C49 /* IFirebase.swift */; };
 		97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */; };
@@ -120,6 +121,7 @@
 		972ED1B82513D4910053567C /* ProfileViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewHeader.xib; sourceTree = "<group>"; };
 		972ED1BA2513D9110053567C /* ProfileViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeader.swift; sourceTree = "<group>"; };
 		972ED1BC2513DDA90053567C /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		9740FAE9253F5FC10024B3B1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9743E2CF250B59FD00590C49 /* IUSerservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUSerservice.swift; sourceTree = "<group>"; };
 		9743E2D1250B60C900590C49 /* IFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFirebase.swift; sourceTree = "<group>"; };
 		97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				976D710F251CA2AF007F0257 /* SendARData.swift */,
 				97D32151252DAD7D0002F8BB /* Following.swift */,
 				97D327BE252F831F00978167 /* ARItem.swift */,
+				9740FAE9253F5FC10024B3B1 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				EE16B7D22308E71A0002397D /* OptionCell.swift in Sources */,
 				18715794248CDC5700EAAF3D /* UserViewController.swift in Sources */,
 				EE7F35E0229CCDEE00AE9089 /* StatusViewController.swift in Sources */,
+				9740FAEA253F5FC10024B3B1 /* User.swift in Sources */,
 				97762B3D25224E23004FDEC2 /* BottomBar.swift in Sources */,
 				972C13672514DD0D009911B7 /* SignUpViewController.swift in Sources */,
 				D3730E1E252A49AF0027B632 /* UserProfileViewController.swift in Sources */,

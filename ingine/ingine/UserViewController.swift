@@ -28,15 +28,17 @@ class UserViewController: UIViewController {
     
     
     private var db = Firestore.firestore()
-    var users = [QueryDocumentSnapshot]()
-    var usersSearch = [QueryDocumentSnapshot]()
-    var selectedUser : QueryDocumentSnapshot?
+    
+    var selectedUser : User?
     var isUserSearching = false
     var currentUser:DocumentSnapshot?
-    var followingArr:[Following] = [Following]()
-    var followersArr:[Following] = [Following]()
-    var finalArr :[Following] = [Following]()
     var isUserSeeFollowing = false
+    
+    var users = [User]()
+    var usersSearch = [User]()
+    var followingArr:[User] = [User]()
+    var followersArr:[User] = [User]()
+    var finalArr :[User] = [User]()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -164,7 +166,15 @@ class UserViewController: UIViewController {
     
     
     @objc func followAction(_ sender:UIButton){
-        let user = isUserSearching ? usersSearch[sender.tag] : users[sender.tag]
+        
+        var user:User!
+        if isUserSeeFollowing{
+            user = finalArr[sender.tag]
+        }else{
+            user = isUserSearching ? usersSearch[sender.tag] : users[sender.tag]
+        }
+        
+       
         if sender.isSelected{
             sender.isSelected = false
             sender.setTitleColor(.black, for: .normal)
@@ -181,13 +191,13 @@ class UserViewController: UIViewController {
     }
     
    
-    func followingUser(_ selectedUser:QueryDocumentSnapshot)
+    func followingUser(_ selectedUser:User)
     {
          let id = Auth.auth().currentUser?.email ?? ""
-         let profileImage = selectedUser.get("profileImage") as? String
+         let profileImage = selectedUser.profileImage
         
-        if let name = selectedUser.get("fullName") as? String{
-            let dictNew = ["following": FieldValue.arrayUnion([["id":selectedUser.documentID,"fullName":name, "profileImage":profileImage ?? "" ]])]
+         let name = selectedUser.fullName
+        let dictNew = ["following": FieldValue.arrayUnion([["id":selectedUser.id,"fullName":name, "profileImage":profileImage, "assetCount":selectedUser.assetCount ]])]
             
             
             IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink { (completion) in
@@ -198,24 +208,24 @@ class UserViewController: UIViewController {
                     print(error.localizedDescription)
                 }
             } receiveValue: { (_) in
-                let following = Following(fullName: name, id: selectedUser.documentID, profileImage: profileImage ?? "")
+                let user = User(fullName: name, id: selectedUser.id, profileImage: profileImage, assetCount: selectedUser.assetCount, isFollowing:true)
                 
-                self.followingArr.append(following)
+                self.followingArr.append(user)
                 self.addMeAsFollower(selectedUser)
             }.store(in: &IFirebaseDatabase.shared.cancelBag)
 
             
 
-        }
+        
       
     }
     
-    func unfollowUser(_ selectedUser:QueryDocumentSnapshot){
+    func unfollowUser(_ selectedUser:User){
         let id = Auth.auth().currentUser?.email ?? ""
-        let profileImage = selectedUser.get("profileImage") as? String
+        let profileImage = selectedUser.profileImage
        
-       if let name = selectedUser.get("fullName") as? String{
-           let dictNew = ["following": FieldValue.arrayRemove([["id":selectedUser.documentID,"fullName":name, "profileImage":profileImage ?? "" ]])]
+        let name = selectedUser.fullName
+           let dictNew = ["following": FieldValue.arrayRemove([["id":selectedUser.id,"fullName":name, "profileImage":profileImage,"assetCount":selectedUser.assetCount ]])]
            
         
         IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink { (completion) in
@@ -227,8 +237,13 @@ class UserViewController: UIViewController {
             }
         } receiveValue: { (_) in
             for i in 0..<self.followingArr.count{
-                if self.followingArr[i].id == selectedUser.documentID{
+                if self.followingArr[i].id == selectedUser.id{
+                    
                     self.followingArr.remove(at: i)
+                    let indexToRemove = self.finalArr.firstIndex(where: {$0.id == selectedUser.id}) ?? 0
+                    self.finalArr.remove(at: indexToRemove)
+                    self.tableView.deleteRows(at: [IndexPath(row: indexToRemove, section: 0)], with: .left)
+                    
                     break
                 }
             }
@@ -236,17 +251,30 @@ class UserViewController: UIViewController {
             self.removeMeAsFollower(selectedUser)
         }.store(in: &IFirebaseDatabase.shared.cancelBag)
 
-       }
+       
     }
     
-    func removeMeAsFollower(_ selectedUser:QueryDocumentSnapshot){
+    func removeMeAsFollower(_ selectedUser:User){
         
         let userName = currentUser?.data()?["fullName"] as? String
         
         let userImageUrl = currentUser?.data()?["profileImage"] as? String
-        let dictNew = ["follower": FieldValue.arrayRemove([["id":currentUser?.documentID,"fullName":userName, "profileImage":userImageUrl ?? "" ]])]
+        
+        
+        let keys = currentUser?.data()?.keys
+        var assests = [String]()
+        for k in keys!{
+            if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
+                assests.append(k)
+            }
+           
+        }
+        
+        
+        
+        let dictNew = ["follower": FieldValue.arrayRemove([["id":currentUser?.documentID ?? "","fullName":userName ?? "", "profileImage":userImageUrl ?? "", "assetCount":assests.count ]])]
 //        let dict = ["follower":]
-        IFirebaseDatabase.shared.updateData("users", document: selectedUser.documentID, data: dictNew).sink { (completion) in
+        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -258,18 +286,28 @@ class UserViewController: UIViewController {
     }
     
     
-    func addMeAsFollower(_ selectedUser:QueryDocumentSnapshot){
+    func addMeAsFollower(_ selectedUser:User){
         
        
         
         let userName = currentUser?.data()?["fullName"] as? String
         
         let userImageUrl = currentUser?.data()?["profileImage"] as? String
-        let dictNew = ["follower": FieldValue.arrayUnion([["id":currentUser?.documentID,"fullName":userName, "profileImage":userImageUrl ?? "" ]])]
+        
+        let keys = currentUser?.data()?.keys
+        var assests = [String]()
+        for k in keys!{
+            if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
+                assests.append(k)
+            }
+           
+        }
+        
+        let dictNew = ["follower": FieldValue.arrayUnion([["id":currentUser?.documentID ?? "","fullName":userName ?? "", "profileImage":userImageUrl ?? "", "assetCount":assests.count ]])]
 //        let dict = ["follower":]
 //
         
-        IFirebaseDatabase.shared.updateData("users", document: selectedUser.documentID, data: dictNew).sink { (completion) in
+        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -308,10 +346,10 @@ class UserViewController: UIViewController {
                     let fullName = value?["fullName"] as? String
                     let id = value?["id"] as? String
                     let profileImage = value?["profileImage"] as? String
+                    let assetCount = value?["assetCount"] as? Int ?? 0
+                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: assetCount, isFollowing:true)
                     
-                    let following = Following(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", isFollowing: true,isFollowers: false)
-                    
-                    self.followingArr.append(following)
+                    self.followingArr.append(user)
                 }
                 
                 //get followers
@@ -322,10 +360,10 @@ class UserViewController: UIViewController {
                     let fullName = value?["fullName"] as? String
                     let id = value?["id"] as? String
                     let profileImage = value?["profileImage"] as? String
-                    
-                    let follower = Following(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", isFollowing:false, isFollowers: true )
+                    let assetCount = value?["assetCount"] as? Int ?? 0
+                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: assetCount, isFollowing:false)
         
-                    self.followersArr.append(follower)
+                    self.followersArr.append(user)
                 }
             } else {
                 print("user does not exist")
@@ -352,18 +390,25 @@ class UserViewController: UIViewController {
         // check if text is empty or not
         if textField.text != "" {
             // check if user exists in user list
-            let filterArr = self.users.filter({($0.get("fullName") as? String ?? "").lowercased().contains(textField.text ?? "") || ($0.get("fullName") as? String ?? "").uppercased().contains(textField.text ?? "")})
+            
+            let filterArr = self.users.filter {$0.fullName.lowercased().contains(textField.text ?? "") || $0.fullName.uppercased().contains(textField.text ?? "")}
             isUserSearching = true
+            
+            print("searched list of filterArr", filterArr.count)
             self.usersSearch = filterArr
+            print("searched list of row", users.count)
             if self.usersSearch.count == 0 {
                 noResultsLabel.isHidden = false
                 noResultsLabel.text = "No user found..."
             }else{
                 noResultsLabel.isHidden = true
             }
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+
+            
         }else{
             noResultsLabel.text = "Search user..."
             // check if text is empty show all users
@@ -381,11 +426,19 @@ class UserViewController: UIViewController {
     @objc func userTabbed(_ gesture: UITapGestureRecognizer){
         guard let view = gesture.view else { return }
         let index = view.tag
-        let user = isUserSearching ? usersSearch[index] : users[index]
+        var selectedID:Any?
+        if isUserSeeFollowing{
+            let user = isUserSearching ? usersSearch[index] : users[index]
+            selectedID = user.id
+        }else{
+           let user = finalArr[index]
+            selectedID = user.id
+        }
+       
         
         if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
             let profileVc = self.storyboard?.instantiateViewController(identifier: "Profile") as! ProfileViewController
-            mainViewController.selectedUserID = user.documentID
+            mainViewController.selectedUserID = selectedID
             mainViewController.isOtherUser = true
             mainViewController.goToController(profileVc)
         }
@@ -411,92 +464,42 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // check if user tabbed following or followers tab
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
+        var user:User!
         if isUserSeeFollowing{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
-            let user = finalArr[indexPath.row]
-            cell.assetCount.text = nil
-            cell.userName.text = user.fullName
-            if user.isFollowing{
-                cell.followButton.isSelected = true
-                cell.followButton.backgroundColor = .black
-                cell.followButton.setTitleColor(.white, for: .normal)
-            }else{
-                cell.followButton.isSelected = false
-                cell.followButton.backgroundColor = .white
-                cell.followButton.setTitleColor(.black, for: .normal)
-            }
-            cell.userImage.isUserInteractionEnabled = true
-            cell.userImage.tag = indexPath.row
-            cell.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userTabbed(_:))))
-                let profileUrl = user.profileImage
-                if let imageUrl = URL(string: profileUrl){
-                
-                DispatchQueue.global().async {
-                    let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                    DispatchQueue.main.async {
-                        cell.userImage.image = UIImage(data: imageData as Data)
-                    }
-                }
-            }
-            return cell
+            user = finalArr[indexPath.row]
+        }else{
+            user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
         }
         
         
-        
-        
-        let user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
-       
-        let fullName = user.get("fullName") as? String
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
-        cell.userName.text = fullName
+        cell.user = user
+        cell.followButton.isHidden = user.id == currentUser?.documentID ? true : false
         cell.followButton.tag = indexPath.row
         cell.followButton.addTarget(self, action: #selector(followAction(_:)), for: .touchUpInside)
         cell.userImage.isUserInteractionEnabled = true
         cell.userImage.tag = indexPath.row
         cell.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userTabbed(_:))))
         // check if user already followers or not
-        let followingUser = followingArr.filter({$0.id == user.documentID})
-        if followingUser.count > 0 {
+        let followingUser = followingArr.filter({$0.id == user.id})
+        if user.isFollowing || followingUser.count > 0{
             cell.followButton.isSelected = true
             cell.followButton.backgroundColor = .black
             cell.followButton.setTitleColor(.white, for: .normal)
-            
         }else{
             cell.followButton.isSelected = false
             cell.followButton.backgroundColor = .white
             cell.followButton.setTitleColor(.black, for: .normal)
         }
-        if let profileUrl = user.get("profileImage") as? String{
-            if  let imageUrl = URL(string: profileUrl){
-                
-                DispatchQueue.global().async {
-                    let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                    DispatchQueue.main.async {
-                        cell.userImage.image = UIImage(data: imageData as Data)
-                    }
-                }
-            }
-        }
-       
         
-        // fetch total pairs of each user
-        var totalArr = [String]()
-        for k in user.data().keys {
-            if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
-                totalArr.append(k)
-            }
-        }
-            
-        cell.assetCount.text = "\(totalArr.count) AR Assets"
+
   
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedUser = users[indexPath.row]
-        NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.documentID))
+        NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.id))
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     

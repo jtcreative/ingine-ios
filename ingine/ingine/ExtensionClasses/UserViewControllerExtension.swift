@@ -23,11 +23,12 @@ extension UserViewController {
                 }
             }) { (snapshot) in
                 for doc in snapshot {
-                    self.users.append(doc)
+                    let user = User().dictToUser(dict: doc.data(), id: doc.documentID)
+                    self.users.append(user)
                 }
                 
                 self.users.sort { (doc1, doc2) -> Bool in
-                    return doc1.documentID.lowercased() < doc2.documentID.lowercased()
+                    return doc1.id.lowercased() < doc2.id.lowercased()
                 }
                 
 //                DispatchQueue.main.async {

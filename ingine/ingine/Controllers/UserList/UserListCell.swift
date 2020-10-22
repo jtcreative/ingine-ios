@@ -15,6 +15,35 @@ class UserListCell: UITableViewCell {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var assetCount: UILabel!
     @IBOutlet weak var followButton: UIButton!
+    
+    var user:User!{
+        didSet{
+            updateUser(user)
+        }
+    }
+    
+    private func updateUser(_ user:User){
+        let fullName = user.fullName
+        
+        userName.text = fullName
+        
+        
+        
+        if  let imageUrl = URL(string: user.profileImage){
+            DispatchQueue.global().async {
+                let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                DispatchQueue.main.async {
+                    self.userImage.image = UIImage(data: imageData as Data)
+                }
+            }
+            
+        }
+        
+        assetCount.text = "\(user.assetCount) AR Assets"
+    }
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
