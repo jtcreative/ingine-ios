@@ -203,20 +203,20 @@ class UserProfileViewController: UIViewController {
          let name = selectedUser.fullName
         let dictNew = ["following": FieldValue.arrayUnion([["id":selectedUser.id,"fullName":name, "profileImage":profileImage, "assetCount":selectedUser.assetCount ]])]
             
-            IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink { (completion) in
+            IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-            } receiveValue: { (_) in
+            }, receiveValue: { (_) in
                 self.profileHeaderView.followButton.setTitle("Following", for: .normal)
                 self.profileHeaderView.followButton.setTitleColor(.white, for: .normal)
                 self.profileHeaderView.followButton.backgroundColor = .black
                 self.delegate?.didUpdateUserFollowing()
                 self.addMeAsFollower(selectedUser)
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }).store(in: &IFirebaseDatabase.shared.cancelBag)
 
 
       
@@ -230,14 +230,14 @@ class UserProfileViewController: UIViewController {
            let dictNew = ["following": FieldValue.arrayRemove([["id":selectedUser.id,"fullName":name, "profileImage":profileImage,"assetCount":selectedUser.assetCount ]])]
            
         
-        IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink { (completion) in
+        IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        } receiveValue: { (_) in
+        }, receiveValue: { (_) in
             self.profileHeaderView.followButton.setTitle("Follow", for: .normal)
           
             self.profileHeaderView.followButton.setTitleColor(.black, for: .normal)
@@ -245,7 +245,7 @@ class UserProfileViewController: UIViewController {
 
             self.delegate?.didUpdateUserFollowing()
             self.removeMeAsFollower(selectedUser)
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
 
        
     }
@@ -268,15 +268,15 @@ class UserProfileViewController: UIViewController {
         
         let dictNew = ["follower": FieldValue.arrayRemove([["id":currentUser?.documentID ?? "","fullName":userName ?? "", "profileImage":userImageUrl ?? "", "assetCount":assests.count ]])]
 //        let dict = ["follower":]
-        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink { (completion) in
+        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        } receiveValue: { (_) in
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }, receiveValue: { (_) in
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
     }
     
     
@@ -301,15 +301,15 @@ class UserProfileViewController: UIViewController {
 //        let dict = ["follower":]
 //
         
-        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink { (completion) in
+        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        } receiveValue: { (_) in
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }, receiveValue: { (_) in
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
         
     }
     

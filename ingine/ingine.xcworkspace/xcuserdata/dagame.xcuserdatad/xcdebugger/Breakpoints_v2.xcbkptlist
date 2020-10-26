@@ -78,8 +78,8 @@
             filePath = "ingine/ExtensionClasses/ViewControllerExtension.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55">
+            startingLineNumber = "72"
+            endingLineNumber = "72">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -172,9 +172,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -220,9 +220,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -238,7 +238,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "246"
             endingLineNumber = "246"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,7 +254,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "247"
             endingLineNumber = "247"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -300,9 +300,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -332,9 +332,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -348,9 +348,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -364,9 +364,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -427,9 +427,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -475,9 +475,9 @@
             filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -525,7 +525,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
             endingLineNumber = "139"
-            landmarkName = "segmentValueChanged(_:)"
+            landmarkName = "followAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
