@@ -76,20 +76,6 @@ class IngineeredItemViewCell: UITableViewCell {
     
 }
 
-struct IngineeredItem {
-    var id = ""
-    var refImage = ""
-    var itemName = ""
-    var itemURL = ""
-    var visStatus = false
-}
-struct ARItem:Codable {
-    var id :String?
-    var name:String?
-    var refImage:String?
-    var matchURL:String?
-    var `public` :Bool?
-}
 
 
 
@@ -113,7 +99,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         ingineeredItemsTableView.backgroundColor = .white
         
         ingineeredItemsTableView.register(ProfileViewHeaderCell.self, forHeaderFooterViewReuseIdentifier: "ProfileViewHeaderCell")
-        
+        ingineeredItemsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
         //let profileHeader = ProfileViewHeader(frame: profileHeaderView.frame)
         
         //ingineeredItemsTableView.tableHeaderView = profileHeader
@@ -128,12 +114,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Configure table view
         configureTableView()
-        addFollowers()
-        // Check if user logged in by email
-        isLoggedIn()
-        
-        // retrieve ingineered items
-        retrieveItems()
+       
+
         setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
         
@@ -142,19 +124,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
-    func addFollowers()
-    {
-         let id = Auth.auth().currentUser?.email ?? ""
-        
-        let dict = ["follower":[["userId":"userid1234","username":"Mike"],["userId":"userid89ds","username":"John"]]]
-        Firestore.firestore().collection("users").document(id).updateData(dict) { (error) in
-            if let error = error{
-                 print("Document error:\(error)")
-            }else{
-                print("Document is written successfully")
-            }
-        }
-    }
     
     // setup profile header view
     private func setupProfileHeader(){
@@ -165,6 +134,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileHeaderView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         profileHeaderView.heightAnchor.constraint(equalToConstant: 160).isActive = true
         profileHeaderView.settingButton.addTarget(self, action: #selector(openProfileSetting), for: .touchUpInside)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Check if user logged in by email
+        isLoggedIn()
+        
+        // retrieve ingineered items
+        retrieveItems()
     }
     
    

@@ -23,65 +23,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EE4D3E27-1F5C-46FB-9914-951015DFCC07"
+            uuid = "93F91781-1C07-4666-9F8F-664D9B830098"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ingine/MainViewController.swift"
+            filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "pageViewController(_:viewControllerAfter:)"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
+            landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BA3559AB-AE9A-4873-AFD4-292C01F29B2C"
+            uuid = "4C3993CA-BF7B-4550-B40A-6AC7EB35E410"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ingine/MainViewController.swift"
+            filePath = "ingine/UserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "pageViewController(_:viewControllerAfter:)"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "removeMeAsFollower(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BA3559AB-AE9A-4873-AFD4-292C01F29B2C - e54bf6938550af65"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ingine.MainViewController.pageViewController(_: __C.UIPageViewController, viewControllerAfter: __C.UIViewController) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/manishdadwal/Documents/Manish/Projects/ingine-ios/ingine/ingine/MainViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "124"
-                  endingLineNumber = "124"
-                  offsetFromSymbolStart = "68">
-               </Location>
-               <Location
-                  uuid = "BA3559AB-AE9A-4873-AFD4-292C01F29B2C - cc0ea1195e3c2990"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIViewController) -&gt; Swift.Bool in ingine.MainViewController.pageViewController(_: __C.UIPageViewController, viewControllerAfter: __C.UIViewController) -&gt; Swift.Optional&lt;__C.UIViewController&gt;"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/manishdadwal/Documents/Manish/Projects/ingine-ios/ingine/ingine/MainViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "125"
-                  endingLineNumber = "125"
-                  offsetFromSymbolStart = "40">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9F31353-489E-4E61-8E56-184F0104DADB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/UserViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "removeMeAsFollower(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C53A1FE8-EAA4-453B-A500-76EB87AA1512"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/Manager/IFirebase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "searchFollowers(_:collection:limit:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

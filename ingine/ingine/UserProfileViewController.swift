@@ -20,6 +20,13 @@ import SafariServices
 import FirebaseAuth
 import FirebaseFirestore
 
+
+protocol UserProfileFollowingUpdateDelegate:class {
+    func didUpdateUserFollowing()
+}
+
+
+
 class UserProfileViewHeaderCell : UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -97,8 +104,10 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var header: UIView!
     var userImage = ""
      var firebaseSnapshotId = ""
+    weak var delegate:UserProfileFollowingUpdateDelegate?
     
-    
+    var currentUser:DocumentSnapshot?
+    var selectedUser:User?
     override func viewDidLoad() {
         super.viewDidLoad()
         // init firebase manager
@@ -110,7 +119,7 @@ class UserProfileViewController: UIViewController {
         }
         
         ingineeredItemsTableView.register(ProfileViewHeaderCell.self, forHeaderFooterViewReuseIdentifier: "ProfileViewHeaderCell")
-        
+        ingineeredItemsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
         view.addGestureRecognizer(rightSwipe)
@@ -129,30 +138,11 @@ class UserProfileViewController: UIViewController {
         retrieveItems()
         setupProfileHeader()
         // ingineeredItemsTableView.separatorStyle = .none
-        
-        
-        
+
     }
     
     
-    func followUser()
-    {
-         let id = Auth.auth().currentUser?.email ?? ""
-        
-        let dict = ["follower":[["userId":"userid1234","username":"Mike"],["userId":"userid89ds","username":"John"]]]
-        Firestore.firestore().collection("users").document(id).updateData(dict) { (error) in
-            if let error = error{
-                 print("Document error:\(error)")
-            }else{
-                print("Document is written successfully")
-            }
-        }
-    }
     
-    func unfolloeUser()
-    {
-        
-    }
     
     // setup profile header view
     private func setupProfileHeader(){
@@ -161,7 +151,8 @@ class UserProfileViewController: UIViewController {
         profileHeaderView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         profileHeaderView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         profileHeaderView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        profileHeaderView.heightAnchor.constraint(equalToConstant: 160).isActive = true
+        profileHeaderView.heightAnchor.constraint(equalToConstant: 180).isActive = true
+        profileHeaderView.followButton.addTarget(self, action: #selector(followAction(_:)), for: .touchUpInside)
         profileHeaderView.settingButton.isHidden = true
         profileHeaderView.followerAndFollowingLabel.isHidden = true
         profileHeaderView.followButton.isHidden = false
@@ -176,13 +167,151 @@ class UserProfileViewController: UIViewController {
         ingineeredItemsTableView.estimatedRowHeight = 120
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getCurrentUser()
+    }
+    
+    @objc func followAction(_ sender:UIButton){
+   
+        if let user = selectedUser{
+            if sender.titleLabel?.text == "Following"{
+                
+                self.profileHeaderView.followButton.setTitle("Follow", for: .normal)
+              
+                self.profileHeaderView.followButton.setTitleColor(.black, for: .normal)
+                self.profileHeaderView.followButton.backgroundColor = .white
+                unfollowUser(user)
+            }else{
+                self.profileHeaderView.followButton.setTitle("Following", for: .normal)
+                self.profileHeaderView.followButton.setTitleColor(.white, for: .normal)
+                self.profileHeaderView.followButton.backgroundColor = .black
+               
+            
+                followingUser(user)
+            }
+        }
+        
+    }
+    
+   
+    func followingUser(_ selectedUser:User)
+    {
+         let id = Auth.auth().currentUser?.email ?? ""
+         let profileImage = selectedUser.profileImage
+        
+         let name = selectedUser.fullName
+        let dictNew = ["following": FieldValue.arrayUnion([["id":selectedUser.id,"fullName":name, "profileImage":profileImage, "assetCount":selectedUser.assetCount ]])]
+            
+            IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { (_) in
+                self.profileHeaderView.followButton.setTitle("Following", for: .normal)
+                self.profileHeaderView.followButton.setTitleColor(.white, for: .normal)
+                self.profileHeaderView.followButton.backgroundColor = .black
+                self.delegate?.didUpdateUserFollowing()
+                self.addMeAsFollower(selectedUser)
+            }).store(in: &IFirebaseDatabase.shared.cancelBag)
 
+
+      
+    }
     
-    /*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let viewHeaderCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileViewHeaderCell") as? ProfileViewHeaderCell
-        return viewHeaderCell
-    }*/
+    func unfollowUser(_ selectedUser:User){
+        let id = Auth.auth().currentUser?.email ?? ""
+        let profileImage = selectedUser.profileImage
+       
+        let name = selectedUser.fullName
+           let dictNew = ["following": FieldValue.arrayRemove([["id":selectedUser.id,"fullName":name, "profileImage":profileImage,"assetCount":selectedUser.assetCount ]])]
+           
+        
+        IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }, receiveValue: { (_) in
+            self.profileHeaderView.followButton.setTitle("Follow", for: .normal)
+          
+            self.profileHeaderView.followButton.setTitleColor(.black, for: .normal)
+            self.profileHeaderView.followButton.backgroundColor = .white
+
+            self.delegate?.didUpdateUserFollowing()
+            self.removeMeAsFollower(selectedUser)
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+
+       
+    }
     
+    func removeMeAsFollower(_ selectedUser:User){
+        
+        let userName = currentUser?.data()?["fullName"] as? String
+        
+        let userImageUrl = currentUser?.data()?["profileImage"] as? String
+        
+        
+        let keys = currentUser?.data()?.keys
+        var assests = [String]()
+        for k in keys!{
+            if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
+                assests.append(k)
+            }
+           
+        }
+        
+        let dictNew = ["follower": FieldValue.arrayRemove([["id":currentUser?.documentID ?? "","fullName":userName ?? "", "profileImage":userImageUrl ?? "", "assetCount":assests.count ]])]
+//        let dict = ["follower":]
+        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }, receiveValue: { (_) in
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+    }
+    
+    
+    func addMeAsFollower(_ selectedUser:User){
+        
+       
+        
+        let userName = currentUser?.data()?["fullName"] as? String
+        
+        let userImageUrl = currentUser?.data()?["profileImage"] as? String
+        
+        let keys = currentUser?.data()?.keys
+        var assests = [String]()
+        for k in keys!{
+            if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
+                assests.append(k)
+            }
+           
+        }
+        
+        let dictNew = ["follower": FieldValue.arrayUnion([["id":currentUser?.documentID ?? "","fullName":userName ?? "", "profileImage":userImageUrl ?? "", "assetCount":assests.count ]])]
+//        let dict = ["follower":]
+//
+        
+        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }, receiveValue: { (_) in
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        
+    }
     
     
     @objc func openProfileSetting(){
@@ -286,6 +415,51 @@ extension UserProfileViewController {
 }
 
 extension UserProfileViewController {
+    
+    
+    func getCurrentUser(){
+        // remove pervious values
+
+        let currentUser = Auth.auth().currentUser?.email ?? ""
+        let selectedUser = userId ?? ""
+        IFirebaseDatabase.shared.getDocument("users", document: selectedUser).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }) { [unowned self](snapshot) in
+            
+            if snapshot.exists {
+             
+                let user = User().dictToUser(dict: snapshot.data()!, id: snapshot.documentID)
+                self.selectedUser = user
+                self.profileHeaderView.userName.text = user.fullName
+                
+                for followUser in user.followers{
+                    if followUser.id == currentUser{
+                        self.profileHeaderView.followButton.setTitle("Following", for: .normal)
+                        self.profileHeaderView.followButton.setTitleColor(.white, for: .normal)
+                        self.profileHeaderView.followButton.backgroundColor = .black
+                        
+                    }else{
+                        self.profileHeaderView.followButton.setTitle("Follow", for: .normal)
+                        self.profileHeaderView.followButton.setTitleColor(.black, for: .normal)
+                        self.profileHeaderView.followButton.backgroundColor = .white
+                    }
+                }
+                
+                
+            } else {
+                print("user does not exist")
+                self.currentUser = nil
+                
+            }
+        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+       
+    }
+    
     // Retrieve ingineered item infro from firebase
        func retrieveItems() {
            print("retrieving data from firebase...")

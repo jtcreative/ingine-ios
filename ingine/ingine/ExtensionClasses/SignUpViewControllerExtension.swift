@@ -85,12 +85,12 @@ extension SignUpViewController{
     private func updateARDataInDocument(url:String){
         var matchURL = ""
         // update Asset url to pairs document
-        let itemName = self.sendArData?.name ?? ""
+        let itemName = self.arData?.name ?? ""
         let email = Auth.auth().currentUser?.email ?? ""
-        if self.sendArData?.url?.hasPrefix("https://") ?? false || self.sendArData?.url?.hasPrefix("http://") ?? false {
-            matchURL = self.sendArData?.url ?? ""
+        if self.arData?.url?.hasPrefix("https://") ?? false || self.arData?.url?.hasPrefix("http://") ?? false {
+            matchURL = self.arData?.url ?? ""
         }else {
-            matchURL = "http://\(self.sendArData?.url ?? "")"
+            matchURL = "http://\(self.arData?.url ?? "")"
         }
         
         let dict = [
@@ -98,7 +98,7 @@ extension SignUpViewController{
             "refImage": url,
             "matchURL": matchURL,
             "user": email,
-            "public": self.sendArData?.visibilty ?? false
+            "public": self.arData?.visibilty ?? false
         ] as [String : Any]
         
         
@@ -178,7 +178,11 @@ extension SignUpViewController{
                 print(error.localizedDescription)
             }
         }) { [unowned self](_) in
-            guard let imageData = self.arImage.image!.jpegData(compressionQuality: 0.8) else { return }
+            guard let imageData = self.arImage.image?.jpegData(compressionQuality: 0.8) else {
+                self.openMainViewController()
+                return
+                
+            }
             self.uploadArImage(imageData)
         }.store(in: &IFirebaseDatabase.shared.cancelBag)
     }

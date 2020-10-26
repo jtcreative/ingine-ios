@@ -29,6 +29,17 @@ extension ProfileViewController{
                     if snapshot.exists {
                         // set title of profile page to full name of logged in user
 //                        self.userName.text = snapshot.data()?["fullName"] as? String
+                        
+                        
+                        // get following
+                        let followingArray = snapshot.get("following") as? [Any]
+                        
+                        // get followers
+                        let followerArray = snapshot.get("follower") as? [Any]
+                        
+                        self.profileHeaderView.followerAndFollowingLabel.text = "Following \(followingArray?.count ?? 0 ) | \(followerArray?.count ?? 0 > 1 ? "Followers" : "Follower") \(followerArray?.count ?? 0)"
+                        
+                        
                         self.profileHeaderView.userName.text = snapshot.data()?["fullName"] as? String
                         
                         if let userImageUrl = snapshot.data()?["profileImage"] as? String{

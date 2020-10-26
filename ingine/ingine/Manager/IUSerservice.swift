@@ -20,8 +20,8 @@ protocol IUserService {
     func forget(_ email:String) -> AnyPublisher<Void, Error>
     func getUserList(_ collection:String, limit:Int) -> AnyPublisher<Q, Error>
     func searchUser(_ query:String, collection:String, limit:Int) -> AnyPublisher<Q, Error>
-    func searchFollowers(_ query: String, collection: String, limit: Int)-> AnyPublisher<[[String:Any]], Error>
-    func searchFollowings(_ query: String, collection: String, limit: Int) -> AnyPublisher<[[String:Any]], Error>
+    func searchFollowers(_ query: String, collection: String, limit: Int)-> AnyPublisher<[User], Error>
+    func searchFollowings(_ query: String, collection: String, limit: Int) -> AnyPublisher<[User], Error>
 }
 
 

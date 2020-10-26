@@ -46,8 +46,13 @@ extension LoginViewController{
             }
         }) { (user) in
            // upload AR image
-            guard let imageData = self.arImage.image!.jpegData(compressionQuality: 0.8) else { return }
-            self.uploadArImage(imageData)
+             guard let imageData = self.arImage.image?.jpegData(compressionQuality: 0.8) else {
+                 
+                 self.openMainViewController()
+                 return
+                 
+             }
+             self.uploadArImage(imageData)
             
         }.store(in: &IFirebase.shared.cancelBag)
     }
@@ -72,39 +77,39 @@ extension LoginViewController{
     }
     
     
-  private func updateARDataInDocument(url:String){
+    private func updateARDataInDocument(url:String){
         var matchURL = ""
-         // update Asset url to pairs document
-         let itemName = self.sendArData?.name ?? ""
-         let email = Auth.auth().currentUser?.email ?? ""
-         if self.sendArData?.url?.hasPrefix("https://") ?? false || self.sendArData?.url?.hasPrefix("http://") ?? false {
-             matchURL = self.sendArData?.url ?? ""
-         }else {
-             matchURL = "http://\(self.sendArData?.url ?? "")"
-         }
-         
-         let dict = [
-             "name": itemName,
-             "refImage": url,
-             "matchURL": matchURL,
-             "user": email,
-             "public": self.sendArData?.visibilty ?? false
-             ] as [String : Any]
-         
-         
-         IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
-             switch completion
-             {
-             case .finished : print("ar asesst updated finish")
-             case .failure(let error):
-                 Loader.stop()
-                 print(error.localizedDescription)
-             }
-         }, receiveValue: { (ref) in
-             
+        // update Asset url to pairs document
+        let itemName = self.arData?.name ?? ""
+        let email = Auth.auth().currentUser?.email ?? ""
+        if self.arData?.url?.hasPrefix("https://") ?? false || self.arData?.url?.hasPrefix("http://") ?? false {
+            matchURL = self.arData?.url ?? ""
+        }else {
+            matchURL = "http://\(self.arData?.url ?? "")"
+        }
+        
+        let dict = [
+            "name": itemName,
+            "refImage": url,
+            "matchURL": matchURL,
+            "user": email,
+            "public": self.arData?.visibilty ?? false
+        ] as [String : Any]
+        
+        
+        IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("ar asesst updated finish")
+            case .failure(let error):
+                Loader.stop()
+                print(error.localizedDescription)
+            }
+        }, receiveValue: { (ref) in
+            
             self.updateUserDocument(ref)
-             
-         }).store(in: &IFirebaseDatabase.shared.cancelBag)
+            
+        }).store(in: &IFirebaseDatabase.shared.cancelBag)
     }
     
     
