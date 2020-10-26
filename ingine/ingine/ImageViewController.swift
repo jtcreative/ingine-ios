@@ -79,17 +79,17 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
 
 
             // if user not login then send to user home vc
-            let homeVc =  HomeViewController()
-         
-            if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-                let model = SendARData(image: image, url: urlBox.text, name: nameBox.text, visibilty: visibilitySwitch.isOn)
-//                NotificationCenter.default.post(name: .sendArData, object: model)
-                mainViewController.data = model as Any
-                mainViewController.goToController(homeVc)
-                
+           
+            let arData = SendARData(image: image, url: urlBox.text, name: nameBox.text, visibilty: visibilitySwitch.isOn)
+            guard let homeVc = storyboard?.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else {
+                return
             }
-            view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-//            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = homeVc
+            homeVc.modalTransitionStyle = .coverVertical
+            homeVc.modalPresentationStyle = .overFullScreen
+            homeVc.arData = arData
+            present(homeVc, animated: true, completion: nil)
+
+
             
         }
        

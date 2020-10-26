@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,7 +33,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="qFG-5N-gLW" secondAttribute="bottom" id="3zG-TI-9Tp"/>
                         <constraint firstItem="qFG-5N-gLW" firstAttribute="top" secondItem="x1b-1c-60I" secondAttribute="top" id="LXO-Ie-vZr"/>
@@ -75,19 +77,20 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQC-XG-eNl">
-                    <rect key="frame" x="119" y="123" width="175" height="30"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQC-XG-eNl">
+                    <rect key="frame" x="119" y="150" width="175" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Follow"/>
                 </button>
             </subviews>
-            <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
             <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="UQC-XG-eNl" secondAttribute="bottom" constant="20" id="0rU-2X-P9u"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="npK-r9-hh4" secondAttribute="trailing" constant="16" id="14v-31-FJA"/>
                 <constraint firstItem="xta-Bf-5Va" firstAttribute="leading" secondItem="hjj-qs-X0G" secondAttribute="trailing" id="5Nk-O6-ZQ6"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oeF-cg-b6E" secondAttribute="bottom" constant="10" id="8n8-do-bXN"/>
-                <constraint firstItem="UQC-XG-eNl" firstAttribute="top" secondItem="qFG-5N-gLW" secondAttribute="bottom" constant="23" id="BBL-WA-Qo5"/>
                 <constraint firstItem="oeF-cg-b6E" firstAttribute="top" secondItem="rf3-mU-uHs" secondAttribute="bottom" id="CeS-sG-7Az"/>
                 <constraint firstItem="oeF-cg-b6E" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="FOl-Vc-HT7"/>
                 <constraint firstItem="rf3-mU-uHs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="TyY-xP-VwE"/>
@@ -104,7 +107,6 @@
                 <constraint firstItem="npK-r9-hh4" firstAttribute="top" secondItem="qFG-5N-gLW" secondAttribute="top" id="zD2-15-wUd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="101.78571428571428"/>
         </view>
     </objects>
@@ -112,5 +114,11 @@
         <image name="profile_ingine" width="28" height="28"/>
         <image name="profile_placeholder" width="69" height="69"/>
         <image name="profile_settings" width="19" height="20"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="viewFlipsideBackgroundColor">
+            <color red="0.1215686274509804" green="0.12941176470588239" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

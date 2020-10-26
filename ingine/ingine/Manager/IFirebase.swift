@@ -105,10 +105,10 @@ class IFirebase: IUserService{
         
     }
     
-    func searchFollowers(_ query: String, collection: String, limit: Int)-> AnyPublisher<[[String:Any]], Error> {
+    func searchFollowers(_ query: String, collection: String, limit: Int)-> AnyPublisher<[User], Error> {
            // Populate cell elements with data from firebase
         let id = Auth.auth().currentUser?.email ?? ""
-        return Future<[[String:Any]], Error>{ promise in
+        return Future<[User], Error>{ promise in
             IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -126,22 +126,15 @@ class IFirebase: IUserService{
                               
                 
                 if snapShot.exists {
-                    for k in snapShot.data()!.keys {
-                        if k == "follower"{
-                           guard let followers = snapShot.get(k) as? [[String:Any]] else {
-                                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
-                                return
-                            }
-
-                            let filterArr = followers.filter({($0["fullName"] as? String ?? "").lowercased().contains(query.lowercased() )})
-                            promise(.success(filterArr))
-                            return
-                            
-                        }else {
-                            print("k is fullName")
-                        }
-                        
+                    let user = User().dictToUser(dict: snapShot.data()!, id: snapShot.documentID)
+                    if query.isEmpty{
+                        promise(.success(user.followers))
+                        return
                     }
+                    let filterA = user.followers.filter({$0.fullName.lowercased().contains(query.lowercased())})
+                    
+                    promise(.success(filterA))
+                    
                 }
                 
                 promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
@@ -150,9 +143,9 @@ class IFirebase: IUserService{
         }.eraseToAnyPublisher()
     }
     
-    func searchFollowings(_ query: String, collection: String, limit: Int) -> AnyPublisher<[[String:Any]], Error> {
+    func searchFollowings(_ query: String, collection: String, limit: Int) -> AnyPublisher<[User], Error> {
         let id = Auth.auth().currentUser?.email ?? ""
-        return Future<[[String:Any]], Error>{ promise in
+        return Future<[User], Error>{ promise in
             IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -170,22 +163,17 @@ class IFirebase: IUserService{
                               
                 
                 if snapShot.exists {
-                    for k in snapShot.data()!.keys {
-                        if k == "following"{
-                           guard let following = snapShot.get(k) as? [[String:Any]] else {
-                                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
-                                return
-                            }
-
-                            let filterArr = following.filter({($0["fullName"] as? String ?? "").lowercased().contains(query.lowercased() )})
-                            promise(.success(filterArr))
-                            return
-                            
-                        }else {
-                            print("k is fullName")
-                        }
-                        
+                    
+                    let user = User().dictToUser(dict: snapShot.data()!, id: snapShot.documentID)
+                    
+                    if query.isEmpty{
+                        promise(.success(user.followings))
+                        return
                     }
+                    let filterA = user.followings.filter({$0.fullName.lowercased().contains(query.lowercased())})
+                    
+                    promise(.success(filterA))
+
                 }
                 
                 promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))

@@ -10,26 +10,112 @@ import UIKit
 import FirebaseAuth
 
 class ProfileSettingsViewController: UIViewController {
+    //MARK: Outlets
     @IBOutlet weak var userImage:UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var appGuide: UIButton!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var editUserName: UIButton!
+    @IBOutlet weak var emailView: UIView!
+    @IBOutlet weak var email: UILabel!
+    @IBOutlet weak var notificationView: UIView!
+    @IBOutlet weak var signOut: UIButton!
     
+    //MARK: Properties
     var userImageStr = ""
     var imagePicker = UIImagePickerController()
+    var isProfileSelected = false
     
+    //MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
+        
+    }
+    
+    private func setupUI(){
         imagePicker.delegate = self
         
-        if !userImageStr.isEmpty{
-            let imageUrl = URL(string: userImageStr)!
-            let imageData:NSData = NSData(contentsOf: imageUrl)!
-            userImage.image = UIImage(data: imageData as Data)
-        }
+        userImage.layer.cornerRadius = userImage.frame.height / 2
+        userImage.clipsToBounds = true
+        emailView.layer.cornerRadius = 8
+        notificationView.layer.cornerRadius = 8
+        appGuide.layer.cornerRadius = 8
+        saveButton.layer.cornerRadius = 8
+        signOut.layer.cornerRadius = 8
         
+        // fetch user
+        fetchUser()
+        
+        
+    }
+    
+    
+    @IBAction func editUsername(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "Update Name", message: "", preferredStyle: .alert)
+        alertController.addTextField { (textField : UITextField!) -> Void in
+                textField.placeholder = "Enter Full Name"
+            }
+            let saveAction = UIAlertAction(title: "Update", style: .default, handler: { alert -> Void in
+                let firstTextField = alertController.textFields![0] as UITextField
+                guard let name = firstTextField.text else { return }
+                self.updateUserName(name)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+                (action : UIAlertAction!) -> Void in })
+    
+            
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+            
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func choosePhoto(_ sender:UIButton){
         showActionSheet()
+    }
+    
+    
+    func updateUserName(_ name:String){
+        let dict = ["fullName":name]
+        let email = Auth.auth().currentUser?.email ?? ""
+        IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }) { [unowned self](_) in
+            self.fetchUser()
+        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+    }
+    
+    
+    private func fetchUser(){
+        let id = Auth.auth().currentUser?.email ?? ""
+        IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }) { (snapshot) in
+            if snapshot.exists {
+                self.userName.text = snapshot.data()?["fullName"] as? String
+                self.email.text = id
+                if let userImageUrl = snapshot.data()?["profileImage"] as? String{
+                    let imageUrl = URL(string: userImageUrl)!
+                    let imageData:NSData = NSData(contentsOf: imageUrl)!
+                    self.userImage.image = UIImage(data: imageData as Data)
+                }
+                
+            } else {
+                print("user does not exist")
+            }
+        }.store(in: &IFirebaseDatabase.shared.cancelBag)
     }
     
     //MARK:- Camera and Gallery
@@ -76,7 +162,15 @@ class ProfileSettingsViewController: UIViewController {
     
     @IBAction func save(_ sender:UIButton){
         
-        guard let imageData = userImage!.image?.jpegData(compressionQuality: 0.8) else { return }
+        if !isProfileSelected{
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        guard let imageData = userImage?.image?.jpegData(compressionQuality: 0.8) else {
+            
+            dismiss(animated: true, completion: nil)
+            return }
         IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
             switch completion
             {
@@ -109,8 +203,15 @@ class ProfileSettingsViewController: UIViewController {
             }
         }) { (_) in
             print("Sign out pressed")
-            let home = HomeViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = home
+
+            DispatchQueue.main.async {
+                // Go back to homescreen
+                let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+                let vc = st.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
+            }
+            
+            
         }.store(in: &IFirebase.shared.cancelBag)
     }
     
@@ -123,6 +224,7 @@ extension ProfileSettingsViewController:UIImagePickerControllerDelegate, UINavig
         guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else{
             return
         }
+        isProfileSelected = true
         userImage.image = image
         dismiss(animated: true, completion: nil)
     }

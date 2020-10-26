@@ -13,8 +13,8 @@ struct User {
     var fullName:String = ""
     var id:String = ""
     var profileImage:String = ""
-    var followings: [Following] = [Following]()
-    var followers :  [Following] = [Following]()
+    var followings: [User] = [User]()
+    var followers :  [User] = [User]()
     var assetCount = 0
     var assetIDs:[String] = [String]()
     var isFollowing = false
@@ -35,24 +35,26 @@ struct User {
         }
        
         let followersArr = dict["follower"] as? [Any]
-        var followersObjArr = [Following]()
+        var followersObjArr = [User]()
         for i in followersArr ?? []{
             let value = i as? [String:Any]
             let fullNameF = value?["fullName"] as? String ?? ""
             let id = value?["id"] as? String ?? ""
             let profileImage = value?["profileImage"] as? String ?? ""
-            let follower = Following(fullName: fullNameF, id: id, profileImage: profileImage, assetCount: 0)
+            let assetCount = value?["assetCount"] as? Int ?? 0
+            let follower = User(fullName: fullNameF, id: id, profileImage: profileImage, assetCount: assetCount)
             followersObjArr.append(follower)
         }
         
         let followingArr = dict["following"] as? [Any]
-        var followingObjArr = [Following]()
+        var followingObjArr = [User]()
         for i in followingArr ?? []{
             let value = i as? [String:Any]
             let fullNameF = value?["fullName"] as? String ?? ""
             let id = value?["id"] as? String ?? ""
             let profileImage = value?["profileImage"] as? String ?? ""
-            let following = Following(fullName: fullNameF, id: id, profileImage: profileImage, assetCount: 0)
+            let assetCount = value?["assetCount"] as? Int ?? 0
+            let following = User(fullName: fullNameF, id: id, profileImage: profileImage, assetCount:assetCount)
             followingObjArr.append(following)
         }
         

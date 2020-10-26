@@ -26,6 +26,7 @@
 		18FDD2222451721D00C3B131 /* NotificationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD2212451721D00C3B131 /* NotificationUtils.swift */; };
 		18FDD224245187C000C3B131 /* PortraitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FDD223245187C000C3B131 /* PortraitViewController.swift */; };
 		8A927EC6D4DFD44678351FE6 /* Pods_ingine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */; };
+		970B4CC62545EFC100EE2FA0 /* ARItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970B4CC52545EFC100EE2FA0 /* ARItem.swift */; };
 		97239E88250E18D500733C34 /* IARService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97239E87250E18D400733C34 /* IARService.swift */; };
 		972C13612514CC20009911B7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972C13602514CC20009911B7 /* HomeViewController.swift */; };
 		972C13632514CD2E009911B7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972C13622514CD2E009911B7 /* UIView+Extension.swift */; };
@@ -54,6 +55,8 @@
 		97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */; };
 		97BCFCEF24FD656E00AA1E2B /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */; };
 		97BCFCF124FD665D00AA1E2B /* ImageViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */; };
+		97D85CBF2544A57600668A94 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D85CBD2544A57500668A94 /* User.swift */; };
+		97D85CC02544A57600668A94 /* Following.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D85CBE2544A57600668A94 /* Following.swift */; };
 		97DEB06825069F670070A5EF /* NotificationDataBindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */; };
 		97F05C0F250FD18E00C3564E /* DocumentSnapshotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C0E250FD18E00C3564E /* DocumentSnapshotPublisher.swift */; };
 		97F05C11250FDF6400C3564E /* IFirebaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */; };
@@ -109,6 +112,7 @@
 		28EF1BCF6424AC43142E7E15 /* Pods-ingine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.release.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.release.xcconfig"; sourceTree = "<group>"; };
 		77EF2C4A65AC41FEDCBDA3EE /* Pods_ingine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ingine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C5AD77DEDED43366A7DA8D3 /* Pods-ingine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ingine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ingine/Pods-ingine.debug.xcconfig"; sourceTree = "<group>"; };
+		970B4CC52545EFC100EE2FA0 /* ARItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARItem.swift; sourceTree = "<group>"; };
 		97239E87250E18D400733C34 /* IARService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IARService.swift; sourceTree = "<group>"; };
 		972C13602514CC20009911B7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		972C13622514CD2E009911B7 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 		97BCFCEB24FD371D00AA1E2B /* AccountViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCEE24FD656E00AA1E2B /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
 		97BCFCF024FD665D00AA1E2B /* ImageViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewControllerExtension.swift; sourceTree = "<group>"; };
+		97D85CBD2544A57500668A94 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		97D85CBE2544A57600668A94 /* Following.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Following.swift; sourceTree = "<group>"; };
 		97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDataBindingExtension.swift; sourceTree = "<group>"; };
 		97F05C0E250FD18E00C3564E /* DocumentSnapshotPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSnapshotPublisher.swift; sourceTree = "<group>"; };
 		97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFirebaseDatabase.swift; sourceTree = "<group>"; };
@@ -260,6 +266,9 @@
 		976D710E251CA29F007F0257 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				970B4CC52545EFC100EE2FA0 /* ARItem.swift */,
+				97D85CBE2544A57600668A94 /* Following.swift */,
+				97D85CBD2544A57500668A94 /* User.swift */,
 				976D710F251CA2AF007F0257 /* SendARData.swift */,
 			);
 			path = Model;
@@ -566,6 +575,7 @@
 				972C13672514DD0D009911B7 /* SignUpViewController.swift in Sources */,
 				D3730E1E252A49AF0027B632 /* UserProfileViewController.swift in Sources */,
 				97F05C15250FEBEA00C3564E /* IFirebaseStorage.swift in Sources */,
+				97D85CBF2544A57600668A94 /* User.swift in Sources */,
 				97F05C0F250FD18E00C3564E /* DocumentSnapshotPublisher.swift in Sources */,
 				97F05C13250FEADF00C3564E /* IArUploadService.swift in Sources */,
 				9743E2D0250B59FD00590C49 /* IUSerservice.swift in Sources */,
@@ -588,6 +598,7 @@
 				97A1315F2523A5D900C48586 /* UserListCell.swift in Sources */,
 				EE28D4D322A5A07E002CA261 /* ProfileViewController.swift in Sources */,
 				972C13692514DF7D009911B7 /* String+Extension.swift in Sources */,
+				970B4CC62545EFC100EE2FA0 /* ARItem.swift in Sources */,
 				97DEB06825069F670070A5EF /* NotificationDataBindingExtension.swift in Sources */,
 				97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */,
 				EE16B7D42308F06C0002397D /* OptionsLauncher.swift in Sources */,
@@ -611,6 +622,7 @@
 				9743E2D2250B60C900590C49 /* IFirebase.swift in Sources */,
 				18FDD2222451721D00C3B131 /* NotificationUtils.swift in Sources */,
 				EE28D4D122A59301002CA261 /* AccountViewController.swift in Sources */,
+				97D85CC02544A57600668A94 /* Following.swift in Sources */,
 				97F05C11250FDF6400C3564E /* IFirebaseDatabase.swift in Sources */,
 				EE7F35D8229CCDE400AE9089 /* SEAreaView.swift in Sources */,
 				EE7F35DD229CCDE400AE9089 /* UIView+globalCoordinates.swift in Sources */,

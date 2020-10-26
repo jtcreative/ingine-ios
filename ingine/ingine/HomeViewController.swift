@@ -20,10 +20,7 @@ class HomeViewController: PortraitViewController {
     
     //MARK: Outlets
     
-    var imageFrom: UIImage?
-    var arAssetName:String?
-    var arAssetUrl:String?
-    var visibility:Bool?
+    var arData:SendARData?
     
     //MARK:Lifecycle
     override func viewDidLoad() {
@@ -47,10 +44,8 @@ class HomeViewController: PortraitViewController {
         // set gradient
         view.setGradientBackground()
         
-        if let main = self.parent as? MainViewController{
-            if let value = main.data as? SendARData{
-                arImage.image = value.image
-            }
+        if let value = arData{
+            arImage.image = value.image
         }
         
     }
@@ -87,18 +82,23 @@ class HomeViewController: PortraitViewController {
     
     @IBAction func signUp(_ sender: UIButton) {
         
-        let signup = storyboard?.instantiateViewController(identifier: "SignUpViewController") as! SignUpViewController
-       if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-        mainViewController.goToController(signup)
-       }
+        guard let signup = storyboard?.instantiateViewController(identifier: "SignUpViewController") as? SignUpViewController else {
+            return
+        }
+        signup.modalTransitionStyle = .coverVertical
+        signup.modalPresentationStyle = .overFullScreen
+        signup.arData = arData
+        present(signup, animated: true, completion: nil)
     }
     
     @IBAction func login(_ sender: UIButton) {
-        let login = storyboard?.instantiateViewController(identifier: "LoginViewController") as! LoginViewController
-        
-        if let mainViewController = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController as? MainViewController {
-                   mainViewController.goToController(login)
-               }
+        guard let login = storyboard?.instantiateViewController(identifier: "LoginViewController") as? LoginViewController else {
+            return
+        }
+        login.modalTransitionStyle = .coverVertical
+        login.modalPresentationStyle = .overFullScreen
+        login.arData = arData
+        present(login, animated: true, completion: nil)
         
     }
 }

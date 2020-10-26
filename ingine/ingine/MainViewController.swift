@@ -62,11 +62,15 @@ class MainViewController : UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViewControllers([pageViews[currentPageIndex]], direction: .forward, animated: true, completion: { result in
-            self.createNavigationView()
+//            self.createNavigationView()
         })
         
 
         dataSource = nil
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.createNavigationView()
     }
     
     func isLoggedIn() -> Bool {
@@ -97,8 +101,7 @@ extension MainViewController {
         bottomView.cameraButton.addTarget(self, action: #selector(self.goToArPage), for: .touchUpInside)
         bottomView.searchButton.addTarget(self, action: #selector(self.goToSearchScreen), for: .touchUpInside)
         bottomView.profileButton.addTarget(self, action: #selector(self.goToProfileSetting), for: .touchUpInside)
-        
-        bottomView.contentView.setCustomGradient([UIColor.black, UIColor.yellow])
+        bottomView.contentView.setCustomGradient([UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.black.withAlphaComponent(0.0).cgColor])
     }
     
     @objc func goToSearchScreen(){
@@ -107,6 +110,10 @@ extension MainViewController {
                 let searchVc = self.storyboard?.instantiateViewController(identifier: "UserViewController") as! UserViewController
                 mainViewController.goToController(searchVc)
             }
+        }else{
+            let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+            let vc = st.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
         }
     }
     
@@ -133,8 +140,9 @@ extension MainViewController {
                 mainViewController.goToController(profileVc)
             }
         } else {
-            let login = LoginViewController()
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
+            let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+            let vc = st.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
         }
     }
 }

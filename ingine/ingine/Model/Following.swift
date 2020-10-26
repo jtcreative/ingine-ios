@@ -11,7 +11,5 @@ struct Following {
     var fullName:String
     var id:String
     var profileImage:String
-    var isFollowing: Bool = false
-    var isFollowers : Bool = false
     var assetCount = 0
 }

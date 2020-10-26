@@ -36,16 +36,19 @@ extension UserViewController {
             }) { (snapshot) in
                 self.users.removeAll()
                 for doc in snapshot {
-                    var data = doc.data()
-                    data["userId"] = doc.documentID
-                    self.users.append(data)
+                    
+//                    var data = doc.data()
+//                    data["userId"] = doc.documentID
+                    
+                    let user = User().dictToUser(dict: doc.data(), id: doc.documentID)
+                    
+                    self.users.append(user)
                 }
                 
                 self.users.sort { (doc1, doc2) -> Bool in
-                    let doc1Str = doc1["fullName"] as! String
-                    let doc2Str = doc1["fullName"] as! String
+                  
                     
-                    return (doc1Str.lowercased() < doc2Str.lowercased())
+                    return (doc1.fullName.lowercased() < doc2.fullName.lowercased())
                 }
                 
                 DispatchQueue.main.async {
@@ -70,14 +73,12 @@ extension UserViewController {
             }) { (snapshot) in
                 self.users.removeAll()
                 for doc in snapshot {
+
                     self.users.append(doc)
                 }
                 
                 self.users.sort { (doc1, doc2) -> Bool in
-                    let doc1Str = doc1["fullName"] as! String
-                    let doc2Str = doc1["fullName"] as! String
-                    
-                    return (doc1Str.lowercased() < doc2Str.lowercased())
+                    return (doc1.fullName.lowercased() < doc2.fullName.lowercased())
                 }
                 
                 DispatchQueue.main.async {
@@ -102,14 +103,14 @@ extension UserViewController {
             }) { (snapshot) in
                 self.users.removeAll()
                 for doc in snapshot {
+                  
                     self.users.append(doc)
                 }
                 
                 self.users.sort { (doc1, doc2) -> Bool in
-                    let doc1Str = doc1["fullName"] as! String
-                    let doc2Str = doc1["fullName"] as! String
                     
-                    return (doc1Str.lowercased() < doc2Str.lowercased())
+                    
+                    return (doc1.fullName.lowercased() < doc2.fullName.lowercased())
                 }
                 
                 DispatchQueue.main.async {
