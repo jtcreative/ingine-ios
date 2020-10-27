@@ -336,6 +336,53 @@
             endingLineNumber = "186"
             landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "997A7953-A0F0-4B61-895E-39BACD501353 - 288886877e12288a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ingine.UserViewController.unfollowUser(ingine.User) -&gt; ()"
+                  moduleName = "ingine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "1876">
+               </Location>
+               <Location
+                  uuid = "997A7953-A0F0-4B61-895E-39BACD501353 - 53b312b5ddbfe97b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Combine.Subscribers.Completion&lt;Swift.Error&gt;) -&gt; () in ingine.UserViewController.unfollowUser(ingine.User) -&gt; ()"
+                  moduleName = "ingine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "672">
+               </Location>
+               <Location
+                  uuid = "997A7953-A0F0-4B61-895E-39BACD501353 - 1bdc79e1254f86ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (()) -&gt; () in ingine.UserViewController.unfollowUser(ingine.User) -&gt; ()"
+                  moduleName = "ingine"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -368,53 +415,6 @@
             endingLineNumber = "184"
             landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "04237921-B3FB-4D04-8922-F3911589A606 - 96a3d5f2067eab68"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ingine.UserViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "184"
-                  endingLineNumber = "184"
-                  offsetFromSymbolStart = "1168">
-               </Location>
-               <Location
-                  uuid = "04237921-B3FB-4D04-8922-F3911589A606 - 58eb65f73d008839"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Combine.Subscribers.Completion&lt;Swift.Error&gt;) -&gt; () in ingine.UserViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "184"
-                  endingLineNumber = "184"
-                  offsetFromSymbolStart = "48">
-               </Location>
-               <Location
-                  uuid = "04237921-B3FB-4D04-8922-F3911589A606 - 9bc981c57c5f9d64"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.FIRDocumentSnapshot) -&gt; () in ingine.UserViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "185"
-                  endingLineNumber = "185"
-                  offsetFromSymbolStart = "104">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -431,38 +431,6 @@
             endingLineNumber = "187"
             landmarkName = "unfollowUser(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A2358D82-CA01-4BF0-9D8E-A42F1AB2EB32 - 9bc981c57c5f9d64"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.FIRDocumentSnapshot) -&gt; () in ingine.UserViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "186"
-                  endingLineNumber = "186"
-                  offsetFromSymbolStart = "164">
-               </Location>
-               <Location
-                  uuid = "A2358D82-CA01-4BF0-9D8E-A42F1AB2EB32 - 9bc981c57c5f9d64"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.FIRDocumentSnapshot) -&gt; () in ingine.UserViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/UserViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "186"
-                  endingLineNumber = "186"
-                  offsetFromSymbolStart = "256">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -545,11 +513,11 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "875C61ED-0892-4E4F-93B4-850BE13649EA - d55d198b90f0d08"
+                  uuid = "875C61ED-0892-4E4F-93B4-850BE13649EA - 7400bbe990f06ba1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.FIRDocumentSnapshot) -&gt; () in closure #1 ((Swift.Result&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;) -&gt; ()) -&gt; () in ingine.IFirebase.searchFollowings(_: Swift.String, collection: Swift.String, limit: Swift.Int) -&gt; Combine.AnyPublisher&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;"
+                  symbolName = "closure #1 ((Swift.Result&lt;Swift.Array&lt;ingine.User&gt;, Swift.Error&gt;) -&gt; ()) -&gt; () in ingine.IFirebase.searchFollowings(_: Swift.String, collection: Swift.String, limit: Swift.Int) -&gt; Combine.AnyPublisher&lt;Swift.Array&lt;ingine.User&gt;, Swift.Error&gt;"
                   moduleName = "ingine"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/Manager/IFirebase.swift"
@@ -557,14 +525,14 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "180"
                   endingLineNumber = "180"
-                  offsetFromSymbolStart = "1688">
+                  offsetFromSymbolStart = "724">
                </Location>
                <Location
-                  uuid = "875C61ED-0892-4E4F-93B4-850BE13649EA - c2ff2ba7329f74c5"
+                  uuid = "875C61ED-0892-4E4F-93B4-850BE13649EA - b312a374e197d34b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; Swift.Bool in closure #2 (__C.FIRDocumentSnapshot) -&gt; () in closure #1 ((Swift.Result&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;) -&gt; ()) -&gt; () in ingine.IFirebase.searchFollowings(_: Swift.String, collection: Swift.String, limit: Swift.Int) -&gt; Combine.AnyPublisher&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;"
+                  symbolName = "closure #2 (__C.FIRDocumentSnapshot) -&gt; () in closure #1 ((Swift.Result&lt;Swift.Array&lt;ingine.User&gt;, Swift.Error&gt;) -&gt; ()) -&gt; () in ingine.IFirebase.searchFollowings(_: Swift.String, collection: Swift.String, limit: Swift.Int) -&gt; Combine.AnyPublisher&lt;Swift.Array&lt;ingine.User&gt;, Swift.Error&gt;"
                   moduleName = "ingine"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/Manager/IFirebase.swift"
@@ -572,7 +540,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "180"
                   endingLineNumber = "180"
-                  offsetFromSymbolStart = "112">
+                  offsetFromSymbolStart = "1576">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -655,38 +623,6 @@
             endingLineNumber = "136"
             landmarkName = "searchFollowers(_:collection:limit:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2F79624E-B6A4-48BD-98EA-E5C41536F605 - e851df6bab24d05"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.FIRDocumentSnapshot) -&gt; () in closure #1 ((Swift.Result&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;) -&gt; ()) -&gt; () in ingine.IFirebase.searchFollowers(_: Swift.String, collection: Swift.String, limit: Swift.Int) -&gt; Combine.AnyPublisher&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/Manager/IFirebase.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "136"
-                  endingLineNumber = "136"
-                  offsetFromSymbolStart = "1688">
-               </Location>
-               <Location
-                  uuid = "2F79624E-B6A4-48BD-98EA-E5C41536F605 - c7479a08bc38d4c2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; Swift.Bool in closure #2 (__C.FIRDocumentSnapshot) -&gt; () in closure #1 ((Swift.Result&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;) -&gt; ()) -&gt; () in ingine.IFirebase.searchFollowers(_: Swift.String, collection: Swift.String, limit: Swift.Int) -&gt; Combine.AnyPublisher&lt;Swift.Array&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, Swift.Error&gt;"
-                  moduleName = "ingine"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/MacDrive/Projects/ingine-ios-jtcreative/ingine/ingine/Manager/IFirebase.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "136"
-                  endingLineNumber = "136"
-                  offsetFromSymbolStart = "112">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -702,6 +638,102 @@
             startingLineNumber = "131"
             endingLineNumber = "131"
             landmarkName = "searchFollowers(_:collection:limit:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E6573395-5672-4599-B932-0242858CCB1C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/ExtensionClasses/ViewControllerExtension.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "renderArAssets(docId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3EFF77CA-3270-4AC8-94F0-C28C0D42BB7B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77590C44-30EA-4162-AA75-B059ABB5287A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "834AEA56-9BFC-4CA8-BC29-12399C539395"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/ExtensionClasses/ViewControllerExtension.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "getArAssetsFromFollowings()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20556430-A2D7-41B9-A7EA-53ADD7220BCB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/ExtensionClasses/ViewControllerExtension.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "getArAssetsFromFollowings()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FD837E57-3542-4B4E-8961-BE51E4667C7F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ingine/ExtensionClasses/ViewControllerExtension.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "renderArAssets(docId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
