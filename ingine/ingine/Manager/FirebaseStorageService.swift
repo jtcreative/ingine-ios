@@ -10,11 +10,11 @@ import Foundation
 import Combine
 import FirebaseStorage
 
-class IFirebaseStorage:IArUploadService{
+class FirebaseStorageService:IArUploadService{
     
     typealias T = String
     var cancelBag = Set<AnyCancellable>()
-    static var shared = IFirebaseStorage()
+    static var shared = FirebaseStorageService()
     
     func uploadImage(_ imageData: Data) -> AnyPublisher<String, Error> {
         Future<String, Error>{ promise in

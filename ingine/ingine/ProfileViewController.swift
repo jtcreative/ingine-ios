@@ -250,7 +250,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func signOut(_ sender: Any) {
        
 //        firebaseManager?.signOut()
-        IFirebase.shared.signOut().sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.signOut().sink(receiveCompletion: { (completion) in
             switch completion{
             case .finished: print("fnished")
             case .failure(let error) : print(error.localizedDescription)
@@ -259,7 +259,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("Sign out pressed")
             let login = AccountViewController()
             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-        }.store(in: &IFirebase.shared.cancelBag)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     
         
     }

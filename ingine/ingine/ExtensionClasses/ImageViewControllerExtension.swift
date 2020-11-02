@@ -14,7 +14,7 @@ import FirebaseAuth
 extension ImageViewController{
     
     func uploadArImage(_ imageData:Data){
-        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+        FirebaseStorageService.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -41,7 +41,7 @@ extension ImageViewController{
                 ] as [String : Any]
             
             
-            IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -57,7 +57,7 @@ extension ImageViewController{
                 let dict = [
                     userRefKey: self.db.document(documentRefString.path)
                 ]
-                IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+                FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
                     switch completion
                     {
                     case .finished : print("finish")
@@ -68,11 +68,11 @@ extension ImageViewController{
                     let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
                     let vc = st.instantiateInitialViewController()
                     (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
-                }.store(in: &IFirebaseDatabase.shared.cancelBag )
-            }).store(in: &IFirebaseDatabase.shared.cancelBag)
+                }.store(in: &FirebaseARService.shared.cancelBag )
+            }).store(in: &FirebaseARService.shared.cancelBag)
             
             
-        }.store(in: &IFirebaseStorage.shared.cancelBag)
+        }.store(in: &FirebaseStorageService.shared.cancelBag)
     }
 }
  

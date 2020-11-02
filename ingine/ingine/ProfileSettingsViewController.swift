@@ -80,7 +80,7 @@ class ProfileSettingsViewController: UIViewController {
     func updateUserName(_ name:String){
         let dict = ["fullName":name]
         let email = Auth.auth().currentUser?.email ?? ""
-        IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -89,13 +89,13 @@ class ProfileSettingsViewController: UIViewController {
             }
         }) { [unowned self](_) in
             self.fetchUser()
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
     
     private func fetchUser(){
         let id = Auth.auth().currentUser?.email ?? ""
-        IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -115,7 +115,7 @@ class ProfileSettingsViewController: UIViewController {
             } else {
                 print("user does not exist")
             }
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
     //MARK:- Camera and Gallery
@@ -171,7 +171,7 @@ class ProfileSettingsViewController: UIViewController {
             
             dismiss(animated: true, completion: nil)
             return }
-        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+        FirebaseStorageService.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -181,7 +181,7 @@ class ProfileSettingsViewController: UIViewController {
         }, receiveValue: { (url) in
             let dict = ["profileImage":url]
             let email = Auth.auth().currentUser?.email ?? ""
-            IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -190,13 +190,13 @@ class ProfileSettingsViewController: UIViewController {
                 }
             }) { (_) in
                 print("image uploaded and save in users")
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }.store(in: &FirebaseARService.shared.cancelBag)
             
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
     }
     
     @IBAction func signOut(_ sender: UIButton) {
-        IFirebase.shared.signOut().sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.signOut().sink(receiveCompletion: { (completion) in
             switch completion{
             case .finished: print("fnished")
             case .failure(let error) : print(error.localizedDescription)
@@ -212,7 +212,7 @@ class ProfileSettingsViewController: UIViewController {
             }
             
             
-        }.store(in: &IFirebase.shared.cancelBag)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     }
     
 }

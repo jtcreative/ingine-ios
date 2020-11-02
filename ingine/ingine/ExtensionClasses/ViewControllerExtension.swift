@@ -10,8 +10,6 @@ import UIKit
 
 
 //  MARK: Notificaton Binding Protocol
-
-
 extension ViewController:NotificatoinBindingDelegate{
     func recieve<T>(_ value: T) {
         if let imageStatus = value as? ImageLoadingStatus{
@@ -26,7 +24,7 @@ extension ViewController:NotificatoinBindingDelegate{
 
 extension ViewController{
     func renderArAssets(docId: String){
-        IFirebaseDatabase.shared.query("pairs", fieldName: "user", isEqualTo: docId)
+        FirebaseARService.shared.query("pairs", fieldName: "user", isEqualTo: docId)
             .sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -36,7 +34,6 @@ extension ViewController{
                 }
             }) { (document) in
                 var arAssets = [ARImageAsset]()
-                //            let document = snapshot.documents
                 arAssets = document.filter { $0.public ?? false}.map({ (doc) ->  ARImageAsset  in
                     return ARImageAsset(name: doc.matchURL ?? "", imageUrl: doc.refImage ??  "")
                 })
@@ -44,16 +41,19 @@ extension ViewController{
                 
                 ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
                 self.isReloading = false
-                //                       NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
+                //We currently no longer run this notification
+                //Leaving it here is we want it in the future, but doesn't work well with
+                //Loading all of the user followers as well
+                //NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
                 
                 let imgMod = ImageLoadingStatus(message: "Updating notification", startIndex: 0, endIndex: arAssets.count)
                 
                 NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
     func getArAssetsFromFollowings() {
-        IFirebase.shared.searchFollowings("", collection: "users", limit: 60)
+        FirebaseUserService.shared.searchFollowings("", collection: "users", limit: 60)
             .sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -66,6 +66,6 @@ extension ViewController{
                 for doc in snapshot {
                     strongSelf.renderArAssets(docId: doc.id)
                 }
-        }.store(in: &IFirebase.shared.cancelBag)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     }
 }

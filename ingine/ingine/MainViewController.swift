@@ -29,21 +29,6 @@ class MainViewController : UIPageViewController {
         return BottomBar()
     }()
     
-    /*
-     [
-         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ARViewController"),
-         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "HomeViewController"),
-          UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController"),
-          UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpViewController"),
-         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Profile"),
-         UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "UserViewController"),
-         
-      
-     ]
-     
-     **/
-    
-    
     var data:Any?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +47,6 @@ class MainViewController : UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViewControllers([pageViews[currentPageIndex]], direction: .forward, animated: true, completion: { result in
-//            self.createNavigationView()
         })
         
 

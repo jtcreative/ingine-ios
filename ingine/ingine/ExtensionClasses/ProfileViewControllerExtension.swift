@@ -17,8 +17,7 @@ extension ProfileViewController{
             if Auth.auth().currentUser?.uid != nil {
                 let id = Auth.auth().currentUser?.email ?? ""
                 
-    //            firebaseManager?.getSingleDocument("users", documentName: id, type: .user)
-                IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+                FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
                     switch completion
                                   {
                                   case .finished : print("finish")
@@ -53,7 +52,7 @@ extension ProfileViewController{
                     } else {
                         print("user does not exist")
                     }
-                }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                }.store(in: &FirebaseARService.shared.cancelBag)
                 
             } else {
                 print("not logged in by email")
@@ -75,7 +74,7 @@ extension ProfileViewController{
             let id = Auth.auth().currentUser?.email ?? ""
            
         //   firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
-        IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -92,7 +91,7 @@ extension ProfileViewController{
             if snapShot.exists {
                 for k in snapShot.data()!.keys {
                     if k != "fullName" {
-                        IFirebaseDatabase.shared.getAssetList("pairs", document: k).sink(receiveCompletion: { (completion) in
+                        FirebaseARService.shared.getAssetList("pairs", document: k).sink(receiveCompletion: { (completion) in
                             switch completion
                             {
                             case .finished : print("finish")
@@ -117,7 +116,7 @@ extension ProfileViewController{
                                 self.ingineeredItemsTableView.reloadData()
                             }
                             
-                        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                        }.store(in: &FirebaseARService.shared.cancelBag)
                         
                         
                     }else {
@@ -126,7 +125,7 @@ extension ProfileViewController{
                     
                 }
             }
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
 
            
        }

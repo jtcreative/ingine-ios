@@ -10,10 +10,10 @@ import Foundation
 import FirebaseAuth
 import Combine
 import FirebaseFirestore
-class IFirebase: IUserService{
+class FirebaseUserService: IUserService {
     
     
-    static var shared = IFirebase()
+    static var shared = FirebaseUserService()
     var cancelBag = Set<AnyCancellable>()
     typealias T = AuthDataResult
     typealias Q = [QueryDocumentSnapshot]
@@ -95,7 +95,7 @@ class IFirebase: IUserService{
                     print("get collection error \(error)")
                     promise(.failure(error))
                 }else{
-                    if let document = querySnapshot?.documents{
+                    if let document = querySnapshot?.documents {
                         promise(.success(document))
                     }
                 }
@@ -109,7 +109,7 @@ class IFirebase: IUserService{
            // Populate cell elements with data from firebase
         let id = Auth.auth().currentUser?.email ?? ""
         return Future<[User], Error>{ promise in
-            IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -138,7 +138,7 @@ class IFirebase: IUserService{
                 }
                 
                 promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }.store(in: &FirebaseARService.shared.cancelBag)
             
         }.eraseToAnyPublisher()
     }
@@ -146,7 +146,7 @@ class IFirebase: IUserService{
     func searchFollowings(_ query: String, collection: String, limit: Int) -> AnyPublisher<[User], Error> {
         let id = Auth.auth().currentUser?.email ?? ""
         return Future<[User], Error>{ promise in
-            IFirebaseDatabase.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -177,7 +177,7 @@ class IFirebase: IUserService{
                 }
                 
                 promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }.store(in: &FirebaseARService.shared.cancelBag)
             
         }.eraseToAnyPublisher()
     }

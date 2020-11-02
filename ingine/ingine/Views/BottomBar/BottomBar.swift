@@ -16,19 +16,12 @@ class BottomBar: UIView {
     @IBOutlet weak var cameraButton: UIButton!
     override init(frame: CGRect) {
            super.init(frame: frame)
-
-           //call function
-
            loadNib()
-
        }
 
        required init?(coder aDecoder: NSCoder) {
            super.init(coder: aDecoder)
-
            loadNib()
-
-           //fatalError("init(coder:) has not been implemented")
        }
 
        func loadNib() {

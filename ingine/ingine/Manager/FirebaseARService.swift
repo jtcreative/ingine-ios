@@ -11,9 +11,9 @@ import Combine
 import FirebaseFirestore
 
 
-class IFirebaseDatabase: IARService{
+class FirebaseARService: IARService{
     
-    static var shared = IFirebaseDatabase()
+    static var shared = FirebaseARService()
     typealias Q = QuerySnapshot
     var db = Firestore.firestore()
     var cancelBag = Set<AnyCancellable>()
