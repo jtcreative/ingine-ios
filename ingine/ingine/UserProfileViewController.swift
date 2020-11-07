@@ -405,7 +405,6 @@ extension UserProfileViewController {
                     }
                 }
                 
-                
             } else {
                 print("user does not exist")
                 self.currentUser = nil
@@ -434,10 +433,10 @@ extension UserProfileViewController {
                 print(error.localizedDescription)
             }
         }) { (snapShot) in
-             guard snapShot.data() != nil else {
-                              print("Document data was empty.")
-                              return
-                          }
+            guard snapShot.data() != nil else {
+                print("Document data was empty.")
+                return
+            }
                           
                           
             if snapShot.exists {
@@ -461,6 +460,8 @@ extension UserProfileViewController {
                             self.itemsArray.append(item)
                            
                             self.itemsArray = self.itemsArray.unique{$0.id}
+                            
+                            self.itemsArray =  self.itemsArray.filter {$0.visStatus }
                             print(self.itemsArray)
                             self.profileHeaderView.arPostCount.text = "\(self.itemsArray.count)"
                             self.configureTableView()
