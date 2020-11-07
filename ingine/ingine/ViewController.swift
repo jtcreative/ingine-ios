@@ -208,8 +208,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
         
         if isLoggedIn() {
-                   reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: Auth.auth().currentUser!.email)
-               }
+            reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: Auth.auth().currentUser!.email)
+        }
         
         
     }
