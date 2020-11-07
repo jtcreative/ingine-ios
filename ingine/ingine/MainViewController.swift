@@ -141,7 +141,9 @@ extension MainViewController {
             }
         } else {
             let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-            let vc = st.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+            guard let vc = st.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else{
+                return
+            }
             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
         }
     }
