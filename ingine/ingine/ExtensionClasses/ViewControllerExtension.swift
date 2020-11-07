@@ -51,4 +51,21 @@ extension ViewController{
                 NotificationCenter.default.post(name: .progressUpdate, object: imgMod)
         }.store(in: &IFirebaseDatabase.shared.cancelBag)
     }
+    
+    func getArAssetsFromFollowings() {
+        IFirebase.shared.searchFollowings("", collection: "users", limit: 60)
+            .sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { [weak self] (snapshot) in
+                guard let strongSelf = self else { return }
+                for doc in snapshot {
+                    strongSelf.renderArAssets(docId: doc.id)
+                }
+        }.store(in: &IFirebase.shared.cancelBag)
+    }
 }

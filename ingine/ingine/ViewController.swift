@@ -434,6 +434,7 @@ extension ViewController {
         // search assest for AR render
 
        renderArAssets(docId: userDocID)
+       getArAssetsFromFollowings()
        
     }
     
