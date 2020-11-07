@@ -208,7 +208,10 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
         
         reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: "alpha850@gmail.com")
+        
+        
     }
+ 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -398,8 +401,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         }
     }
     
-    
-  
+
 }
 
 extension ViewController {

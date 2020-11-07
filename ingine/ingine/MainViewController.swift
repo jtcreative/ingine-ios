@@ -97,11 +97,27 @@ extension MainViewController {
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0 ).isActive = true
         bottomView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
+       
         // add actions to button
         bottomView.cameraButton.addTarget(self, action: #selector(self.goToArPage), for: .touchUpInside)
         bottomView.searchButton.addTarget(self, action: #selector(self.goToSearchScreen), for: .touchUpInside)
         bottomView.profileButton.addTarget(self, action: #selector(self.goToProfileSetting), for: .touchUpInside)
-        bottomView.contentView.setCustomGradient([UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.black.withAlphaComponent(0.0).cgColor])
+        if currentPageIndex != 1{
+            for layer in bottomView.contentView.layer.sublayers ?? []{
+                if layer.isKind(of: CAGradientLayer.self){
+                    layer.removeFromSuperlayer()
+                }
+            }
+            bottomView.contentView.setCustomGradient([UIColor.black.withAlphaComponent(0.2).cgColor, UIColor.black.withAlphaComponent(0.0).cgColor])
+        }else{
+            for layer in bottomView.contentView.layer.sublayers ?? []{
+                if layer.isKind(of: CAGradientLayer.self){
+                    layer.removeFromSuperlayer()
+                }
+            }
+            bottomView.contentView.setCustomGradient([UIColor.black.withAlphaComponent(0.0).cgColor])
+        }
+        
     }
     
     @objc func goToSearchScreen(){
