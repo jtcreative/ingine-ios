@@ -14,7 +14,7 @@ extension AccountViewController{
     
     
     func login( _ email: String, password:String){
-        IFirebase.shared.signIn(email, password: password).sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.signIn(email, password: password).sink(receiveCompletion: { (completion) in
             self.spinnerView.stopAnimating()
             self.loginRegisterButton.isUserInteractionEnabled = true
                    switch completion {
@@ -40,12 +40,12 @@ extension AccountViewController{
                          }
               }) { (user) in
                   print("User", user.user.email as Any)
-              }.store(in: &IFirebase.shared.cancelBag)
+              }.store(in: &FirebaseUserService.shared.cancelBag)
     }
     
     
     func signUp( _ email: String, password:String){
-        IFirebase.shared.signUp(email, password: password).sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.signUp(email, password: password).sink(receiveCompletion: { (completion) in
             self.spinnerView.stopAnimating()
             self.loginRegisterButton.isUserInteractionEnabled = true
                    switch completion {
@@ -75,7 +75,7 @@ extension AccountViewController{
                    guard let email = self.emailTextField.text,
                                          let username = self.nameTextField.text else { return }
                  let userDict = ["fullName": username]
-                IFirebaseDatabase.shared.setData("users", document: email, data: userDict).sink(receiveCompletion: { (completion) in
+                FirebaseARService.shared.setData("users", document: email, data: userDict).sink(receiveCompletion: { (completion) in
                     switch completion {
                      
                     case .finished: print("finished")
@@ -87,13 +87,13 @@ extension AccountViewController{
                         self.dismiss(animated: true, completion: nil)
                         self.openMainViewController()
                     }
-                }.store(in: &IFirebaseDatabase.shared.cancelBag)
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+                }.store(in: &FirebaseARService.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
     //
     func forgotPassword( _ email: String){
-        IFirebase.shared.forget(email).sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.forget(email).sink(receiveCompletion: { (completion) in
             switch completion {
             case .finished: print("finished")
             self.emailTextField.text = ""
@@ -114,6 +114,6 @@ extension AccountViewController{
                 }
             }
         }) { (_) in
-        }.store(in: &IFirebase.shared.cancelBag)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     }
 }

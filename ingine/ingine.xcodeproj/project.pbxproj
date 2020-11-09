@@ -37,7 +37,7 @@
 		972ED1BB2513D9110053567C /* ProfileViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972ED1BA2513D9110053567C /* ProfileViewHeader.swift */; };
 		972ED1BD2513DDA90053567C /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972ED1BC2513DDA90053567C /* ProfileSettingsViewController.swift */; };
 		9743E2D0250B59FD00590C49 /* IUSerservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743E2CF250B59FD00590C49 /* IUSerservice.swift */; };
-		9743E2D2250B60C900590C49 /* IFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743E2D1250B60C900590C49 /* IFirebase.swift */; };
+		9743E2D2250B60C900590C49 /* FirebaseUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743E2D1250B60C900590C49 /* FirebaseUserService.swift */; };
 		97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */; };
 		97653FAC250007BB00274A91 /* UserViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */; };
 		9766F1C225570A8200D39C9A /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9766F1C125570A8200D39C9A /* UIDevice+Extension.swift */; };
@@ -60,9 +60,9 @@
 		97D85CC02544A57600668A94 /* Following.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D85CBE2544A57600668A94 /* Following.swift */; };
 		97DEB06825069F670070A5EF /* NotificationDataBindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */; };
 		97F05C0F250FD18E00C3564E /* DocumentSnapshotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C0E250FD18E00C3564E /* DocumentSnapshotPublisher.swift */; };
-		97F05C11250FDF6400C3564E /* IFirebaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */; };
+		97F05C11250FDF6400C3564E /* FirebaseARService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C10250FDF6400C3564E /* FirebaseARService.swift */; };
 		97F05C13250FEADF00C3564E /* IArUploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C12250FEADF00C3564E /* IArUploadService.swift */; };
-		97F05C15250FEBEA00C3564E /* IFirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C14250FEBEA00C3564E /* IFirebaseStorage.swift */; };
+		97F05C15250FEBEA00C3564E /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F05C14250FEBEA00C3564E /* FirebaseStorageService.swift */; };
 		D34CCAF924AC101000096DAA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34CCAF824AC101000096DAA /* MainViewController.swift */; };
 		D3730E1E252A49AF0027B632 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3730E1D252A49AF0027B632 /* UserProfileViewController.swift */; };
 		EE16B7D22308E71A0002397D /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE16B7D12308E7190002397D /* OptionCell.swift */; };
@@ -124,7 +124,7 @@
 		972ED1BA2513D9110053567C /* ProfileViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewHeader.swift; sourceTree = "<group>"; };
 		972ED1BC2513DDA90053567C /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		9743E2CF250B59FD00590C49 /* IUSerservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUSerservice.swift; sourceTree = "<group>"; };
-		9743E2D1250B60C900590C49 /* IFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFirebase.swift; sourceTree = "<group>"; };
+		9743E2D1250B60C900590C49 /* FirebaseUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserService.swift; sourceTree = "<group>"; };
 		97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewControllerExtension.swift; sourceTree = "<group>"; };
 		9766F1C125570A8200D39C9A /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
@@ -147,9 +147,9 @@
 		97D85CBE2544A57600668A94 /* Following.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Following.swift; sourceTree = "<group>"; };
 		97DEB06725069F670070A5EF /* NotificationDataBindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDataBindingExtension.swift; sourceTree = "<group>"; };
 		97F05C0E250FD18E00C3564E /* DocumentSnapshotPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSnapshotPublisher.swift; sourceTree = "<group>"; };
-		97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFirebaseDatabase.swift; sourceTree = "<group>"; };
+		97F05C10250FDF6400C3564E /* FirebaseARService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseARService.swift; sourceTree = "<group>"; };
 		97F05C12250FEADF00C3564E /* IArUploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IArUploadService.swift; sourceTree = "<group>"; };
-		97F05C14250FEBEA00C3564E /* IFirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFirebaseStorage.swift; sourceTree = "<group>"; };
+		97F05C14250FEBEA00C3564E /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		D34CCAF824AC101000096DAA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D3730E1D252A49AF0027B632 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		EE16B7D12308E7190002397D /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
@@ -316,11 +316,11 @@
 			children = (
 				97F05C0D250FD13D00C3564E /* Publisher */,
 				9743E2CF250B59FD00590C49 /* IUSerservice.swift */,
-				9743E2D1250B60C900590C49 /* IFirebase.swift */,
+				9743E2D1250B60C900590C49 /* FirebaseUserService.swift */,
 				97239E87250E18D400733C34 /* IARService.swift */,
-				97F05C10250FDF6400C3564E /* IFirebaseDatabase.swift */,
+				97F05C10250FDF6400C3564E /* FirebaseARService.swift */,
 				97F05C12250FEADF00C3564E /* IArUploadService.swift */,
-				97F05C14250FEBEA00C3564E /* IFirebaseStorage.swift */,
+				97F05C14250FEBEA00C3564E /* FirebaseStorageService.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -577,7 +577,7 @@
 				97762B3D25224E23004FDEC2 /* BottomBar.swift in Sources */,
 				972C13672514DD0D009911B7 /* SignUpViewController.swift in Sources */,
 				D3730E1E252A49AF0027B632 /* UserProfileViewController.swift in Sources */,
-				97F05C15250FEBEA00C3564E /* IFirebaseStorage.swift in Sources */,
+				97F05C15250FEBEA00C3564E /* FirebaseStorageService.swift in Sources */,
 				97D85CBF2544A57600668A94 /* User.swift in Sources */,
 				97F05C0F250FD18E00C3564E /* DocumentSnapshotPublisher.swift in Sources */,
 				97F05C13250FEADF00C3564E /* IArUploadService.swift in Sources */,
@@ -623,11 +623,11 @@
 				1801068A2499AE91007B5E80 /* TutorialViewController.swift in Sources */,
 				972ED1BB2513D9110053567C /* ProfileViewHeader.swift in Sources */,
 				EE7F35DA229CCDE400AE9089 /* CGPoint+geometry.swift in Sources */,
-				9743E2D2250B60C900590C49 /* IFirebase.swift in Sources */,
+				9743E2D2250B60C900590C49 /* FirebaseUserService.swift in Sources */,
 				18FDD2222451721D00C3B131 /* NotificationUtils.swift in Sources */,
 				EE28D4D122A59301002CA261 /* AccountViewController.swift in Sources */,
 				97D85CC02544A57600668A94 /* Following.swift in Sources */,
-				97F05C11250FDF6400C3564E /* IFirebaseDatabase.swift in Sources */,
+				97F05C11250FDF6400C3564E /* FirebaseARService.swift in Sources */,
 				EE7F35D8229CCDE400AE9089 /* SEAreaView.swift in Sources */,
 				EE7F35DD229CCDE400AE9089 /* UIView+globalCoordinates.swift in Sources */,
 				97B17FAE251E6A560080DCC6 /* Constant.swift in Sources */,

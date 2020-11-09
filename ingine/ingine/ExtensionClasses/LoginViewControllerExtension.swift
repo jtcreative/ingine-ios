@@ -21,7 +21,7 @@ extension LoginViewController{
         
         Loader.start()
         
-        IFirebase.shared.signIn(email, password: password).sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.signIn(email, password: password).sink(receiveCompletion: { (completion) in
             switch completion {
             case .finished: print("login finished")
              
@@ -54,13 +54,13 @@ extension LoginViewController{
              }
              self.uploadArImage(imageData)
             
-        }.store(in: &IFirebase.shared.cancelBag)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     }
     
     // uplod ar asset image
     func uploadArImage(_ imageData:Data){
         // upload image
-        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+        FirebaseStorageService.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("photo uploaded finish")
@@ -73,7 +73,7 @@ extension LoginViewController{
             self.updateARDataInDocument(url: url)
           
 
-        }.store(in: &IFirebaseStorage.shared.cancelBag)
+        }.store(in: &FirebaseStorageService.shared.cancelBag)
     }
     
     
@@ -97,7 +97,7 @@ extension LoginViewController{
         ] as [String : Any]
         
         
-        IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("ar asesst updated finish")
@@ -109,7 +109,7 @@ extension LoginViewController{
             
             self.updateUserDocument(ref)
             
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
     }
     
     
@@ -123,7 +123,7 @@ extension LoginViewController{
         let dict = [
             userRefKey: self.db.document(documentRefString.path)
         ]
-        IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
             Loader.stop()
             switch completion
             {
@@ -136,7 +136,7 @@ extension LoginViewController{
             // all requests done send to next screen
            
             self.openMainViewController()
-        }.store(in: &IFirebaseDatabase.shared.cancelBag )
+        }.store(in: &FirebaseARService.shared.cancelBag )
     }
     
 }

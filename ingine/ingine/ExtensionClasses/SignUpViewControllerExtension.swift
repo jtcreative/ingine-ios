@@ -11,7 +11,7 @@ import Firebase
 extension SignUpViewController{
     func signUp( _ email: String, password:String){
         Loader.start()
-        IFirebase.shared.signUp(email, password: password).sink(receiveCompletion: { (completion) in
+        FirebaseUserService.shared.signUp(email, password: password).sink(receiveCompletion: { (completion) in
             switch completion {
             
             case .finished: print("finished")
@@ -38,7 +38,7 @@ extension SignUpViewController{
             guard let email = self.emailTextField.text,
                   let username = self.firstTextField.text else { return }
             let userDict = ["fullName": username]
-            IFirebaseDatabase.shared.setData("users", document: email, data: userDict).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.setData("users", document: email, data: userDict).sink(receiveCompletion: { (completion) in
                 switch completion {
                 
                 case .finished: print("finished")
@@ -58,14 +58,14 @@ extension SignUpViewController{
                 
                 
                 
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }.store(in: &FirebaseARService.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
     // uplod ar asset image
     func uploadArImage(_ imageData:Data){
         // upload image
-        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+        FirebaseStorageService.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("photo uploaded finish")
@@ -78,7 +78,7 @@ extension SignUpViewController{
             self.updateARDataInDocument(url: url)
             
             
-        }.store(in: &IFirebaseStorage.shared.cancelBag)
+        }.store(in: &FirebaseStorageService.shared.cancelBag)
     }
     
     
@@ -102,7 +102,7 @@ extension SignUpViewController{
         ] as [String : Any]
         
         
-        IFirebaseDatabase.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.addDocument("pairs", data: dict).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("ar asesst updated finish")
@@ -114,7 +114,7 @@ extension SignUpViewController{
             
             self.updateUserDocument(ref)
             
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
     }
     
     
@@ -128,7 +128,7 @@ extension SignUpViewController{
         let dict = [
             userRefKey: self.db.document(documentRefString.path)
         ]
-        IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
             Loader.stop()
             switch completion
             {
@@ -141,7 +141,7 @@ extension SignUpViewController{
             // all requests done send to next screen
             
             self.openMainViewController()
-        }.store(in: &IFirebaseDatabase.shared.cancelBag )
+        }.store(in: &FirebaseARService.shared.cancelBag )
     }
     
     
@@ -149,7 +149,7 @@ extension SignUpViewController{
     
     private func uploadProfileImage(){
         guard let imageData = userProfile!.image?.jpegData(compressionQuality: 0.8) else { return }
-        IFirebaseStorage.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
+        FirebaseStorageService.shared.uploadImage(imageData).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -162,7 +162,7 @@ extension SignUpViewController{
             
             self.updateUserImageDocument(url)
             
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
     }
     
     // update user image url in user document
@@ -170,7 +170,7 @@ extension SignUpViewController{
     private func updateUserImageDocument(_ imageURL:String){
         let dict = ["profileImage":imageURL]
         let email = Auth.auth().currentUser?.email ?? ""
-        IFirebaseDatabase.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -184,7 +184,7 @@ extension SignUpViewController{
                 
             }
             self.uploadArImage(imageData)
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
 }

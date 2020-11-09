@@ -23,7 +23,7 @@ extension UserViewController {
     }
     
     private func queryAll(name:String) {
-        IFirebase.shared.searchUser(name, collection: "users", limit: 20)
+        FirebaseUserService.shared.searchUser(name, collection: "users", limit: 20)
             .sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -34,33 +34,15 @@ extension UserViewController {
                     self.tableView.reloadData()
                 }
             }) { (snapshot) in
-                self.users.removeAll()
-                for doc in snapshot {
-                    
-//                    var data = doc.data()
-//                    data["userId"] = doc.documentID
-                    
-                    let user = User().dictToUser(dict: doc.data(), id: doc.documentID)
-                    
-                    self.users.append(user)
+                let users = snapshot.map { (snap) -> User in
+                    User().dictToUser(dict: snap.data(), id: snap.documentID)
                 }
-                
-                self.users.sort { (doc1, doc2) -> Bool in
-                  
-                    
-                    return (doc1.fullName.lowercased() < doc2.fullName.lowercased())
-                }
-                
-                DispatchQueue.main.async {
-                    //self.refreshControl?.endRefreshing()
-                    self.isUserSearching = false
-                    self.tableView.reloadData()
-                }
-        }.store(in: &IFirebase.shared.cancelBag)
+                self.clearAndResetUserSortedData(users: users)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     }
     
     private func queryFollowers(name:String) {
-        IFirebase.shared.searchFollowers(name, collection: "users", limit: 20)
+        FirebaseUserService.shared.searchFollowers(name, collection: "users", limit: 20)
             .sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -71,26 +53,12 @@ extension UserViewController {
                     self.tableView.reloadData()
                 }
             }) { (snapshot) in
-                self.users.removeAll()
-                for doc in snapshot {
-
-                    self.users.append(doc)
-                }
-                
-                self.users.sort { (doc1, doc2) -> Bool in
-                    return (doc1.fullName.lowercased() < doc2.fullName.lowercased())
-                }
-                
-                DispatchQueue.main.async {
-                    //self.refreshControl?.endRefreshing()
-                    self.isUserSearching = false
-                    self.tableView.reloadData()
-                }
-        }.store(in: &IFirebase.shared.cancelBag)
+                self.clearAndResetUserSortedData(users: snapshot)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
     }
     
     private func queryFollowing(name:String) {
-        IFirebase.shared.searchFollowings(name, collection: "users", limit: 20)
+        FirebaseUserService.shared.searchFollowings(name, collection: "users", limit: 20)
             .sink(receiveCompletion: { (completion) in
                 switch completion
                 {
@@ -101,24 +69,25 @@ extension UserViewController {
                     self.tableView.reloadData()
                 }
             }) { (snapshot) in
-                self.users.removeAll()
-                for doc in snapshot {
-                  
-                    self.users.append(doc)
-                }
-                
-                self.users.sort { (doc1, doc2) -> Bool in
-                    
-                    
-                    return (doc1.fullName.lowercased() < doc2.fullName.lowercased())
-                }
-                
-                DispatchQueue.main.async {
-                    //self.refreshControl?.endRefreshing()
-                    self.isUserSearching = false
-                    self.tableView.reloadData()
-                }
-        }.store(in: &IFirebase.shared.cancelBag)
+                self.clearAndResetUserSortedData(users: snapshot)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
+    }
+    
+    private func clearAndResetUserSortedData(users:[User]) {
+        self.users.removeAll()
+        for user in users {
+            
+            self.users.append(user)
+        }
+        
+        self.users.sort { (user1, user2) -> Bool in
+            return (user1.fullName.lowercased() < user2.fullName.lowercased())
+        }
+        
+        DispatchQueue.main.async {
+            self.isUserSearching = false
+            self.tableView.reloadData()
+        }
     }
     
 }

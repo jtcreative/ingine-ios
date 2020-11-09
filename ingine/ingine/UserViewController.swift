@@ -150,7 +150,7 @@ class UserViewController: UIViewController {
         let dictNew = ["following": FieldValue.arrayUnion([["id":selectedUser.id,"fullName":name, "profileImage":profileImage, "assetCount":selectedUser.assetCount ]])]
         
             
-            IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -162,7 +162,7 @@ class UserViewController: UIViewController {
                 
                 self.followingArr.append(user)
                 self.addMeAsFollower(selectedUser)
-            }).store(in: &IFirebaseDatabase.shared.cancelBag)
+            }).store(in: &FirebaseARService.shared.cancelBag)
 
 
       
@@ -176,7 +176,7 @@ class UserViewController: UIViewController {
            let dictNew = ["following": FieldValue.arrayRemove([["id":selectedUser.id,"fullName":name, "profileImage":profileImage,"assetCount":selectedUser.assetCount ]])]
            
         
-        IFirebaseDatabase.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: id, data: dictNew).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -197,7 +197,7 @@ class UserViewController: UIViewController {
             }
             
             self.removeMeAsFollower(selectedUser)
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
 
        
     }
@@ -220,7 +220,7 @@ class UserViewController: UIViewController {
         
         let dictNew = ["follower": FieldValue.arrayRemove([["id":currentUser?.documentID ?? "","fullName":userName ?? "", "profileImage":userImageUrl ?? "", "assetCount":assests.count ]])]
 //        let dict = ["follower":]
-        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -228,7 +228,7 @@ class UserViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }, receiveValue: { (_) in
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
     }
     
     
@@ -253,7 +253,7 @@ class UserViewController: UIViewController {
 //        let dict = ["follower":]
 //
         
-        IFirebaseDatabase.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.updateData("users", document: selectedUser.id, data: dictNew).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -261,7 +261,7 @@ class UserViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }, receiveValue: { (_) in
-        }).store(in: &IFirebaseDatabase.shared.cancelBag)
+        }).store(in: &FirebaseARService.shared.cancelBag)
         
     }
     
@@ -273,7 +273,7 @@ class UserViewController: UIViewController {
         
         
         let id = Auth.auth().currentUser?.email ?? ""
-        IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+        FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -316,7 +316,7 @@ class UserViewController: UIViewController {
                 self.currentUser = nil
                 
             }
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
        
     }
     
@@ -402,7 +402,7 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //selectedUser = users[indexPath.row]
         
-        IFirebaseDatabase.shared.getUser("users", document: users[indexPath.row].id)
+        FirebaseARService.shared.getUser("users", document: users[indexPath.row].id)
             .sink(receiveCompletion: { (error) in
                 
             }) { (user) in
@@ -412,7 +412,7 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
                 userProfileVc.currentUser = self.currentUser
                 userProfileVc.delegate = self
                 self.show(userProfileVc, sender: nil)
-        }.store(in: &IFirebase.shared.cancelBag)
+        }.store(in: &FirebaseUserService.shared.cancelBag)
         
         //NotificationCenter.default.post(Notification.selectedUserProfileNotification(userId: selectedUser!.documentID))
         //self.presentingViewController?.dismiss(animated: true, completion: nil)
