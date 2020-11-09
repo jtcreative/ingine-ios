@@ -206,12 +206,9 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         homeButton?.isHidden = isLoggedIn() ? false : true
         
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
-        
         if isLoggedIn() {
             reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: Auth.auth().currentUser!.email)
         }
-        
-        
     }
  
     
@@ -434,6 +431,7 @@ extension ViewController {
         // search assest for AR render
 
        renderArAssets(docId: userDocID)
+       getArAssetsFromFollowings()
        
     }
     
