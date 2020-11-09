@@ -210,6 +210,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: Auth.auth().currentUser!.email)
         }
     }
+ 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -399,8 +400,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         }
     }
     
-    
-  
+
 }
 
 extension ViewController {
