@@ -117,10 +117,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
        
 
         setupProfileHeader()
-        // ingineeredItemsTableView.separatorStyle = .none
-        
-        
-        
     }
     
     
@@ -228,9 +224,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "profileSettings" {
-            if let controller = segue.destination as? ProfileSettingsViewController{
-//                controller.userImageStr = userImage
+            DispatchQueue.main.async {
+                if let controller = segue.destination as? ProfileSettingsViewController{
+    //                controller.userImageStr = userImage
+                    controller.delegate = self
+                }
             }
+
         }
     }
     
@@ -270,5 +270,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 extension ProfileViewController {
     override var supportedInterfaceOrientations:UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
+    }
+}
+
+extension ProfileViewController:UserProfileUpdateDelegate{
+    func didUpdateUser() {
+        isLoggedIn()
     }
 }

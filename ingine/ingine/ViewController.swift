@@ -27,6 +27,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     var isReloading = false
     var isPublic = false
     var arImageCycleTimer : Timer?
+    var arCount = 0
+    var followingUsers:[User] = [User]()
     
     // Scene initializations
     @IBOutlet var sceneView: ARSCNView!
@@ -76,6 +78,10 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         leftSwipe.direction = .left
         rightSwipe.direction = .right
         
+        
+        // hide userbutton
+        userButton?.isHidden = true
+      
         DispatchQueue.main.async {
             // Scene setup
             self.sceneView.delegate = self
@@ -106,6 +112,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         statusViewController.restartExperienceHandler = { [unowned self] in
             self.restartExperience()
         }
+       
         
     }
     
@@ -208,8 +215,10 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(onUserSelected(_:)), name: Notification.Name.init(rawValue: NotificatioType.UserProfileSelectedNotification.rawValue), object: nil)
         if isLoggedIn() {
             reloadArAssets(isPublic: (Auth.auth().currentUser?.uid != nil), userId: Auth.auth().currentUser!.email)
+            getCurrentUser()
         }
     }
+ 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -231,6 +240,68 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         }
 //        var refreshTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(ViewController.refreshConfig), userInfo: nil, repeats: true)
 
+    }
+    
+    private func getCurrentUser(){
+        let id = Auth.auth().currentUser?.email ?? ""
+        IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : print("finish")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }) { (snapshot) in
+            
+            if snapshot.exists {
+
+                //get following
+                let followingObjectArray = snapshot.get("following") as? [Any]
+                //  add all following of current user
+              
+                for i in (followingObjectArray ?? []){
+                    let value = i as? [String:Any]
+                    let fullName = value?["fullName"] as? String
+                    let id = value?["id"] as? String
+                    let profileImage = value?["profileImage"] as? String
+                    let assetCount = value?["assetCount"] as? Int ?? 0
+                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: assetCount, isFollowing:true)
+                    
+                    self.followingUsers.append(user)
+                    
+                    
+                  
+                }
+                if self.followingUsers.count > 1 {
+                    self.downloadUserAndHisFollowersAR()
+                }
+                
+        
+            } else {
+                print("user does not exist")
+            }
+        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+    }
+    
+    
+    // Download and show AR followings
+    
+    private func downloadUserAndHisFollowersAR(){
+        
+        // check if devie has more than 10 MB space
+        guard let leftStorage = Int(UIDevice.current.freeDiskSpaceInMB.replacingOccurrences(of: ",", with: ".").replacingOccurrences(of: ".", with: "")) else {
+            return
+        }
+        if leftStorage > 10{
+            // if storage more than 10 MB then download AR assets
+            if arCount < followingUsers.count{
+                reloadArAssets(isPublic: true, userId: followingUsers[arCount].id)
+            }
+        }else{
+            // if storage less than 10 MB then show alert
+            self.displayAlert(title: "Alert", message: "Device doesn't have enough storage.")
+        }
+    
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -399,8 +470,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
         }
     }
     
-    
-  
+
 }
 
 extension ViewController {
@@ -497,7 +567,7 @@ extension ViewController {
                         imagesToAdd.insert(newReferenceImage)
                     }
                 }
-                strongSelf.removeUnusedAssets(assets: imagesToRemove)
+                //strongSelf.removeUnusedAssets(assets: imagesToRemove)
                 strongSelf.currentImgIndex = endIndex < (strongSelf.arAssets.count - 1) ? endIndex : 0
             }
             
@@ -563,6 +633,11 @@ extension ViewController: ARImageDownloadServiceDelegate {
             }
         
             arAssets.append(arAsset)
+            print("arAssets.append", arAssets)
+            if status == .Success{
+                arCount += 1
+                downloadUserAndHisFollowersAR()
+            }
         }
         
       
@@ -576,6 +651,8 @@ extension ViewController: ARImageDownloadServiceDelegate {
     }
     
     func onOperationCompleted(status:ARImageDownloadStatus) {
+        
+        
         
         NotificatonBinding.shared.registerPublisher(name: .progressEnd, type: String.self)
         

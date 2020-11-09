@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -800,7 +800,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="9v4-VV-Ddi" secondAttribute="bottom" id="8ey-m8-6cV"/>
                                     <constraint firstAttribute="height" constant="100" id="Bgo-OF-RNL"/>
@@ -814,14 +814,14 @@
                                     <constraint firstItem="7cd-Y3-fId" firstAttribute="leading" secondItem="F0q-Kx-iIB" secondAttribute="leading" id="v4n-po-7Uv"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCe-el-T9F">
-                                <rect key="frame" x="181" y="128" width="52" height="25"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCe-el-T9F">
+                                <rect key="frame" x="203.5" y="128" width="7" height="25"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bNI-Cl-4l9">
-                                <rect key="frame" x="241" y="129.5" width="30" height="22"/>
+                                <rect key="frame" x="218.5" y="129.5" width="30" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="w3M-jZ-oGa"/>
                                 </constraints>
@@ -894,7 +894,7 @@ When an AR Image is created by any of your following.</string>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qS0-Lk-xPr"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GCe-el-T9F" firstAttribute="top" secondItem="F0q-Kx-iIB" secondAttribute="bottom" constant="8" id="18O-SU-IBD"/>
                             <constraint firstItem="Gl7-fy-5Ba" firstAttribute="top" secondItem="WAb-88-AT6" secondAttribute="bottom" constant="16" id="3Ov-88-mrA"/>
@@ -965,20 +965,6 @@ When an AR Image is created by any of your following.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Hw-9H-7XE">
-                                <rect key="frame" x="22" y="794" width="370" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Eph-KD-F53"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="19"/>
-                                <state key="normal" title="  Sign in with Apple">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="appleSignIn:" destination="LlR-OW-m1O" eventType="touchUpInside" id="A3v-ad-e6z"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g13-n6-9f7">
                                 <rect key="frame" x="22" y="738" width="370" height="44"/>
                                 <color key="backgroundColor" name="ingineColor"/>
@@ -1030,29 +1016,25 @@ When an AR Image is created by any of your following.</string>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="qzT-R0-Yyj" firstAttribute="top" secondItem="IxB-aV-4ob" secondAttribute="top" id="0RB-nf-yPZ"/>
-                            <constraint firstItem="IxB-aV-4ob" firstAttribute="bottom" secondItem="6Hw-9H-7XE" secondAttribute="bottom" constant="24" id="27J-RW-fOZ"/>
                             <constraint firstItem="qzT-R0-Yyj" firstAttribute="centerX" secondItem="IxB-aV-4ob" secondAttribute="centerX" id="6wG-JB-sTA"/>
                             <constraint firstItem="HyX-ka-7Kp" firstAttribute="width" secondItem="QNl-B9-d3d" secondAttribute="width" multiplier="0.6" id="Ayl-uE-Oeu"/>
-                            <constraint firstItem="6Hw-9H-7XE" firstAttribute="leading" secondItem="IxB-aV-4ob" secondAttribute="leading" constant="22" id="Bm4-x2-jVj"/>
-                            <constraint firstItem="IxB-aV-4ob" firstAttribute="trailing" secondItem="6Hw-9H-7XE" secondAttribute="trailing" constant="22" id="IBg-ap-Rad"/>
                             <constraint firstItem="IxB-aV-4ob" firstAttribute="trailing" secondItem="h4e-Yc-eEF" secondAttribute="trailing" constant="16" id="Nmd-1C-iVv"/>
                             <constraint firstItem="h4e-Yc-eEF" firstAttribute="leading" secondItem="IxB-aV-4ob" secondAttribute="leading" constant="16" id="Onf-6J-IUA"/>
+                            <constraint firstItem="g13-n6-9f7" firstAttribute="leading" secondItem="IxB-aV-4ob" secondAttribute="leading" constant="22" id="PXp-ba-5NN"/>
+                            <constraint firstItem="IxB-aV-4ob" firstAttribute="trailing" secondItem="g13-n6-9f7" secondAttribute="trailing" constant="22" id="SSt-2B-xkt"/>
                             <constraint firstItem="g13-n6-9f7" firstAttribute="top" secondItem="esK-80-Xsx" secondAttribute="bottom" constant="12" id="XC4-Xs-qTE"/>
-                            <constraint firstItem="6Hw-9H-7XE" firstAttribute="top" secondItem="g13-n6-9f7" secondAttribute="bottom" constant="12" id="ZKU-RM-5lH"/>
                             <constraint firstItem="esK-80-Xsx" firstAttribute="trailing" secondItem="g13-n6-9f7" secondAttribute="trailing" id="bwb-le-A22"/>
                             <constraint firstItem="HyX-ka-7Kp" firstAttribute="centerX" secondItem="IxB-aV-4ob" secondAttribute="centerX" id="euq-5u-aNm"/>
-                            <constraint firstItem="g13-n6-9f7" firstAttribute="trailing" secondItem="6Hw-9H-7XE" secondAttribute="trailing" id="gcZ-vL-2pg"/>
                             <constraint firstItem="HyX-ka-7Kp" firstAttribute="top" secondItem="h4e-Yc-eEF" secondAttribute="bottom" constant="24" id="guc-A0-CvA"/>
-                            <constraint firstItem="g13-n6-9f7" firstAttribute="leading" secondItem="6Hw-9H-7XE" secondAttribute="leading" id="kAD-tY-cXT"/>
                             <constraint firstItem="h4e-Yc-eEF" firstAttribute="top" secondItem="qzT-R0-Yyj" secondAttribute="bottom" constant="12" id="oKc-s4-3ha"/>
                             <constraint firstItem="esK-80-Xsx" firstAttribute="leading" secondItem="g13-n6-9f7" secondAttribute="leading" id="oXl-kA-W9f"/>
                             <constraint firstItem="HyX-ka-7Kp" firstAttribute="height" secondItem="QNl-B9-d3d" secondAttribute="height" multiplier="0.4" id="sTS-yb-d0q"/>
                             <constraint firstItem="h4e-Yc-eEF" firstAttribute="centerX" secondItem="qzT-R0-Yyj" secondAttribute="centerX" id="sj2-pT-5IK"/>
+                            <constraint firstItem="IxB-aV-4ob" firstAttribute="bottom" secondItem="g13-n6-9f7" secondAttribute="bottom" constant="80" id="vQV-bR-bbB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5JX-RI-ChB"/>
                     <connections>
-                        <outlet property="appleSignInButton" destination="6Hw-9H-7XE" id="5k0-E5-Jkm"/>
                         <outlet property="arImage" destination="Rna-td-I9x" id="GL1-WV-cnl"/>
                         <outlet property="arImageView" destination="HyX-ka-7Kp" id="Wcr-Fq-x13"/>
                         <outlet property="loginButton" destination="esK-80-Xsx" id="PRT-Lg-Gwq"/>
@@ -1121,6 +1103,7 @@ When an AR Image is created by any of your following.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="TBx-2c-pAY"/>
                                 </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                 <connections>
@@ -1132,6 +1115,7 @@ When an AR Image is created by any of your following.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="FeF-MO-ZMm"/>
                                 </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
@@ -1251,6 +1235,7 @@ When an AR Image is created by any of your following.</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="57V-LF-294"/>
                                                 </constraints>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -1262,6 +1247,7 @@ When an AR Image is created by any of your following.</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="hyf-XW-FsL"/>
                                                 </constraints>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 <connections>
@@ -1270,6 +1256,7 @@ When an AR Image is created by any of your following.</string>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qj9-Zn-lK9">
                                                 <rect key="frame" x="24" y="383" width="366" height="44"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <connections>
@@ -1278,6 +1265,7 @@ When an AR Image is created by any of your following.</string>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X16-d0-lY6">
                                                 <rect key="frame" x="24" y="449" width="366" height="44"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <connections>

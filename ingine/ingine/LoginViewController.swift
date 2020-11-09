@@ -45,6 +45,7 @@ class LoginViewController: BaseViewController {
         // align textfield placeholder
         emailTextField.attributedPlaceholder = "Email".toArributedString(alignment: .center)
         passwordTextField.attributedPlaceholder = "Password".toArributedString(alignment: .center)
+        
         emailTextField.backgroundColor = .white
         passwordTextField.backgroundColor = .white
         

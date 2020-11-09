@@ -76,8 +76,6 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
             uploadArImage(imageData)
         }else{
             
-
-
             // if user not login then send to user home vc
            
             let arData = SendARData(image: image, url: urlBox.text, name: nameBox.text, visibilty: visibilitySwitch.isOn)

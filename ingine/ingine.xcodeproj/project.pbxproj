@@ -40,6 +40,7 @@
 		9743E2D2250B60C900590C49 /* FirebaseUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9743E2D1250B60C900590C49 /* FirebaseUserService.swift */; };
 		97653FAA24FFDB4B00274A91 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */; };
 		97653FAC250007BB00274A91 /* UserViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */; };
+		9766F1C225570A8200D39C9A /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9766F1C125570A8200D39C9A /* UIDevice+Extension.swift */; };
 		976D7110251CA2AF007F0257 /* SendARData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976D710F251CA2AF007F0257 /* SendARData.swift */; };
 		97762B3D25224E23004FDEC2 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97762B3C25224E23004FDEC2 /* BottomBar.swift */; };
 		97762B4125224E2E004FDEC2 /* BottomBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97762B4025224E2E004FDEC2 /* BottomBar.xib */; };
@@ -126,6 +127,7 @@
 		9743E2D1250B60C900590C49 /* FirebaseUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserService.swift; sourceTree = "<group>"; };
 		97653FA924FFDB4B00274A91 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewControllerExtension.swift; sourceTree = "<group>"; };
+		9766F1C125570A8200D39C9A /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		976D710F251CA2AF007F0257 /* SendARData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendARData.swift; sourceTree = "<group>"; };
 		97762B3C25224E23004FDEC2 /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
 		97762B4025224E2E004FDEC2 /* BottomBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomBar.xib; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				97653FAB250007BB00274A91 /* UserViewControllerExtension.swift */,
 				97BB1DA0251E5990002C2875 /* LoginViewControllerExtension.swift */,
 				97BB1DA3251E5DB8002C2875 /* SignUpViewControllerExtension.swift */,
+				9766F1C125570A8200D39C9A /* UIDevice+Extension.swift */,
 			);
 			path = ExtensionClasses;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				97BCFCEC24FD371D00AA1E2B /* AccountViewControllerExtension.swift in Sources */,
 				180106AE2499F351007B5E80 /* TutorialImageViewController.swift in Sources */,
 				97653FAC250007BB00274A91 /* UserViewControllerExtension.swift in Sources */,
+				9766F1C225570A8200D39C9A /* UIDevice+Extension.swift in Sources */,
 				97BB1D99251E268A002C2875 /* Loader.swift in Sources */,
 				EE7F35D6229CCDE400AE9089 /* SECornerView.swift in Sources */,
 				972C13632514CD2E009911B7 /* UIView+Extension.swift in Sources */,

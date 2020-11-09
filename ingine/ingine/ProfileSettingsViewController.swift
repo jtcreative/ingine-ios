@@ -9,6 +9,12 @@
 import UIKit
 import FirebaseAuth
 
+
+protocol UserProfileUpdateDelegate:class {
+    func didUpdateUser()
+}
+
+
 class ProfileSettingsViewController: UIViewController {
     //MARK: Outlets
     @IBOutlet weak var userImage:UIImageView!
@@ -20,6 +26,7 @@ class ProfileSettingsViewController: UIViewController {
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var notificationView: UIView!
     @IBOutlet weak var signOut: UIButton!
+    weak var delegate:UserProfileUpdateDelegate?
     
     //MARK: Properties
     var userImageStr = ""
@@ -88,6 +95,7 @@ class ProfileSettingsViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }) { [unowned self](_) in
+            self.delegate?.didUpdateUser()
             self.fetchUser()
         }.store(in: &FirebaseARService.shared.cancelBag)
     }
@@ -184,12 +192,16 @@ class ProfileSettingsViewController: UIViewController {
             FirebaseARService.shared.updateData("users", document: email, data: dict).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
-                case .finished : print("finish")
+                case .finished :
+                    self.dismiss(animated: true, completion: nil)
+                  
+                    print("finish")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }) { (_) in
                 print("image uploaded and save in users")
+                self.delegate?.didUpdateUser()
             }.store(in: &FirebaseARService.shared.cancelBag)
             
         }).store(in: &FirebaseARService.shared.cancelBag)
@@ -207,7 +219,9 @@ class ProfileSettingsViewController: UIViewController {
             DispatchQueue.main.async {
                 // Go back to homescreen
                 let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-                let vc = st.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+                guard let vc = st.instantiateViewController(identifier: "HomeViewController") as? HomeViewController else {
+                    return
+                }
                 (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
             }
             
