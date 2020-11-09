@@ -14,7 +14,6 @@ class HomeViewController: PortraitViewController {
     //MARK: Outlets
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var appleSignInButton: UIButton!
     @IBOutlet weak var arImageView: UIView!
     @IBOutlet weak var arImage: UIImageView!
     
@@ -38,7 +37,6 @@ class HomeViewController: PortraitViewController {
         // give radius to buttons
         loginButton.setRadius(8)
         signUpButton.setRadius(8)
-        appleSignInButton.setRadius(8)
         arImageView.setRadius(12)
         
         // set gradient
@@ -76,9 +74,6 @@ class HomeViewController: PortraitViewController {
 
 //MARK: Actions
     
-    @IBAction func appleSignIn(_ sender: UIButton) {
-        print("appleSignIn")
-    }
     
     @IBAction func signUp(_ sender: UIButton) {
         

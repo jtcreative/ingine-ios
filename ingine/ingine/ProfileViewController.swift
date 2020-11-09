@@ -117,10 +117,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
        
 
         setupProfileHeader()
-        // ingineeredItemsTableView.separatorStyle = .none
-        
-        
-        
     }
     
     

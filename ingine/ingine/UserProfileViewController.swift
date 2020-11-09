@@ -50,48 +50,6 @@ class UserProfileViewHeaderCell : UITableViewHeaderFooterView {
     
 }
 
-/*class IngineeredItemViewCell: UITableViewCell {
-
-    @IBOutlet weak var refImage: UIImageView!
-    @IBOutlet weak var itemName: UILabel!
-    @IBOutlet weak var itemURL: UILabel!
-    @IBOutlet weak var viewsLabel: UILabel!
-    @IBOutlet weak var visibilityStatus: UIImageView!
-    @IBOutlet weak var timeStamp: UILabel!
-    @IBOutlet weak var linkView: UIView!
-    var id : String = ""
-   
-    let optionsLauncher = OptionsLauncher()
-    @IBAction func showOptions(_ sender: UIButton) {
-        optionsLauncher.showOptions(identification: id)
-
-    }
-    
-    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        selectionStyle = .none
-        // setup ui
-        contentView.subviews[0].layer.cornerRadius = 16
-        linkView.layer.cornerRadius = linkView.frame.height / 2
-        itemName.text = ""
-        itemURL.text = ""
-        viewsLabel.text = ""
-        timeStamp.text = ""
-    }
-    
-}*/
-
-
 
 class UserProfileViewController: UIViewController {
     public var userId : String?
@@ -130,9 +88,7 @@ class UserProfileViewController: UIViewController {
         
         // Configure table view
         configureTableView()
-        //addFollowers()
-        // Check if user logged in by email
-        //isLoggedIn()
+     
         
         // retrieve ingineered items
         retrieveItems()
@@ -340,8 +296,7 @@ class UserProfileViewController: UIViewController {
     }
     
     
-    /////////////////////////////////////////////////////////////////////////////
-    
+
     // handle swipe gestures from home screen
     @objc func handleSwipes(_ sender:UISwipeGestureRecognizer) {
         /*if (sender.direction == .right) {
