@@ -800,7 +800,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="9v4-VV-Ddi" secondAttribute="bottom" id="8ey-m8-6cV"/>
                                     <constraint firstAttribute="height" constant="100" id="Bgo-OF-RNL"/>
@@ -894,7 +894,7 @@ When an AR Image is created by any of your following.</string>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qS0-Lk-xPr"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GCe-el-T9F" firstAttribute="top" secondItem="F0q-Kx-iIB" secondAttribute="bottom" constant="8" id="18O-SU-IBD"/>
                             <constraint firstItem="Gl7-fy-5Ba" firstAttribute="top" secondItem="WAb-88-AT6" secondAttribute="bottom" constant="16" id="3Ov-88-mrA"/>
@@ -1103,6 +1103,7 @@ When an AR Image is created by any of your following.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="TBx-2c-pAY"/>
                                 </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                 <connections>
@@ -1114,6 +1115,7 @@ When an AR Image is created by any of your following.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="FeF-MO-ZMm"/>
                                 </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
@@ -1233,6 +1235,7 @@ When an AR Image is created by any of your following.</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="57V-LF-294"/>
                                                 </constraints>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -1244,6 +1247,7 @@ When an AR Image is created by any of your following.</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="hyf-XW-FsL"/>
                                                 </constraints>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                 <connections>
@@ -1252,6 +1256,7 @@ When an AR Image is created by any of your following.</string>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qj9-Zn-lK9">
                                                 <rect key="frame" x="24" y="383" width="366" height="44"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <connections>
@@ -1260,6 +1265,7 @@ When an AR Image is created by any of your following.</string>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X16-d0-lY6">
                                                 <rect key="frame" x="24" y="449" width="366" height="44"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 <connections>
