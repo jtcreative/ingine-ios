@@ -12,11 +12,18 @@ extension String{
     func toArributedString(alignment:NSTextAlignment) -> NSAttributedString{
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
-        return toAttributed(attributes: [.paragraphStyle:paragraphStyle])
+        return toAttributed(attributes: [.paragraphStyle:paragraphStyle, .foregroundColor: UIColor.lightGray])
     }
     
     
     func toAttributed(attributes:[NSAttributedString.Key:Any]? = nil) -> NSAttributedString{
         return NSAttributedString(string: self, attributes: attributes)
     }
+  
+        func toDouble() -> Double? {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.locale = Locale(identifier: "en_US_POSIX")
+            return numberFormatter.number(from: self)?.doubleValue
+        }
+    
 }

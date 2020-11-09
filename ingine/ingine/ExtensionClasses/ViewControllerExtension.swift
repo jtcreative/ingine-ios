@@ -42,6 +42,7 @@ extension ViewController{
                 })
                 
                 
+                print("arCount************",self.arCount, docId)
                 ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
                 self.isReloading = false
                 //                       NotificationCenter.default.post(Notification.progressUpdateNotification(message: "Updating notification", fromStartingIndex: 0, toEndingIndex: arAssets.count))
