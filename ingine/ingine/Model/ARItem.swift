@@ -13,6 +13,9 @@ struct IngineeredItem {
     var itemName = ""
     var itemURL = ""
     var visStatus = false
+   
+
+    
 }
 struct ARItem:Codable {
     var id :String?
