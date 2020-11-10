@@ -388,6 +388,40 @@ class AccountViewController: PortraitViewController {
         profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
+    override func setupKeyboardObservers(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    @objc override func handleKeyboardWillShow(notification: Notification){
+        //get keyboard height
+        let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+        let height = keyboardFrame.cgRectValue.height
+        let move = height/4
+
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber
+        let duration = keyboardDuration.doubleValue
+
+        inputContainerCenterYAnchor?.constant = -move
+
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc override func handleKeyboardWillHide(notification: Notification){
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber
+        let duration = keyboardDuration.doubleValue
+        inputContainerCenterYAnchor?.constant = 0
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     func openMainViewController() {
         DispatchQueue.main.async {
             // log user in, and show home screen

@@ -48,6 +48,7 @@ class IngineeredItemViewCell: UITableViewCell {
    
     let optionsLauncher = OptionsLauncher()
     @IBAction func showOptions(_ sender: UIButton) {
+       
         optionsLauncher.showOptions(identification: id)
 
     }
@@ -155,6 +156,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // set cell fields info from firebase
         cell.id = itemsArray[indexPath.row].id
         let imageUrl = URL(string: itemsArray[indexPath.row].refImage)!
+        cell.optionsLauncher.delegate = self
         
         DispatchQueue.global().async {
             guard let imageData = NSData(contentsOf: imageUrl) else {
@@ -280,5 +282,17 @@ extension ProfileViewController {
 extension ProfileViewController:UserProfileUpdateDelegate{
     func didUpdateUser() {
         isLoggedIn()
+    }
+}
+
+extension ProfileViewController:UpdateARItemLauncherDelegate{
+    func delete(itemId: String) {
+        // get index of deleted item
+        let indexToRemove = itemsArray.firstIndex { $0.id == itemId}
+        // remove item from main array
+        itemsArray.remove(at: indexToRemove ?? 0)
+        // delete row from tableview
+        ingineeredItemsTableView.deleteRows(at: [IndexPath(row: indexToRemove ?? 0, section: 0)], with: .automatic)
+        
     }
 }
