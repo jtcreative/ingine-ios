@@ -40,7 +40,7 @@ extension ViewController{
                 
                 
                 print("arCount************",self.arCount, docId)
-                ARImageDownloadService.main.beginDownloadOperation(imageAssets: arAssets, delegate: self)
+                ARImageDownloadService.main.downloadAssets(imageAssets: arAssets)
                 self.isReloading = false
                 //We currently no longer run this notification
                 //Leaving it here is we want it in the future, but doesn't work well with

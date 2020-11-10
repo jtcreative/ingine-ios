@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class PortraitViewController : BaseViewController{
+class PortraitViewController : BaseViewController{
     override public var supportedInterfaceOrientations:UIInterfaceOrientationMask {
             return UIInterfaceOrientationMask.portrait
     }

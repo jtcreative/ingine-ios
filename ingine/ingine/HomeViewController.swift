@@ -29,7 +29,7 @@ class HomeViewController: PortraitViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       // isLoggedIn()
+        isLoggedIn()
     }
     
     // setup the UI 836269
@@ -54,7 +54,7 @@ class HomeViewController: PortraitViewController {
         if Auth.auth().currentUser?.uid != nil {
             self.openMainViewController()
         }else{
-            self.openMainViewController()
+            //self.openMainViewController()
         }
         
     }
@@ -63,9 +63,9 @@ class HomeViewController: PortraitViewController {
            DispatchQueue.main.async {
                // log user in, and show home screen
                // Go back to homescreen
-            let arVC = self.storyboard?.instantiateViewController(identifier: "ARViewController") as! ViewController
-            
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = arVC
+               let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+               let vc = st.instantiateViewController(identifier: "MainViewController")
+               (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
            }
        }
     

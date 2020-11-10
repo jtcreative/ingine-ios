@@ -244,7 +244,8 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
     
     private func getCurrentUser(){
         let id = Auth.auth().currentUser?.email ?? ""
-        IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+        //FirebaseARService.shared.getDocument("", document: ""
+        FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
             switch completion
             {
             case .finished : print("finish")
@@ -280,7 +281,7 @@ class ViewController: PortraitViewController, ARSCNViewDelegate {
             } else {
                 print("user does not exist")
             }
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
     }
     
     
@@ -499,7 +500,7 @@ extension ViewController {
         self.isPublic = isPublic
         
         // search assest for AR render
-
+       ARImageDownloadService.main.restartDownloadOperation(delegate: self)
        renderArAssets(docId: userDocID)
        getArAssetsFromFollowings()
        
@@ -636,7 +637,7 @@ extension ViewController: ARImageDownloadServiceDelegate {
             print("arAssets.append", arAssets)
             if status == .Success{
                 arCount += 1
-                downloadUserAndHisFollowersAR()
+                //downloadUserAndHisFollowersAR()
             }
         }
         
@@ -655,8 +656,8 @@ extension ViewController: ARImageDownloadServiceDelegate {
         
         
         NotificatonBinding.shared.registerPublisher(name: .progressEnd, type: String.self)
-        
-        NotificationCenter.default.post(name: .progressEnd, object: "Update Complete")
+        print("AR download Operation: Update Complete")
+        NotificationCenter.default.post(name: .progressEnd, object: "AR download Operation: Update Complete")
         //NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Complete"))
         guard status != .Error else {
             print("all images could not be downloaded. Error: \(status)")
@@ -664,7 +665,7 @@ extension ViewController: ARImageDownloadServiceDelegate {
         }
         
 //        NotificationCenter.default.post(Notification.progressEndNotification(message: "Update Completed"))
-        NotificationCenter.default.post(name: .progressEnd, object: "Update Completed")
+        NotificationCenter.default.post(name: .progressEnd, object: "AR download Operation: Update Completed")
         cycleNextArAssets(Timer.init())
         //startTimer()
     }
