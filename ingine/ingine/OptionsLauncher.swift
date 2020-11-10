@@ -248,7 +248,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         print("trying to delete")
         if Auth.auth().currentUser?.uid != nil {
             //            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
-            IFirebaseDatabase.shared.deleteDocument("pairs", document: itemID).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.deleteDocument("pairs", document: itemID).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -258,7 +258,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
             }) { (_) in
                 self.delegate?.delete(itemId: self.itemID)
                 self.handleDismiss()
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }.store(in: &FirebaseARService.shared.cancelBag)
             
             
         } else {
