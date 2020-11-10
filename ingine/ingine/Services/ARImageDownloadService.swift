@@ -51,12 +51,15 @@ class ARImageDownloadService {
     var count:Int = 0
     var total:Int = 0
     
-    func beginDownloadOperation(imageAssets:[ARImageAsset], delegate:ARImageDownloadServiceDelegate?)  {
+    func restartDownloadOperation(delegate:ARImageDownloadServiceDelegate?) {
         stopDownloadOperation()
-        
         count = 0
-        total = imageAssets.count
+        total = 0
         serviceDelegate = delegate
+    }
+    
+    func downloadAssets(imageAssets:[ARImageAsset])  {
+        total = total + imageAssets.count
         
         let completionOperation = BlockOperation {
             self.serviceDelegate?.onOperationCompleted(status: .Success)
@@ -86,8 +89,20 @@ class ARImageDownloadService {
         guard ImageLoadingService.main.exists(forKey: asset.imageUrl) == false,
             let imageUrl = URL(string: asset.imageUrl),
             let imageData:NSData = NSData(contentsOf: imageUrl) else {
-                serviceDelegate?.onImageDownloaded(status: .Error, asset: nil, index: myCount, total: total)
+                
+                guard ImageLoadingService.main.get(forKey: asset.imageUrl) != nil else {
+                    serviceDelegate?.onImageDownloaded(status: .Error, asset: nil, index: myCount, total: total)
+                    return
+                }
+                
+                serviceDelegate?.onImageDownloaded(status: .Success, asset: asset, index: myCount, total: total)
                 return
+        }
+        
+        guard let leftStorage = Int(UIDevice.current.freeDiskSpaceInMB.replacingOccurrences(of: ",", with: ".").replacingOccurrences(of: ".", with: "")),
+                leftStorage > 10 else {
+                    serviceDelegate?.onImageDownloaded(status: .Error, asset: nil, index: myCount, total: total)
+                    return
         }
             
         ImageLoadingService.main.add(imageData: imageData as Data, forKey: asset.imageUrl)

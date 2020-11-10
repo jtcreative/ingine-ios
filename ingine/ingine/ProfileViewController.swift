@@ -157,7 +157,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let imageUrl = URL(string: itemsArray[indexPath.row].refImage)!
         
         DispatchQueue.global().async {
-            let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+            guard let imageData = NSData(contentsOf: imageUrl) else {
+                return
+            }
+            
+            //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
             DispatchQueue.main.async {
                 cell.refImage.image = UIImage(data: imageData as Data)
             }

@@ -152,13 +152,6 @@ class AccountViewController: PortraitViewController {
     
     }
     
-    func displayAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(defaultAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     @objc func handleForgetPassword (){
         guard let email = emailTextField.text else{
             self.displayAlert(title: "Invalid Form", message: "Please fill in your email!")
@@ -287,7 +280,7 @@ class AccountViewController: PortraitViewController {
 //            
 //            // Go back to homescreen
 //            let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-//            let vc = st.instantiateInitialViewController()
+//            let vc = st.instantiateViewController(identifier: "MainViewController")
 //            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
 //        }
     }
@@ -395,46 +388,12 @@ class AccountViewController: PortraitViewController {
         profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
-    func setupKeyboardObservers(){
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    
-    @objc func handleKeyboardWillShow(notification: Notification){
-        //get keyboard height
-        let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
-        let height = keyboardFrame.cgRectValue.height
-        let move = height/4
-
-        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber
-        let duration = keyboardDuration.doubleValue
-
-        inputContainerCenterYAnchor?.constant = -move
-
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
-    }
-
-    @objc func handleKeyboardWillHide(notification: Notification){
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
-        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber
-        let duration = keyboardDuration.doubleValue
-        inputContainerCenterYAnchor?.constant = 0
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     func openMainViewController() {
         DispatchQueue.main.async {
             // log user in, and show home screen
             // Go back to homescreen
             let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-            let vc = st.instantiateInitialViewController()
+            let vc = st.instantiateViewController(identifier: "MainViewController")
             (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
         }
     }

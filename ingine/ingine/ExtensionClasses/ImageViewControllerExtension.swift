@@ -66,7 +66,7 @@ extension ImageViewController{
                     }
                 }) { (_) in
                     let st = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-                    let vc = st.instantiateInitialViewController()
+                    let vc = st.instantiateViewController(identifier: "MainViewController")
                     (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = vc
                 }.store(in: &FirebaseARService.shared.cancelBag )
             }).store(in: &FirebaseARService.shared.cancelBag)
