@@ -18,7 +18,7 @@ extension ProfileViewController{
             let id = Auth.auth().currentUser?.email ?? ""
             
             //            firebaseManager?.getSingleDocument("users", documentName: id, type: .user)
-            IFirebaseDatabase.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+            FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
                 switch completion
                 {
                 case .finished : print("finish")
@@ -53,7 +53,7 @@ extension ProfileViewController{
                 } else {
                     print("user does not exist")
                 }
-            }.store(in: &IFirebaseDatabase.shared.cancelBag)
+            }.store(in: &FirebaseARService.shared.cancelBag)
             
         } else {
             print("not logged in by email")
@@ -138,7 +138,7 @@ extension ProfileViewController{
                     
                 }
             }
-        }.store(in: &IFirebaseDatabase.shared.cancelBag)
+        }.store(in: &FirebaseARService.shared.cancelBag)
         
         
     }
