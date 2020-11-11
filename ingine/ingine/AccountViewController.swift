@@ -152,6 +152,8 @@ class AccountViewController: PortraitViewController {
     
     }
     
+   
+    
     @objc func handleForgetPassword (){
         guard let email = emailTextField.text else{
             self.displayAlert(title: "Invalid Form", message: "Please fill in your email!")
