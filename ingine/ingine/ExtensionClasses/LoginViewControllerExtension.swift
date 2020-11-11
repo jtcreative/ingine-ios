@@ -93,7 +93,8 @@ extension LoginViewController{
             "refImage": url,
             "matchURL": matchURL,
             "user": email,
-            "public": self.arData?.visibilty ?? false
+            "public": self.arData?.visibilty ?? false,
+            "lastupdated":Date()
         ] as [String : Any]
         
         

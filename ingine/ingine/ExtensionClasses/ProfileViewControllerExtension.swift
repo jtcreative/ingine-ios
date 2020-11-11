@@ -106,7 +106,7 @@ extension ProfileViewController{
                             item.refImage = shot.refImage ?? ""
                             item.itemURL = shot.matchURL ?? ""
                             item.visStatus = shot.public ?? false
-                            
+                            item.lastupdated = shot.lastupdated ?? Date()
                             
                             self.itemsArray.append(item)
                             
@@ -119,9 +119,10 @@ extension ProfileViewController{
                                 self.itemsArray[row].refImage = shot.refImage ?? ""
                                 self.itemsArray[row].itemURL = shot.matchURL ?? ""
                                 self.itemsArray[row].visStatus = shot.public ?? false
-                                
+                                self.itemsArray[row].lastupdated = shot.lastupdated ?? Date()
                             }
                             
+                            self.itemsArray = self.itemsArray.sorted { $0.lastupdated ?? Date() > $1.lastupdated ?? Date() }
                     
                             self.profileHeaderView.arPostCount.text = "\(self.itemsArray.count)"
                             self.configureTableView()

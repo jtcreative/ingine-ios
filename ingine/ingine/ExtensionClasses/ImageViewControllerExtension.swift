@@ -37,7 +37,8 @@ extension ImageViewController{
                 "refImage": self.storageURL,
                 "matchURL": matchURL,
                 "user": email,
-                "public": self.visibilitySwitch.isOn
+                "public": self.visibilitySwitch.isOn,
+                "lastupdated":Date()
                 ] as [String : Any]
             
             

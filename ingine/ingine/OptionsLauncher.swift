@@ -220,8 +220,9 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         
         if Auth.auth().currentUser?.uid != nil {
             let dict = [
-                "matchURL" : link
-            ]
+                "matchURL" : link,
+                "lastupdated":Date()
+            ] as [String : Any]
            // firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
             FirebaseARService.shared.updateData("pairs", document: itemID, data: dict).sink(receiveCompletion: { (completion) in
                 switch completion
