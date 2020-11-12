@@ -13,6 +13,9 @@ struct IngineeredItem {
     var itemName = ""
     var itemURL = ""
     var visStatus = false
+    var lastupdated:Date?
+
+    
 }
 struct ARItem:Codable {
     var id :String?
@@ -20,4 +23,5 @@ struct ARItem:Codable {
     var refImage:String?
     var matchURL:String?
     var `public` :Bool?
+    var lastupdated:Date?
 }

@@ -12,67 +12,68 @@ import FirebaseFirestore
 
 
 extension ProfileViewController{
-     // Check if user is logged in
-        func isLoggedIn() {
-            if Auth.auth().currentUser?.uid != nil {
-                let id = Auth.auth().currentUser?.email ?? ""
-                
-                FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
-                    switch completion
-                                  {
-                                  case .finished : print("finish")
-                                  case .failure(let error):
-                                      print(error.localizedDescription)
-                                  }
-                }) { (snapshot) in
-                    if snapshot.exists {
-                        // set title of profile page to full name of logged in user
-//                        self.userName.text = snapshot.data()?["fullName"] as? String
-                        
-                        
-                        // get following
-                        let followingArray = snapshot.get("following") as? [Any]
-                        
-                        // get followers
-                        let followerArray = snapshot.get("follower") as? [Any]
-                        
-                        self.profileHeaderView.followerAndFollowingLabel.text = "Following \(followingArray?.count ?? 0 ) | \(followerArray?.count ?? 0 > 1 ? "Followers" : "Follower") \(followerArray?.count ?? 0)"
-                        
-                        
-                        self.profileHeaderView.userName.text = snapshot.data()?["fullName"] as? String
-                        
-                        if let userImageUrl = snapshot.data()?["profileImage"] as? String{
-                            let imageUrl = URL(string: userImageUrl)!
-                            let imageData:NSData = NSData(contentsOf: imageUrl)!
-                            self.profileHeaderView.profileImage.image = UIImage(data: imageData as Data)
-                        }
-                       
-                         
-                        
-                    } else {
-                        print("user does not exist")
-                    }
-                }.store(in: &FirebaseARService.shared.cancelBag)
-                
-            } else {
-                print("not logged in by email")
-                // send to login screen
-                let login = LoginViewController()
-                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
-            }
+    // Check if user is logged in
+    func isLoggedIn() {
+        if Auth.auth().currentUser?.uid != nil {
+            let id = Auth.auth().currentUser?.email ?? ""
             
+            //            firebaseManager?.getSingleDocument("users", documentName: id, type: .user)
+            FirebaseARService.shared.getDocument("users", document: id).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { (snapshot) in
+                if snapshot.exists {
+                    // set title of profile page to full name of logged in user
+                    //                        self.userName.text = snapshot.data()?["fullName"] as? String
+                    
+                    
+                    // get following
+                    let followingArray = snapshot.get("following") as? [Any]
+                    
+                    // get followers
+                    let followerArray = snapshot.get("follower") as? [Any]
+                    
+                    self.profileHeaderView.followerAndFollowingLabel.text = "Following \(followingArray?.count ?? 0 ) | \(followerArray?.count ?? 0 > 1 ? "Followers" : "Follower") \(followerArray?.count ?? 0)"
+                    
+                    
+                    self.profileHeaderView.userName.text = snapshot.data()?["fullName"] as? String
+                    
+                    if let userImageUrl = snapshot.data()?["profileImage"] as? String{
+                        let imageUrl = URL(string: userImageUrl)!
+                        let imageData:NSData = NSData(contentsOf: imageUrl)!
+                        self.profileHeaderView.profileImage.image = UIImage(data: imageData as Data)
+                    }
+                    
+                    
+                    
+                } else {
+                    print("user does not exist")
+                }
+            }.store(in: &FirebaseARService.shared.cancelBag)
+            
+        } else {
+            print("not logged in by email")
+            // send to login screen
+            let login = LoginViewController()
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = login
         }
+        
+    }
     
     // Retrieve ingineered item infro from firebase
-       func retrieveItems() {
-           print("retrieving data from firebase...")
+    func retrieveItems() {
+        print("retrieving data from firebase...")
         if Auth.auth().currentUser?.uid == nil {
             return
         }
-           
-           // Populate cell elements with data from firebase
-            let id = Auth.auth().currentUser?.email ?? ""
-           
+        
+        // Populate cell elements with data from firebase
+        let id = Auth.auth().currentUser?.email ?? ""
+        
         //   firebaseManager?.getDocuments("users", documentName: id, type: .multipleItem)
         FirebaseARService.shared.getUser("users", document: id).sink(receiveCompletion: { (completion) in
             switch completion
@@ -82,12 +83,12 @@ extension ProfileViewController{
                 print(error.localizedDescription)
             }
         }) { (snapShot) in
-             guard snapShot.data() != nil else {
-                              print("Document data was empty.")
-                              return
-                          }
-                          
-                          
+            guard snapShot.data() != nil else {
+                print("Document data was empty.")
+                return
+            }
+            
+            
             if snapShot.exists {
                 for k in snapShot.data()!.keys {
                     if k != "fullName" {
@@ -99,17 +100,30 @@ extension ProfileViewController{
                                 print(error.localizedDescription)
                             }
                         }) { (shot) in
-                           
                             var item = IngineeredItem()
-                                item.id = k
+                            item.id = k
                             item.itemName = shot.name ?? ""
                             item.refImage = shot.refImage ?? ""
                             item.itemURL = shot.matchURL ?? ""
                             item.visStatus = shot.public ?? false
+                            item.lastupdated = shot.lastupdated ?? Date()
+                            
                             self.itemsArray.append(item)
-                           
-                            self.itemsArray = self.itemsArray.unique{$0.id}
-                            print(self.itemsArray)
+                            
+                            self.itemsArray = self.itemsArray.unique { $0.id }
+                            
+                            if let row = self.itemsArray.firstIndex(where: {$0.id == k}) {
+                                
+                                self.itemsArray[row].id = k
+                                self.itemsArray[row].itemName = shot.name ?? ""
+                                self.itemsArray[row].refImage = shot.refImage ?? ""
+                                self.itemsArray[row].itemURL = shot.matchURL ?? ""
+                                self.itemsArray[row].visStatus = shot.public ?? false
+                                self.itemsArray[row].lastupdated = shot.lastupdated ?? Date()
+                            }
+                            
+                            self.itemsArray = self.itemsArray.sorted { $0.lastupdated ?? Date() > $1.lastupdated ?? Date() }
+                    
                             self.profileHeaderView.arPostCount.text = "\(self.itemsArray.count)"
                             self.configureTableView()
                             DispatchQueue.main.async {
@@ -126,10 +140,10 @@ extension ProfileViewController{
                 }
             }
         }.store(in: &FirebaseARService.shared.cancelBag)
-
-           
-       }
-       
+        
+        
+    }
+    
 }
 extension Array {
     func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
@@ -141,7 +155,9 @@ extension Array {
                 arrayOrdered.append(value)
             }
         }
-
+        
         return arrayOrdered
     }
 }
+
+

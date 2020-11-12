@@ -11,6 +11,11 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 
+protocol UpdateARItemLauncherDelegate:class {
+    func delete(itemId: String)
+}
+
+
 class Option: NSObject {
     // Add buttons here/or uiviews
     
@@ -28,7 +33,7 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
 //    var profileController : ProfileViewController?
     var db: Firestore! = Firestore.firestore()
     var itemID : String = ""
-    
+    weak var delegate:UpdateARItemLauncherDelegate?
     let blackView = UIView()
     
     let collectionView: UICollectionView = {
@@ -215,8 +220,9 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
         
         if Auth.auth().currentUser?.uid != nil {
             let dict = [
-                "matchURL" : link
-            ]
+                "matchURL" : link,
+                "lastupdated":Date()
+            ] as [String : Any]
            // firebaseManager?.updateData(dict: dict, collectionName: "pairs", documentName: itemID)
             FirebaseARService.shared.updateData("pairs", document: itemID, data: dict).sink(receiveCompletion: { (completion) in
                 switch completion
@@ -242,18 +248,19 @@ class OptionsLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDel
     func deleteItem() {
         print("trying to delete")
         if Auth.auth().currentUser?.uid != nil {
-//            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
+            //            firebaseManager?.deleteDocument("pairs", documentName: itemID, type: .deleteDoc)
             FirebaseARService.shared.deleteDocument("pairs", document: itemID).sink(receiveCompletion: { (completion) in
-                           switch completion
-                           {
-                           case .finished : print("finish")
-                           case .failure(let error):
-                               print(error.localizedDescription)
-                           }
-                       }) { (_) in
-                            self.handleDismiss()
-                       }.store(in: &FirebaseARService.shared.cancelBag)
-                       
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { (_) in
+                self.delegate?.delete(itemId: self.itemID)
+                self.handleDismiss()
+            }.store(in: &FirebaseARService.shared.cancelBag)
+            
             
         } else {
             print("not logged in at deleting item screen")
