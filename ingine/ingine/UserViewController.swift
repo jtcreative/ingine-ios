@@ -68,10 +68,12 @@ class UserViewController: UIViewController {
     
     override func viewDidLoad() {
         // selected option color
-        searchContainerView.translatesAutoresizingMaskIntoConstraints = false
-        searchContainerView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        searchContainerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        searchContainerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+//        searchContainerView.translatesAutoresizingMaskIntoConstraints = false
+//        searchContainerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+//        searchContainerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+//        searchContainerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+//        searchContainerView.heightAnchor.isActive = true
+
         
         tableView.register(UINib(nibName: "UserListCell", bundle: nil), forCellReuseIdentifier: "UserListCell")
         tableView.tableFooterView = UIView()

@@ -31,6 +31,9 @@ class BottomBar: UIView {
            view.frame = bounds
            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
            self.addSubview(view);
+        cameraButton.imageView?.contentMode = .scaleAspectFill
+        searchButton.imageView?.contentMode = .scaleAspectFit
+        profileButton.imageView?.contentMode = .scaleAspectFit
         
        
        }
