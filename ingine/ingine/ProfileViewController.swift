@@ -116,8 +116,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Configure table view
         configureTableView()
        
-
         setupProfileHeader()
+        
+        
     }
     
     

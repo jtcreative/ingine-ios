@@ -98,18 +98,21 @@ class StatusViewController: PortraitViewController {
 	func escalateFeedback(for trackingState: ARCamera.TrackingState, inSeconds seconds: TimeInterval) {
         cancelScheduledMessage(for: .trackingStateEscalation)
 
-		let timer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false, block: { [unowned self] _ in
-            self.cancelScheduledMessage(for: .trackingStateEscalation)
+        DispatchQueue.global().async {
+            let timer = Timer.scheduledTimer(withTimeInterval: seconds, repeats: false, block: { [unowned self] _ in
+                self.cancelScheduledMessage(for: .trackingStateEscalation)
 
-            var message = trackingState.presentationString
-            if let recommendation = trackingState.recommendation {
-                message.append(": \(recommendation)")
-            }
+                var message = trackingState.presentationString
+                if let recommendation = trackingState.recommendation {
+                    message.append(": \(recommendation)")
+                }
+                
+                self.showMessage(message, autoHide: false)
+            })
 
-            self.showMessage(message, autoHide: false)
-		})
-
-        timers[.trackingStateEscalation] = timer
+            self.timers[.trackingStateEscalation] = timer
+        }
+		
     }
     
     // MARK: - IBActions
