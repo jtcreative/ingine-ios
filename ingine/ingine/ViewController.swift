@@ -532,12 +532,14 @@ extension ViewController {
             let semaphore = DispatchSemaphore(value: 1)
             var imagesToAdd = Set<ARReferenceImage>()
             
+            let endIndex = (strongSelf.arAssets.count - 1)
+            var strtIndex = 0 //strongSelf.currentImgIndex
             //this while loop assumes that there will be a valid arImage reference in the list
             //this is could create an infinite loop in
-            while(strongSelf.arAssets.count > 0 && imagesToAdd.count < 1) {
-                var endIndex = min((strongSelf.currentImgIndex + strongSelf.maxNumImages), (strongSelf.arAssets.count - 1))
-                var imagesToRemove = [ARImageAsset]()
-                for i in strongSelf.currentImgIndex...endIndex  {
+            //while(strongSelf.arAssets.count > 0 && imagesToAdd.count < 1) {
+                //min((strongSelf.currentImgIndex + strongSelf.maxNumImages), (strongSelf.arAssets.count - 1))
+                //var imagesToRemove = [ARImageAsset]()
+                for i in strtIndex...endIndex  {
                     guard strongSelf.isReloading == false else { break }
                     
                     let asset = strongSelf.arAssets[i]
@@ -545,7 +547,7 @@ extension ViewController {
                     guard let imageData = ImageLoadingService.main.get(forKey: asset.imageUrl),
                         let image = UIImage(data: imageData as Data),
                         let cgImage = image.cgImage else {
-                        imagesToRemove.append(asset)
+                        //imagesToRemove.append(asset)
                         continue
                     }
                     
@@ -557,7 +559,7 @@ extension ViewController {
                             defer { semaphore.signal() }
                             
                             guard error == nil else {
-                                imagesToRemove.append(asset)
+                                //imagesToRemove.append(asset)
                                 return
                             }
                             
@@ -569,17 +571,18 @@ extension ViewController {
                     }
                 }
                 //strongSelf.removeUnusedAssets(assets: imagesToRemove)
-                strongSelf.currentImgIndex = endIndex < (strongSelf.arAssets.count - 1) ? endIndex : 0
-            }
+                //strongSelf.currentImgIndex = endIndex < (strongSelf.arAssets.count - 1) ? endIndex : 0
+            //}
             
-            guard strongSelf.isReloading == false else {
+            /*guard strongSelf.isReloading == false else {
                 strongSelf.cancelTimer()
                 return
-            }
+            }*/
             
             strongSelf.resetArImageConfiguration(withNewImage: imagesToAdd)
             //strongSelf.startTimer()
-            print("cycled through arImages at index \(strongSelf.currentImgIndex)")
+            //print("cycled through arImages at index \(strongSelf.currentImgIndex)")
+            print("cycled through arImages at index \(strtIndex)")
         }
     }
     
