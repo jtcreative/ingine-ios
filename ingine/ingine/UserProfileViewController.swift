@@ -377,22 +377,26 @@ extension UserProfileViewController {
             
             if snapshot.exists {
              
-                let user = User().dictToUser(dict: snapshot.data()!, id: snapshot.documentID)
-                self.selectedUser = user
-                self.profileHeaderView.userName.text = user.fullName
-                
-                for followUser in user.followers{
-                    if followUser.id == currentUser{
-                        self.profileHeaderView.followButton.setTitle("Following", for: .normal)
-                        self.profileHeaderView.followButton.setTitleColor(.white, for: .normal)
-                        self.profileHeaderView.followButton.backgroundColor = .black
-                        
-                    }else{
-                        self.profileHeaderView.followButton.setTitle("Follow", for: .normal)
-                        self.profileHeaderView.followButton.setTitleColor(.black, for: .normal)
-                        self.profileHeaderView.followButton.backgroundColor = .white
+               User().dictToUser(dict: snapshot.data()!, id: snapshot.documentID, {
+                    user in
+                    self.selectedUser = user
+                    self.profileHeaderView.userName.text = user.fullName
+                    
+                    for followUser in user.followers{
+                        if followUser.id == currentUser{
+                            self.profileHeaderView.followButton.setTitle("Following", for: .normal)
+                            self.profileHeaderView.followButton.setTitleColor(.white, for: .normal)
+                            self.profileHeaderView.followButton.backgroundColor = .black
+                            
+                        }else{
+                            self.profileHeaderView.followButton.setTitle("Follow", for: .normal)
+                            self.profileHeaderView.followButton.setTitleColor(.black, for: .normal)
+                            self.profileHeaderView.followButton.backgroundColor = .white
+                        }
                     }
-                }
+                
+                })
+               
                 
             } else {
                 print("user does not exist")

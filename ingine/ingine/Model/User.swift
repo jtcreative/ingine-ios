@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import FirebaseAuth
 struct User {
     
     var fullName:String = ""
@@ -18,11 +18,9 @@ struct User {
     var assetCount = 0
     var assetIDs:[String] = [String]()
     var isFollowing = false
-    
-    func dictToUser (dict:[String:Any], id:String) -> User {
+    func dictToUser (dict:[String:Any], id:String, _ completation:@escaping (User)->()){
         
-        
-       let fullname = dict["fullName"] as? String ?? ""
+        let fullname = dict["fullName"] as? String ?? ""
         let profileImage = dict["profileImage"] as? String ?? ""
         
         let keys = dict.keys
@@ -31,36 +29,78 @@ struct User {
             if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
                 assests.append(k)
             }
-           
+            
         }
-       
+        
         let followersArr = dict["follower"] as? [Any]
         var followersObjArr = [User]()
         for i in followersArr ?? []{
             let value = i as? [String:Any]
-            let fullNameF = value?["fullName"] as? String ?? ""
             let id = value?["id"] as? String ?? ""
-            let profileImage = value?["profileImage"] as? String ?? ""
-            let assetCount = value?["assetCount"] as? Int ?? 0
-            let follower = User(fullName: fullNameF, id: id, profileImage: profileImage, assetCount: assetCount)
-            followersObjArr.append(follower)
+            dispatchGroupe.enter()
+            self.getUserUpdatedAssets(userId: id, completion: { user in
+                dispatchGroupe.leave()
+                followersObjArr.append(user)
+            })
+            
         }
         
+        
+        //group.wait()
         let followingArr = dict["following"] as? [Any]
         var followingObjArr = [User]()
         for i in followingArr ?? []{
             let value = i as? [String:Any]
-            let fullNameF = value?["fullName"] as? String ?? ""
             let id = value?["id"] as? String ?? ""
-            let profileImage = value?["profileImage"] as? String ?? ""
-            let assetCount = value?["assetCount"] as? Int ?? 0
-            let following = User(fullName: fullNameF, id: id, profileImage: profileImage, assetCount:assetCount)
-            followingObjArr.append(following)
+            dispatchGroupe.enter()
+            self.getUserUpdatedAssets(userId: id, completion: { user in
+                dispatchGroupe.leave()
+                var us = user
+                us.isFollowing = true
+                followingObjArr.append(us)
+            })
+            
         }
         
-        return User(fullName: fullname, id: id, profileImage: profileImage, followings: followingObjArr, followers: followersObjArr, assetCount: assests.count, assetIDs: assests)
+        dispatchGroupe.notify(queue: .main) {
+            
+            let user = User(fullName: fullname, id: id, profileImage: profileImage, followings: followingObjArr, followers: followersObjArr, assetCount: assests.count, assetIDs: assests, isFollowing: isFollowing)
+            completation(user)
+            
+        }
+        
     }
     
     
-
+    private func getUserUpdatedAssets(userId:String,  completion:@escaping ((User)->Void)){
+        var asstes = [String]()
+        FirebaseARService.shared.getDocument("users", document: userId).sink(receiveCompletion: { (completion) in
+            switch completion
+            {
+            case .finished : break
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }) { (userSnap) in
+            
+            
+            if userSnap.exists{
+                let dict = userSnap.data()!
+                for k in dict.keys{
+                    if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
+                        asstes.append(k)
+                    }
+                }
+                
+                let name = userSnap.get("fullName") as? String ?? ""
+                let profilePic = userSnap.get("profileImage") as? String ?? ""
+                let user = User(fullName: name, id: userSnap.documentID, profileImage: profilePic, followings: [], followers: [], assetCount: asstes.count, assetIDs: [])
+                
+                
+                completion(user)
+            }
+        }.store(in: &FirebaseARService.shared.cancelBag)
+        
+    }
 }

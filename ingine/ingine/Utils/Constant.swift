@@ -14,5 +14,7 @@ enum Validation{
     case invaild(String)
 }
 
+let dispatchGroupe =  DispatchGroup()
+
 
 

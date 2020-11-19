@@ -127,7 +127,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     private func setupProfileHeader(){
         profileHeaderView.profileView.setRadius(profileHeaderView.profileView.frame.height / 2)
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        profileHeaderView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        
         profileHeaderView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         profileHeaderView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         profileHeaderView.heightAnchor.constraint(equalToConstant: 160).isActive = true

@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 extension SignUpViewController{
     func signUp( _ email: String, password:String){
         Loader.start()

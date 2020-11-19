@@ -71,7 +71,7 @@ class ImageViewController: PortraitViewController, UITextFieldDelegate {
 
         // check if user already login or not
         if Auth.auth().currentUser?.uid != nil {
-            // if user login then upload AR image asset
+            // if user login then upload A//////////////R image asset
             guard let imageData = image!.jpegData(compressionQuality: 0.8) else { return }
             uploadArImage(imageData)
         }else{
