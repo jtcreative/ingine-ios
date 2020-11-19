@@ -126,18 +126,24 @@ class FirebaseUserService: IUserService {
                               
                 
                 if snapShot.exists {
-                    let user = User().dictToUser(dict: snapShot.data()!, id: snapShot.documentID)
-                    if query.isEmpty{
-                        promise(.success(user.followers))
-                        return
-                    }
-                    let filterA = user.followers.filter({$0.fullName.lowercased().contains(query.lowercased())})
+                    User().dictToUser(dict: snapShot.data()!, id: snapShot.documentID, {
+                        user in
+                        if query.isEmpty{
+                            promise(.success(user.followers))
+                            return
+                        }
+                        let filterA = user.followers.filter({$0.fullName.lowercased().contains(query.lowercased())})
+                        
+                        promise(.success(filterA))
+                        
+                    })
+                  
                     
-                    promise(.success(filterA))
-                    
+                }else{
+                    promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
                 }
                 
-                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
+               
             }.store(in: &FirebaseARService.shared.cancelBag)
             
         }.eraseToAnyPublisher()
@@ -164,19 +170,26 @@ class FirebaseUserService: IUserService {
                 
                 if snapShot.exists {
                     
-                    let user = User().dictToUser(dict: snapShot.data()!, id: snapShot.documentID)
+                    User().dictToUser(dict: snapShot.data()!, id: snapShot.documentID, {
+                        user in
+                        if query.isEmpty{
+                            promise(.success(user.followings))
+                            return
+                        }
+                        let filterA = user.followings.filter({$0.fullName.lowercased().contains(query.lowercased())})
+                        
+                        promise(.success(filterA))
+                        
+                
+                    })
                     
-                    if query.isEmpty{
-                        promise(.success(user.followings))
-                        return
-                    }
-                    let filterA = user.followings.filter({$0.fullName.lowercased().contains(query.lowercased())})
-                    
-                    promise(.success(filterA))
+                  
 
+                }else{
+                    promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
                 }
                 
-                promise(.failure(NSError(domain: "500", code: 500, userInfo: [:])))
+              
             }.store(in: &FirebaseARService.shared.cancelBag)
             
         }.eraseToAnyPublisher()

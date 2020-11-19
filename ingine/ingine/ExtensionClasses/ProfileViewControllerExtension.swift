@@ -44,8 +44,10 @@ extension ProfileViewController{
                     
                     if let userImageUrl = snapshot.data()?["profileImage"] as? String{
                         let imageUrl = URL(string: userImageUrl)!
-                        let imageData:NSData = NSData(contentsOf: imageUrl)!
-                        self.profileHeaderView.profileImage.image = UIImage(data: imageData as Data)
+                        if let imageData:NSData = NSData(contentsOf: imageUrl){
+                            self.profileHeaderView.profileImage.image = UIImage(data: imageData as Data)
+                        }
+                        
                     }
                     
                     

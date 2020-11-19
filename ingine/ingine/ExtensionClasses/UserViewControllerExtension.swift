@@ -34,10 +34,19 @@ extension UserViewController {
                     self.tableView.reloadData()
                 }
             }) { (snapshot) in
-                let users = snapshot.map { (snap) -> User in
-                    User().dictToUser(dict: snap.data(), id: snap.documentID)
+                var users = [User]()
+                
+                snapshot.forEach { (snap) in
+                    User().dictToUser(dict: snap.data(), id: snap.documentID) { user in
+                        users.append(user)
+                        if snapshot.count == users.count{
+                            self.clearAndResetUserSortedData(users: users)
+                        }
+                    }
                 }
-                self.clearAndResetUserSortedData(users: users)
+               
+
+               
         }.store(in: &FirebaseUserService.shared.cancelBag)
     }
     
@@ -85,7 +94,7 @@ extension UserViewController {
         }
         
         DispatchQueue.main.async {
-            self.isUserSearching = false
+            //self.isUserSearching = false
             self.tableView.reloadData()
         }
     }

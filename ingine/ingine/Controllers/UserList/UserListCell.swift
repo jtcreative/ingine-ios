@@ -35,15 +35,20 @@ class UserListCell: UITableViewCell {
         let fullName = user.fullName
         
         userName.text = fullName
-        
+        print("user.profileImage", user.profileImage)
         if  let imageUrl = URL(string: user.profileImage){
             DispatchQueue.global().async {
-                let imageData:NSData = NSData(contentsOf: imageUrl)! //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                DispatchQueue.main.async {
-                    self.userImage.image = UIImage(data: imageData as Data)
-                }
+                if let imageData:NSData = NSData(contentsOf: imageUrl){
+                    DispatchQueue.main.async {
+                        self.userImage.image = UIImage(data: imageData as Data)
+                    }
+                } //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+               
             }
             
+        }else{
+            self.userImage.image = #imageLiteral(resourceName: "logo")
+            self.userImage.backgroundColor = .black
         }
         
         assetCount.text = "\(user.assetCount) AR Assets"

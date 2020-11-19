@@ -39,14 +39,14 @@ class UserViewController: UIViewController {
     @IBOutlet weak var followersSegment: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
-    
+   
     private var db = Firestore.firestore()
     var currentUser:DocumentSnapshot?
     //var users = [[QueryDocumentSnapshot]]()
    // var users = [[String:Any]]()
    // var usersSearch = [QueryDocumentSnapshot]()
     var selectedUser : User?
-    var isUserSearching = false
+    var isUserSearching = true
     var searchType = SearchType.all
     
     var users = [User]()
@@ -186,10 +186,15 @@ class UserViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }, receiveValue: { (_) in
-            for i in 0..<self.followingArr.count{
-                if self.followingArr[i].id == selectedUser.id{
+            
+            
+            if self.isUserSearching{
+                return
+            }
+            for i in 0..<self.users.count{
+                if self.users[i].id == selectedUser.id{
                     
-                    self.followingArr.remove(at: i)
+                    //self.followingArr.remove(at: i)
                     let indexToRemove = self.users.firstIndex(where: {$0.id == selectedUser.id}) ?? 0
                     self.users.remove(at: indexToRemove)
                     self.tableView.deleteRows(at: [IndexPath(row: indexToRemove, section: 0)], with: .left)
@@ -283,7 +288,7 @@ class UserViewController: UIViewController {
                 print(error.localizedDescription)
             }
         }) { (snapshot) in
-            
+           
             if snapshot.exists {
                 self.currentUser = snapshot
                 //get following
@@ -294,10 +299,13 @@ class UserViewController: UIViewController {
                     let fullName = value?["fullName"] as? String
                     let id = value?["id"] as? String
                     let profileImage = value?["profileImage"] as? String
-                    let assetCount = value?["assetCount"] as? Int ?? 0
-                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: assetCount, isFollowing:true)
                     
-                    self.followingArr.append(user)
+                    let arC = self.getUserUpdatedAssets(userId: id ?? "")
+                    
+//                    let assetCount = value?["assetCount"] as? Int ?? 0
+                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: arC, isFollowing:true)
+                    
+                  //  self.followingArr.append(user)
                 }
                 
                 //get followers
@@ -308,10 +316,13 @@ class UserViewController: UIViewController {
                     let fullName = value?["fullName"] as? String
                     let id = value?["id"] as? String
                     let profileImage = value?["profileImage"] as? String
-                    let assetCount = value?["assetCount"] as? Int ?? 0
-                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: assetCount, isFollowing:false)
+                    
+                    let arC = self.getUserUpdatedAssets(userId: id ?? "")
+                    
+//                    let assetCount = value?["assetCount"] as? Int ?? 0
+                    let user = User(fullName: fullName ?? "", id: id ?? "", profileImage: profileImage ?? "", assetCount: arC, isFollowing:false)
         
-                    self.followersArr.append(user)
+                   // self.followersArr.append(user)
                 }
             } else {
                 print("user does not exist")
@@ -322,34 +333,63 @@ class UserViewController: UIViewController {
        
     }
     
+    
+    private func getUserUpdatedAssets(userId:String) -> Int{
+        var asstes = [String]()
+        DispatchQueue.global().async{
+           // self.semaphore.wait()
+            FirebaseARService.shared.getDocument("users", document: userId).sink(receiveCompletion: { (completion) in
+                switch completion
+                {
+                case .finished : print("finish")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }) { (user) in
+                
+                print(user.data())
+               
+                let dict = user.data() as! [String:Any]
+                for k in dict.keys{
+                    if k != "fullName" &&  k != "profileImage" && k != "follower" && k != "following"{
+                        asstes.append(k)
+                    }
+                   
+                }
+            //    self.semaphore.signal()
+                
+            }.store(in: &FirebaseARService.shared.cancelBag)
+        
+            
+            
+            
+        }
+        return  asstes.count
+        
+    }
+    
     @objc func searchByText(_ textField:UITextField){
         
    
         // check if text is empty or not
         if textField.text != "" {
             // check if user exists in user list
-            isUserSearching = true
-
             reloadUsers(name: searchTextField.text ?? "", forType: searchType)
-            //let filterArr = self.users.filter({($0.get("fullName") as! String).lowercased().contains(textField.text ?? "") || ($0.get("fullName") as! String).uppercased().contains(textField.text ?? "")})
-            //self.usersSearch = filterArr
-            /*DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }*/
+
         }else{
             // check if text is empty show all users
-            isUserSearching = false
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            reloadUsers(name: searchTextField.text ?? "", forType: searchType)
         }
  
     }
     
     @objc func segmentValueChanged(_ sender : UISegmentedControl) {
         searchType = SearchType(searchType: sender.selectedSegmentIndex) ?? SearchType.all
-        isUserSearching = true
-
+        if searchType == .follower || searchType == .all{
+            isUserSearching = true
+        }else{
+            isUserSearching = false
+        }
         reloadUsers(name: searchTextField.text ?? "", forType: searchType)
     }
 
@@ -366,16 +406,8 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserListCell", for: indexPath) as! UserListCell
-
-        //let user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
-        //let user = users[indexPath.row]
         
         var user:User!
-//        if isUserSeeFollowing{
-//            user = finalArr[indexPath.row]
-//        }else{
-//            user = isUserSearching ? usersSearch[indexPath.row] : users[indexPath.row]
-//        }
         user = users[indexPath.row]
 //
         
@@ -387,7 +419,8 @@ extension UserViewController : UITableViewDataSource, UITableViewDelegate {
         cell.userImage.tag = indexPath.row
       //  cell.userImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userTabbed(_:))))
         // check if user already followers or not
-        let followingUser = followingArr.filter({$0.id == user.id})
+
+        let followingUser = user.followers.filter({$0.id == Auth.auth().currentUser?.email})
         if user.isFollowing || followingUser.count > 0{
             cell.followButton.isSelected = true
             cell.followButton.backgroundColor = .black
